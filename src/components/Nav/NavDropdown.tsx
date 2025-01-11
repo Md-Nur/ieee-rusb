@@ -8,7 +8,7 @@ const NavDropdown = ({
   routes: { name: string; url?: string }[];
 }) => {
   return (
-    <li className="dropdown dropdown-hover">
+    <li className="dropdown dropdown-hover z-20">
       <details>
         <summary className="uppercase">{name}</summary>
         <ul className="p-2 w-52 bg-base-200">
