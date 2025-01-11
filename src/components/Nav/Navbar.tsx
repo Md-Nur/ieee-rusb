@@ -3,6 +3,7 @@ import { IoMdMenu } from "react-icons/io";
 import NavRoutes from "./NavRoutes";
 import Image from "next/image";
 import Profile from "./Profile";
+import Link from "next/link";
 
 const Navbar = ({ children }: { children: ReactNode }) => {
   return (
@@ -34,6 +35,9 @@ const Navbar = ({ children }: { children: ReactNode }) => {
               <NavRoutes />
             </ul>
           </div>
+          <Link href="/join" className="btn btn-sm btn-outline">
+            Join Us
+          </Link>
           <Profile />
         </div>
         {children}
