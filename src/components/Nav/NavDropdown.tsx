@@ -11,7 +11,7 @@ const NavDropdown = ({
     <li className="dropdown dropdown-hover z-20">
       <details>
         <summary className="uppercase">{name}</summary>
-        <ul className="p-2 w-52 bg-base-200">
+        <ul className="p-2 w-56 bg-base-200">
           {routes.map((route, index) => (
             <NavLink key={index} name={route.name} route={route.url} />
           ))}
