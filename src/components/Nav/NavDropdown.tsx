@@ -1,4 +1,3 @@
-import Link from "next/link";
 import NavLink from "./NavLink";
 
 const NavDropdown = ({

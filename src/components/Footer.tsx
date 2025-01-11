@@ -166,9 +166,9 @@ const Footer = () => {
           />
           <p>
             Copyright © 2025 IEEE RUSB All rights reserved. <br />A
-            not-for-profit organization, IEEE is the world's largest technical
-            professional organization dedicated to advancing technology for the
-            benefit of humanity.
+            not-for-profit organization, IEEE is the world&apos; largest
+            technical professional organization dedicated to advancing
+            technology for the benefit of humanity.
           </p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
