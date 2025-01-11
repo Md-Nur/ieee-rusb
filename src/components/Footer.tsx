@@ -1,83 +1,186 @@
+import Image from "next/image";
 import Link from "next/link";
+import { FaFacebook, FaPhone } from "react-icons/fa";
+import { IoIosMail } from "react-icons/io";
 
 const Footer = () => {
   return (
     <section>
       <footer className="footer bg-base-200 text-base-content p-10">
         <nav>
-          <h6 className="footer-title">Services</h6>
-          <Link href="/join" className="link link-hover">Branding</Link>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+          <h6 className="footer-title">Membership</h6>
+          <Link href="/join" className="link link-hover">
+            Join
+          </Link>
+          <a
+            href="https://www.ieee.org/membership/renew.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=renew"
+            target="_blank"
+            className="link link-hover"
+          >
+            Renew
+          </a>
+          <a
+            href="https://www.ieee.org/membership/benefits/index.html"
+            target="_blank"
+            className="link link-hover"
+          >
+            Benefit
+          </a>
+          <a
+            href="https://ieee-collabratec.ieee.org/?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=collabratec-membership-list"
+            target="_blank"
+            className="link link-hover"
+          >
+            IEEE Collabratee
+          </a>
+          <a
+            href="mailto:security@ieee.org"
+            target="_blank"
+            className="link link-hover"
+          >
+            Report cybersecurity <br />
+            concerns to <br />
+            security@ieee.org
+          </a>
         </nav>
         <nav>
-          <h6 className="footer-title">Company</h6>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <h6 className="footer-title">Get Involved</h6>
+          <a
+            href="https://www.ieee.org/conferences/index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=conferences"
+            target="_blank"
+            className="link link-hover"
+          >
+            Conferences
+          </a>
+          <a
+            href="https://www.ieee.org/communities/geographic-activities.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=local-activities"
+            target="_blank"
+            className="link link-hover"
+          >
+            Local Activities
+          </a>
+          <a
+            href="https://www.ieee.org/publications/authors/publishing-benefits/index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=publishing"
+            target="_blank"
+            className="link link-hover"
+          >
+            Publishing
+          </a>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/communities/societies/index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=societies"
+            className="link link-hover"
+          >
+            Societies
+          </a>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/communities/societies/about-technical-councils.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=councils"
+            className="link link-hover"
+          >
+            Councils
+          </a>
+          <a
+            target="_blank"
+            href="https://standards.ieee.org/?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=standards&_ga=2.138828091.983862010.1583757310-1875752245.1558373461&_gl=1*1sb33kd*_gcl_au*NTUxMDc3NjMzLjE3MjgwNTY0MzM."
+            className="link link-hover"
+          >
+            Standards
+          </a>
+          <a
+            target="_blank"
+            href="https://jobs.ieee.org/?msessid=FdZjUkViRs2FRhh&utm_campaign=technical-careers&utm_medium=hp&utm_source=dhtml_footer"
+            className="link link-hover"
+          >
+            Technical Careers
+          </a>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/about/volunteers/index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=volunteer"
+            className="link link-hover"
+          >
+            Volunteer
+          </a>
         </nav>
         <nav>
-          <h6 className="footer-title">Legal</h6>
-          <a className="link link-hover">Terms of use</a>
-          <a className="link link-hover">Privacy policy</a>
-          <a className="link link-hover">Cookie policy</a>
+          <h6 className="footer-title">Contact With IEEE</h6>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/about/contact.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=contact-support-button"
+            className="link link-hover"
+          >
+            Contact & Support
+          </a>
+          <a
+            href="https://ieee-collabratec.ieee.org/?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=collabratec"
+            target="_blank"
+            className="link link-hover"
+          >
+            IEEE Collaborate
+          </a>
+          <a
+            href="https://ieee.taleo.net/careersection/2/jobsearch.ftl?utm_source=mf&utm_campaign=taleo-jobs&utm_medium=footer&utm_term=taleo-jobs%20at%20ieee"
+            target="_blank"
+            className="link link-hover"
+          >
+            Careers at IEEE
+          </a>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/about/news/index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=newsroom"
+            className="link link-hover"
+          >
+            IEEE Newsroom
+          </a>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/about/news/media-kit-index.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=media-kit"
+            className="link link-hover"
+          >
+            IEEE Media Kit
+          </a>
+          <a
+            target="_blank"
+            href="https://iln.ieee.org/public/TrainingCatalog.aspx"
+            className="link link-hover"
+          >
+            IEEE Learning Network
+          </a>
+          <h6 className="mt-2 footer-title mb-1">Locations</h6>
+          <a
+            target="_blank"
+            href="https://www.ieee.org/about/contact.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=office-locations"
+            className="link link-hover"
+          >
+            IEEE Office Locations
+          </a>
         </nav>
       </footer>
       <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
         <aside className="grid-flow-col items-center">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-            fillRule="evenodd"
-            clipRule="evenodd"
-            className="fill-current"
-          >
-            <path d="M22.672 15.226l-2.432.811.841 2.515c.33 1.019-.209 2.127-1.23 2.456-1.15.325-2.148-.321-2.463-1.226l-.84-2.518-5.013 1.677.84 2.517c.391 1.203-.434 2.542-1.831 2.542-.88 0-1.601-.564-1.86-1.314l-.842-2.516-2.431.809c-1.135.328-2.145-.317-2.463-1.229-.329-1.018.211-2.127 1.231-2.456l2.432-.809-1.621-4.823-2.432.808c-1.355.384-2.558-.59-2.558-1.839 0-.817.509-1.582 1.327-1.846l2.433-.809-.842-2.515c-.33-1.02.211-2.129 1.232-2.458 1.02-.329 2.13.209 2.461 1.229l.842 2.515 5.011-1.677-.839-2.517c-.403-1.238.484-2.553 1.843-2.553.819 0 1.585.509 1.85 1.326l.841 2.517 2.431-.81c1.02-.33 2.131.211 2.461 1.229.332 1.018-.21 2.126-1.23 2.456l-2.433.809 1.622 4.823 2.433-.809c1.242-.401 2.557.484 2.557 1.838 0 .819-.51 1.583-1.328 1.847m-8.992-6.428l-5.01 1.675 1.619 4.828 5.011-1.674-1.62-4.829z"></path>
-          </svg>
+          <Image
+            src="/logo.png"
+            alt="IEEE RUSB Logo"
+            width={150}
+            height={150}
+          />
           <p>
-            ACME Industries Ltd.
-            <br />
-            Providing reliable tech since 1992
+            Copyright © 2025 IEEE RUSB All rights reserved. <br />A
+            not-for-profit organization, IEEE is the world's largest technical
+            professional organization dedicated to advancing technology for the
+            benefit of humanity.
           </p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
-          <div className="grid grid-flow-col gap-4">
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
-              </svg>
+          <div className="grid grid-flow-col gap-4 items-center">
+            <a href="https://www.facebook.com/ieeerusb" target="_blank">
+              <FaFacebook className="w-6 h-6" />
             </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
-              </svg>
+            <a href="mailto:ieeerusb@gmail.com">
+              <IoIosMail className="w-7 h-7" />
             </a>
-            <a>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                className="fill-current"
-              >
-                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
-              </svg>
+            <a href="tel:+8801798-672640">
+              <FaPhone className="w-5 h-5" />
             </a>
           </div>
         </nav>

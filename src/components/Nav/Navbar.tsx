@@ -35,7 +35,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
               <NavRoutes />
             </ul>
           </div>
-          <Link href="/join" className="btn btn-sm btn-outline">
+          <Link href="/join" className="btn btn-sm btn-outline uppercase">
             Join Us
           </Link>
           <Profile />
