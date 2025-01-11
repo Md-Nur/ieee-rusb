@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Profile = () => {
   return (
@@ -19,16 +20,13 @@ const Profile = () => {
       </div>
       <ul
         tabIndex={0}
-        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+        className="menu menu-sm dropdown-content bg-base-200 rounded-box z-[1] mt-3 p-2 shadow"
       >
         <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
+          <Link href="/dashboard" className="justify-between">Profile</Link>
         </li>
         <li>
-          <a>Settings</a>
+          <Link href="/admin">Admin</Link>
         </li>
         <li>
           <a>Logout</a>
