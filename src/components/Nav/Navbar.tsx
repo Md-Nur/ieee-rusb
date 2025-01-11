@@ -35,10 +35,16 @@ const Navbar = ({ children }: { children: ReactNode }) => {
               <NavRoutes />
             </ul>
           </div>
-          <Link href="/join" className="btn btn-sm btn-outline uppercase">
-            Join Us
-          </Link>
-          <Profile />
+          {true ? (
+            <Link
+              href="/join"
+              className="btn btn-sm btn-outline uppercase mr-2"
+            >
+              Join Us
+            </Link>
+          ) : (
+            <Profile />
+          )}
         </div>
         {children}
       </div>

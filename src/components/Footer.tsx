@@ -157,7 +157,7 @@ const Footer = () => {
         </nav>
       </footer>
       <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
-        <aside className="grid-flow-col items-center">
+        <aside className="flex flex-wrap items-center">
           <Image
             src="/logo.png"
             alt="IEEE RUSB Logo"
