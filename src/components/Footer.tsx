@@ -5,7 +5,7 @@ import { IoIosMail } from "react-icons/io";
 
 const Footer = () => {
   return (
-    <section>
+    <section className="mt-10">
       <footer className="footer bg-base-200 text-base-content p-10">
         <nav>
           <h6 className="footer-title">Membership</h6>

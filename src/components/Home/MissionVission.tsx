@@ -7,7 +7,7 @@ const MissionVission = () => {
       <div className="flex gap-10 flex-col md:flex-row">
         <p>
           The IEEE (Institute of Electrical and Electronics Engineers) is the
-          world’s largest nonprofit technical organization, dedicated to using
+          world&apos;s largest nonprofit technical organization, dedicated to using
           the resources of the electrical and electronics industries to advance
           technology for the betterment of humanity. With the core purpose of
           “advancing technology for the benefit of humanity” and a vision “to be
