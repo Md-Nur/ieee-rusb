@@ -22,12 +22,14 @@ const Navbar = ({ children }: { children: ReactNode }) => {
             </label>
           </div>
           <div className="mx-2 flex-1 px-2">
-            <Image
-              src={"/logo.png"}
-              alt="IEEE RUSB Logo"
-              width={150}
-              height={150}
-            />
+            <Link href="/" className="text-lg font-bold">
+              <Image
+                src={"/logo.png"}
+                alt="IEEE RUSB Logo"
+                width={150}
+                height={150}
+              />
+            </Link>
           </div>
           <div className="hidden flex-none lg:block">
             <ul className="menu menu-horizontal">

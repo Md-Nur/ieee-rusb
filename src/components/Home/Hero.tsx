@@ -29,6 +29,11 @@ const HeroData = [
       "https://jobs.ieee.org/headers/cc/responsive/partner_lib/23764/img/hero23764.jpg",
     title: "Connecting Talent with Opportunity",
   },
+  {
+    image:
+      "https://signalprocessingsociety.org/sites/default/files/home_pg_sps_slider.jpg",
+    title: "The Science Behind Our Digital Lives",
+  },
 ];
 
 const Hero = () => {
@@ -58,7 +63,7 @@ const Hero = () => {
                 backgroundImage: `url(${item.image})`,
               }}
             >
-              <h1 className="text-white shadow-2xl text-xl sm:text-3xl md:text-5xl font-bold w-full h-full flex items-center justify-center bg-[#00000079] p-2 text-center px-10">
+              <h1 className="text-white shadow-2xl text-xl sm:text-3xl md:text-5xl font-bold w-full h-full flex items-center justify-center bg-[#00000096] p-2 text-center px-10">
                 {item.title}
               </h1>
             </div>
