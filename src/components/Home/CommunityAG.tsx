@@ -47,7 +47,7 @@ const CommunityAG = () => {
       <div className="flex flex-wrap gap-5 justify-between">
         {communityAndAG.map((item, index) => (
           <div
-            className="card w-72 md:w-96"
+            className="card w-72 md:w-96 mx-auto"
             key={index}
             style={{
               backgroundImage: `url(${item.img || "/ieee.jpg"})`,

@@ -9,8 +9,11 @@ const Footer = () => {
       <footer className="footer bg-base-200 text-base-content p-10">
         <nav>
           <h6 className="footer-title">Membership</h6>
-          <Link href="/join" className="link link-hover">
+          <Link href="/join/1" className="link link-hover">
             Join
+          </Link>
+          <Link href="/login" className="link link-hover">
+            Login
           </Link>
           <a
             href="https://www.ieee.org/membership/renew.html?utm_source=dhtml_footer&utm_medium=hp&utm_campaign=renew"

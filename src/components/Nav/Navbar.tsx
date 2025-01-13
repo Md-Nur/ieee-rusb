@@ -38,12 +38,20 @@ const Navbar = ({ children }: { children: ReactNode }) => {
             </ul>
           </div>
           {true ? (
-            <Link
-              href="/join"
-              className="btn btn-sm btn-outline uppercase mr-2"
-            >
-              Join Us
-            </Link>
+            <>
+              <Link
+                href="/join/1"
+                className="btn btn-sm btn-outline uppercase mr-2"
+              >
+                Join
+              </Link>
+              <Link
+                href="/login"
+                className="btn btn-sm btn-outline uppercase mr-2"
+              >
+                Login
+              </Link>
+            </>
           ) : (
             <Profile />
           )}

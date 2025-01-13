@@ -2,7 +2,7 @@ import Title from "../Title";
 
 const MissionVission = () => {
   return (
-    <section className="max-w-7xl mx-auto px-1 md:px-10 text-justify my-3">
+    <section className="max-w-7xl mx-auto px-3 md:px-10 text-justify my-3">
       <Title>Our Vision & Mission</Title>
       <div className="flex gap-10 flex-col md:flex-row">
         <p>
