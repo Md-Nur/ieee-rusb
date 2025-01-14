@@ -1,17 +1,20 @@
+"use client";
 import { ReactNode } from "react";
 import { IoMdMenu } from "react-icons/io";
 import NavRoutes from "./NavRoutes";
 import Image from "next/image";
 import Profile from "./Profile";
 import Link from "next/link";
+import { useUserAuth } from "@/context/userAuth";
 
 const Navbar = ({ children }: { children: ReactNode }) => {
+  const { userAuth } = useUserAuth();
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-300 w-full">
+        <div className="navbar bg-base-300 w-full sticky top-0 z-10 shadow-lg">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -37,7 +40,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
               <NavRoutes />
             </ul>
           </div>
-          {true ? (
+          {!userAuth ? (
             <>
               <Link
                 href="/join/1"

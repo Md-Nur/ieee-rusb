@@ -26,9 +26,8 @@ const Join4 = () => {
     if (societies.length) {
       setUser({ ...user, societies: societies });
     }
-    let res;
     try {
-      res = await axios.post("/api/register", user);
+      const res = await axios.post("/api/register", user);
       toast.dismiss();
       if (res.status >= 400) {
         toast.error(res?.response?.data?.error || "Something went wrong");
@@ -36,7 +35,7 @@ const Join4 = () => {
       toast.success("Registration successful! Plase login after approval");
     } catch (error) {
       toast.dismiss();
-      toast.error(res?.response?.data?.error || error?.message);
+      toast.error(error?.response?.data?.error || error?.message);
     }
     router.push("/");
   };
