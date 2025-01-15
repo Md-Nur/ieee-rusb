@@ -11,7 +11,7 @@ const Profile = () => {
       <Title>{userAuth?.name || "User"}</Title>
       <div className="flex justify-evenly items-center my-10 flex-wrap gap-5 w-full">
         <div className="avatar">
-          <div className="ring-primary ring-offset-base-100 w-32 rounded-full ring ring-offset-2">
+          <div className="ring-accent ring-offset-base-100 w-32 rounded-full ring ring-offset-2">
             <Image
               src={userAuth?.avatar || "defaultAvatar.jng"}
               alt={userAuth?.name || "User"}
