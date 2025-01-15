@@ -6,7 +6,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Admin = () => {
-  const [users, setUsers] = useState<any[] | null>(null);
+  const [users, setUsers] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,10 +18,7 @@ const Admin = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleApproved = async (
-    e: ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
+  const handleApproved = async (e, id) => {
     try {
       if (e.target.checked) {
         await axios.post(`/api/user-approval`, {
@@ -34,7 +31,7 @@ const Admin = () => {
           isApproved: false,
         });
       }
-    } catch (error: unknown | any) {
+    } catch (error) {
       e.target.checked = !e.target.checked;
       toast.error(error?.response?.data?.error || error.message);
     }
@@ -82,7 +79,7 @@ const Admin = () => {
                               width={50}
                               height={50}
                               alt={user?.name || "Avatar"}
-                            />                            
+                            />
                           </div>
                         </div>
                         <div>
@@ -102,7 +99,7 @@ const Admin = () => {
                     </td>
                     <td>
                       <ul>
-                        {user?.roles.map((role: string, i: number) => (
+                        {user?.roles.map((role, i) => (
                           <li key={i} className="list-disc capitalize">
                             {role.split("-").join(" ")}
                           </li>
@@ -111,7 +108,7 @@ const Admin = () => {
                     </td>
                     <td>
                       <ul>
-                        {user?.societies.map((society: string, i: number) => (
+                        {user?.societies.map((society, i) => (
                           <li key={i} className="list-disc capitalize">
                             {society.split("-").join(" ")}
                           </li>

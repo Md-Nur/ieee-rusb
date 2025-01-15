@@ -1,10 +1,9 @@
 "use client";
 import { Join } from "@/context/join";
-import { Users } from "@/models/user.model";
 import { ReactNode, useState } from "react";
 
-const JoinProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<any | null>({
+const JoinProvider = ({ children }) => {
+  const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
