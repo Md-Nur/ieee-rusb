@@ -2,28 +2,32 @@
 import Title from "@/components/Title";
 import { useJoin } from "@/context/join";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Join = () => {
   const { user, setUser } = useJoin();
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+
   const router = useRouter();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
-    if (user.password !== confirmPassword) {
-      setError("Password didn't match");
+    if (
+      user.name === "" ||
+      user.dept === "" ||
+      user.session === "" ||
+      user.phone === "" ||
+      user.email === ""
+    ) {
+      toast.error("Please fill all the fields");
       return;
     }
     router.push("/join/2");
   };
 
   return (
-    <div className="card w-full max-w-sm shrink-0 mb-10">
+    <div className="card w-full max-w-sm shrink-0">
       <Title>Join Us</Title>
-      <form className="card-body" onSubmit={handleSubmit}>
+      <form className="card-body mb-10" onSubmit={handleSubmit}>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Name</span>
@@ -32,7 +36,31 @@ const Join = () => {
             type="text"
             placeholder="Name"
             className="input input-bordered input-accent"
-            onBlur={(e) => setUser({ ...user, name: e.target.value })}
+            onChange={(e) => setUser({ ...user, name: e.target.value })}
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Department</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Department"
+            className="input input-bordered input-accent"
+            onChange={(e) => setUser({ ...user, dept: e.target.value })}
+            required
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Session</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Session"
+            className="input input-bordered input-accent"
+            onChange={(e) => setUser({ ...user, session: e.target.value })}
             required
           />
         </div>
@@ -44,7 +72,7 @@ const Join = () => {
             type="text"
             placeholder="Phone"
             className="input input-bordered input-accent"
-            onBlur={(e) => setUser({ ...user, phone: e.target.value })}
+            onChange={(e) => setUser({ ...user, phone: e.target.value })}
             required
           />
         </div>
@@ -57,34 +85,7 @@ const Join = () => {
             placeholder="Email"
             className="input input-bordered input-accent"
             required
-            onBlur={(e) => setUser({ ...user, email: e.target.value })}
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Create Password</span>
-            {error && (
-              <span className="label-text text-error font-bold">{error}</span>
-            )}
-          </label>
-          <input
-            type="password"
-            placeholder="Create Password"
-            className="input input-bordered input-accent"
-            required
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Confirm Password</span>
-          </label>
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="input input-bordered input-accent"
-            required
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </div>
         <div className="form-control mt-6">

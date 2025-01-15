@@ -12,7 +12,6 @@ const Join3 = () => {
   const router = useRouter();
 
   const handleChecked = (e) => {
-    console.log(e.target.value)
     if (e.target.checked) {
       setCommittee([...committee, e.target.value]);
     } else {
@@ -21,9 +20,11 @@ const Join3 = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(committee)
     if (committee.length) {
       setUser({ ...user, roles: committee });
+    } else {
+      toast.dismiss();
+      toast.error("Please select at least one society");
     }
     router.push("/join/4");
   };

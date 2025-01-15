@@ -1,10 +1,10 @@
 "use client";
 import { createContext, useContext } from "react";
-import { User } from "@/models/user.model";
+import { Users } from "@/models/user.model";
 
 const Join = createContext<{
-  user: User | null;
-  setUser: (user: User | null) => void;
+  user: Users | null;
+  setUser: (user: Users | null) => void;
 }>({
   user: null,
   setUser: () => {},

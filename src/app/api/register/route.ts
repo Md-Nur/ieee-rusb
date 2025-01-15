@@ -5,14 +5,19 @@ import { hash } from "bcryptjs";
 export async function POST(req: Request) {
   await dbConnect();
   const data = await req.json();
-
-  if (!data?.email || !data?.password || !data?.phone || !data?.name) {
+  if (
+    !data?.email ||
+    !data?.password ||
+    !data?.phone ||
+    !data?.name ||
+    !data?.dept ||
+    !data?.session
+  ) {
     return Response.json({ message: "All fields are required" });
   }
 
   const existingUser = await UserModel.findOne({
-    email: data.email,
-    phone: data.phone,
+    $or: [{ email: data.email }, { phone: data.phone }],
   });
 
   if (existingUser) {

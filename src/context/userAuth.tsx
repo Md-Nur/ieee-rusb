@@ -1,13 +1,17 @@
 "use client";
-import { User } from "@/models/user.model";
+import { Users } from "@/models/user.model";
 import { createContext, useContext } from "react";
 
 const UserAuth = createContext<{
-  userAuth: User | null;
-  setUserAuth: (user: User | null) => void;
+  userAuth: Users | null;
+  setUserAuth: (user: Users | null) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 }>({
   userAuth: null,
   setUserAuth: () => {},
+  loading: true,
+  setLoading: () => {},
 });
 
 const useUserAuth = () => {

@@ -13,7 +13,8 @@ const Check = ({
         <input
           type="checkbox"
           value={name}
-          onChange={handleChecked}
+          // onChange={handleChecked}
+          onClick={handleChecked}
           className="checkbox checkbox-accent rounded-full"
         />
         <span className="label-text capitalize">

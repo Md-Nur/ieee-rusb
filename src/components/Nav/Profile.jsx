@@ -15,7 +15,6 @@ const Profile = () => {
       const res = await axios.get("/api/logout");
       if (res.status === 200) {
         setUserAuth(null);
-        router.push("/");
         toast.success("Logged out successfully");
       }
     } catch (err) {

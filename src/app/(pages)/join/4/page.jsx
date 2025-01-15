@@ -2,7 +2,6 @@
 import Check from "@/components/Form/Check";
 import Title from "@/components/Title";
 import { useJoin } from "@/context/join";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,23 +20,13 @@ const Join4 = () => {
     }
   };
   const handleSubmit = async (e) => {
-    toast.loading("Please wait...");
     e.preventDefault();
-    if (societies.length) {
-      setUser({ ...user, societies: societies });
-    }
-    try {
-      const res = await axios.post("/api/register", user);
+    if (!societies.length) {
       toast.dismiss();
-      if (res.status >= 400) {
-        toast.error(res?.response?.data?.error || "Something went wrong");
-      }
-      toast.success("Registration successful! Plase login after approval");
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error?.response?.data?.error || error?.message);
+      toast.error("Please select at least one society");
     }
-    router.push("/");
+    setUser({ ...user, societies });
+    router.push("/join/5");
   };
   return (
     <div>
@@ -66,7 +55,7 @@ const Join4 = () => {
             Previous
           </Link>
           <button type="submit" className="btn btn-accent">
-            Submit
+            Next
           </button>
         </div>
       </form>
