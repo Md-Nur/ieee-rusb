@@ -1,7 +1,10 @@
+"use client";
+import { useUserAuth } from "@/context/userAuth";
 import NavDropdown from "./NavDropdown";
 import NavLink from "./NavLink";
 
 const NavRoutes = () => {
+  const { userAuth } = useUserAuth();
   return (
     <>
       <NavLink name="home" route="/" />
@@ -18,9 +21,9 @@ const NavRoutes = () => {
       <NavDropdown
         name="Societies & AG"
         routes={[
+          { name: "IEEE RAS RUSB Chapter", url: "/ras" },
           { name: "IEEE SPS RUSB Chapter", url: "/sps" },
           { name: "IEEE PES RUSB Chapter", url: "/pes" },
-          { name: "IEEE RAS RUSB Chapter", url: "/ras" },
           { name: "IEEE CS RUSB Chapter", url: "/cs" },
           { name: "IEEE APS RUSB Chapter", url: "/aps" },
           { name: "IEEE WIE RUSB AG", url: "/wie" },
@@ -33,6 +36,19 @@ const NavRoutes = () => {
           { name: "All Events", url: "/all-events" },
         ]}
       />
+
+      {userAuth?.isAdmin && (
+        <NavDropdown
+          name="Admin"
+          routes={[
+            { name: "Dashboard", url: "/admin/dashboard" },
+            { name: "Users", url: "/admin/users" },
+            { name: "Events", url: "/admin/events" },
+            { name: "Blogs", url: "/admin/blogs" },
+            { name: "Gallery", url: "/admin/gallery" },
+          ]}
+        />
+      )}
       <NavLink name="blogs" />
       <NavLink name="gallery" />
     </>

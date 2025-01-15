@@ -46,12 +46,12 @@ const Join4 = () => {
         className="flex flex-col max-w-60 mx-auto gap-3"
         onSubmit={handleSubmit}
       >
-        <Check name="signal-processing-society" handleChecked={handleChecked} />
-        <Check name="power-&-energy-society" handleChecked={handleChecked} />
         <Check
           name="robotics-&-automation-society"
           handleChecked={handleChecked}
         />
+        <Check name="signal-processing-society" handleChecked={handleChecked} />
+        <Check name="power-&-energy-society" handleChecked={handleChecked} />
         <Check name="computer-society" handleChecked={handleChecked} />
         <Check
           name="antenna-&-propagation-society"

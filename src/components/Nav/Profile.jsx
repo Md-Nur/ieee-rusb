@@ -22,8 +22,16 @@ const Profile = () => {
       toast.error(err?.response?.data?.message || err.message);
     }
   };
+  const handleVisible = () => {
+    const profile = document.getElementById("profile");
+    if (profile.classList.contains("hidden")) {
+      profile.classList.remove("hidden");
+    } else {
+      profile.classList.add("hidden");
+    }
+  };
   return (
-    <div className="dropdown dropdown-end mr-5">
+    <div className="dropdown dropdown-end mr-5" onClick={handleVisible}>
       <div
         tabIndex={0}
         role="button"
@@ -40,6 +48,7 @@ const Profile = () => {
       </div>
       <ul
         tabIndex={0}
+        id="profile"
         className="menu menu-sm dropdown-content bg-base-200 rounded-box z-40 mt-3 p-2 shadow"
       >
         <li>
@@ -47,9 +56,7 @@ const Profile = () => {
             Profile
           </Link>
         </li>
-        <li>
-          <Link href="/admin">Admin</Link>
-        </li>
+
         <li>
           <button onClick={handleLogout}>Logout</button>
         </li>
