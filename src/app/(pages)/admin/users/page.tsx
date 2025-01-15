@@ -77,17 +77,12 @@ const Admin = () => {
                       <div className="flex flex-col items-center gap-1">
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
-                            {/* <Image
+                            <Image
                               src={user?.avatar || "/defaultAvatar.jpg"}
                               width={50}
                               height={50}
                               alt={user?.name || "Avatar"}
-                            /> */}
-                            <img
-                            src={user?.avatar || "/defaultAvatar.jpg"}
-                            alt={user?.name || "Avatar"}
-                            className="h-12 w-12"
-                          />
+                            />                            
                           </div>
                         </div>
                         <div>
