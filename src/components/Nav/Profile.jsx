@@ -18,8 +18,8 @@ const Profile = () => {
         router.push("/");
         toast.success("Logged out successfully");
       }
-    } catch (err: any) {
-      toast.error(err?.response?.data.message);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err.message);
     }
   };
   return (

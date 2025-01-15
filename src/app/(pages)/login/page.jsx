@@ -14,7 +14,7 @@ const Login = () => {
     password: "",
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     toast("Logging in...");
     e.preventDefault();
     try {
@@ -27,7 +27,7 @@ const Login = () => {
         toast.success(res.data?.message);
         router.push("/dashboard");
       }
-    } catch (error: any) {
+    } catch (error) {
       toast.dismiss();
       toast.error(error?.response?.data?.error || error.message);
     }

@@ -5,7 +5,7 @@ const Check = ({
 }: {
   name: string;
   label?: string;
-  handleChecked: any;
+  handleChecked: () => void;
 }) => {
   return (
     <div className="form-control">
