@@ -41,11 +41,7 @@ const NavRoutes = () => {
         <NavDropdown
           name="Admin"
           routes={[
-            { name: "Dashboard", url: "/admin/dashboard" },
-            { name: "Users", url: "/admin/users" },
-            { name: "Events", url: "/admin/events" },
-            { name: "Blogs", url: "/admin/blogs" },
-            { name: "Gallery", url: "/admin/gallery" },
+            { name: "User Approval", url: "/admin/user-approval" },
           ]}
         />
       )}

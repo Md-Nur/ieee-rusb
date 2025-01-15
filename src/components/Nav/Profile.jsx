@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import NavLink from "./NavLink";
 
 const Profile = () => {
   const { userAuth, setUserAuth } = useUserAuth();
@@ -50,12 +51,9 @@ const Profile = () => {
         id="profile"
         className="menu menu-sm dropdown-content bg-base-200 rounded-box z-40 mt-3 p-2 shadow"
       >
-        <li>
-          <Link href="/dashboard" className="justify-between">
-            Profile
-          </Link>
-        </li>
-
+        <NavLink name="dashboard" />
+        <NavLink name="Add Blog" route="add-blog" />
+        <NavLink name="Add Event" route="add-event" />
         <li>
           <button onClick={handleLogout}>Logout</button>
         </li>

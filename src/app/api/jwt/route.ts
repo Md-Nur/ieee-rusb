@@ -35,5 +35,7 @@ export async function GET() {
     isApproved: newUser.isApproved,
     roles: newUser.roles,
     societies: newUser.societies,
+    dept: newUser.dept,
+    session: newUser.session,
   });
 }
