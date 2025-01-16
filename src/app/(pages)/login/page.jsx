@@ -18,7 +18,7 @@ const Login = () => {
     toast("Logging in...");
     e.preventDefault();
     try {
-      const res = await axios.post("/api/login", user);
+      const res = await axios.post("/api/users/login", user);
       toast.dismiss();
       if (res.data.error) {
         toast.error(res.data.error);

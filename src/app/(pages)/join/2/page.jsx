@@ -90,7 +90,7 @@ const Join2 = () => {
             className="btn btn-accent"
             disabled={progress > 0}
           >
-            {preview ? "Uploade" : "Next"}
+            {preview ? "Upload" : "Next"}
           </button>
         </div>
       </form>

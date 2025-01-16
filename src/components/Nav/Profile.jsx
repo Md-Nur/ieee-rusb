@@ -13,7 +13,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.get("/api/logout");
+      const res = await axios.get("/api/users/logout");
       if (res.status === 200) {
         setUserAuth(null);
         toast.success("Logged out successfully");

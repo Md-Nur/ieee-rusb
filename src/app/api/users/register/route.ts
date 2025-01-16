@@ -26,6 +26,25 @@ export async function POST(req: Request) {
     );
   }
 
+  if (
+    data.roles.includes("faculty-member") &&
+    data.roles.includes("student-member")
+  ) {
+    return Response.json(
+      { error: "You can't be both faculty and student member" },
+      { status: 400 }
+    );
+  }
+  if (
+    data.roles.includes("student-member") &&
+    (data.roles.includes("gradute-member") || data.roles.includes("alumni"))
+  ) {
+    return Response.json(
+      { error: "You can't be both student and gradute member/alumni" },
+      { status: 400 }
+    );
+  }
+
   data.password = await hash(data.password, 12);
 
   const newUser = await UserModel.create(data);

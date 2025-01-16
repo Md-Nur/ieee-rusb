@@ -1,6 +1,7 @@
 "use client";
 import Title from "@/components/Title";
 import { useJoin } from "@/context/join";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -9,7 +10,7 @@ const Join = () => {
 
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const bdPhoneRegex = /^(?:\+88)?01[3-9]\d{8}$/;
     if (user.name === "" || user.email === "") {
@@ -17,6 +18,21 @@ const Join = () => {
       return;
     } else if (!bdPhoneRegex.test(user.phone)) {
       toast.error("Invalid Phone Number");
+      return;
+    }
+
+    if (user.email && user.phone) {
+      try {
+        await axios.post("/api/users/existing-user", {
+          email: user.email,
+          phone: user.phone,
+        });
+      } catch (error) {
+        toast.error(error?.response?.data?.error || "User already exists");
+        return;
+      }
+    } else {
+      toast.error("Please fill all the fields");
       return;
     }
     router.push("/join/2");

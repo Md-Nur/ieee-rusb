@@ -38,6 +38,13 @@ const UserSchema = new Schema<Users>({
   roles: {
     type: [String],
     default: [],
+    enum: [
+      "executive-committee",
+      "faculty-member",
+      "student-member",
+      "gradute-member",
+      "alumni",
+    ],
   },
   isAdmin: {
     type: Boolean,
@@ -46,6 +53,14 @@ const UserSchema = new Schema<Users>({
   societies: {
     type: [String],
     default: [],
+    enum: [
+      "robotics-&-automation-society",
+      "signal-processing-society",
+      "power-&-energy-society",
+      "computer-society",
+      "antenna-&-propagation-society",
+      "women-in-engineering-society",
+    ],
   },
   isApproved: {
     type: Boolean,
@@ -54,12 +69,20 @@ const UserSchema = new Schema<Users>({
   dept: {
     type: String,
     required: true,
+    enum: ["EEE", "CSE", "MSE", "ICE", "ACCE", "Others"],
   },
   session: {
     type: String,
   },
   designation: {
     type: String,
+    enum: [
+      "Professor",
+      "Associate Professor",
+      "Assistant Professor",
+      "Lecturer",
+      "Other",
+    ],
   },
 });
 

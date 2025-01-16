@@ -26,7 +26,7 @@ const Admin = () => {
           isApproved: true,
         });
       } else {
-        await axios.post(`/api/user-approval`, {
+        await axios.post(`/api/users/user-approval`, {
           id,
           isApproved: false,
         });
