@@ -17,24 +17,24 @@ const Join2 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setProgress(10);
     const file = avatarFile.current?.files?.[0] || null;
-    setProgress(20);
     if (file) {
-      setProgress(30);
+      setProgress(20);
       const formData = new FormData();
       setProgress(40);
       formData.append("image", file);
-      setProgress(50);
+      setProgress(60);
       const response = await axios.post(
         `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
         formData
       );
-      setProgress(90);
-      setUser({ ...user, avatar: response.data.data.url });
+      setProgress(80);
+      setUser({ ...user, avatar: response?.data?.data.url });
       setProgress(100);
-      router.push("/join/3");
+    } else {
+      setUser({ ...user, avatar: "" });
     }
+    router.push("/join/3");
   };
   const onFileChange = () => {
     // console.log(avatarFile.current);
@@ -46,10 +46,13 @@ const Join2 = () => {
     <div className="card-body">
       <Title>Upload Avatar</Title>
       <form
-        className="flex flex-col max-w-sm mx-auto gap-3"
+        className="flex flex-col max-w-sm mx-auto gap-3 w-full"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="avatar" className="btn btn-accent w-auto h-auto mx-auto rounded-full p-1">
+        <label
+          htmlFor="avatar"
+          className="btn btn-accent w-auto h-auto mx-auto rounded-full p-1"
+        >
           {preview ? (
             <Image
               alt="avatar"
@@ -70,15 +73,14 @@ const Join2 = () => {
           id="avatar"
           type="file"
           className="file-input file-input-accent"
-          required
         />
-        <progress
-          className={`progress progress-accent w-full block mx-auto ${
-            progress === 100 || progress === 0 ? "hidden" : ""
-          }`}
-          value={progress}
-          max="100"
-        ></progress>
+        {(progress > 0 || preview) && (
+          <progress
+            className="progress progress-accent w-full block mx-auto"
+            value={progress}
+            max="100"
+          ></progress>
+        )}
         <div className="flex w-full items-center justify-between my-5">
           <Link href="/join/1" type="reset" className="btn btn-accent">
             Previous
@@ -86,7 +88,7 @@ const Join2 = () => {
           <button
             type="submit"
             className="btn btn-accent"
-            disabled={progress === 100 || !preview}
+            // disabled={progress === 100 || !preview}
           >
             Upload
           </button>

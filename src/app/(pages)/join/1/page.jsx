@@ -11,14 +11,12 @@ const Join = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      user.name === "" ||
-      user.dept === "" ||
-      user.session === "" ||
-      user.phone === "" ||
-      user.email === ""
-    ) {
+    const bdPhoneRegex = /^(?:\+88)?01[3-9]\d{8}$/;
+    if (user.name === "" || user.email === "") {
       toast.error("Please fill all the fields");
+      return;
+    } else if (!bdPhoneRegex.test(user.phone)) {
+      toast.error("Invalid Phone Number");
       return;
     }
     router.push("/join/2");
@@ -37,30 +35,6 @@ const Join = () => {
             placeholder="Name"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, name: e.target.value })}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Department</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Department"
-            className="input input-bordered input-accent"
-            onChange={(e) => setUser({ ...user, dept: e.target.value })}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Session</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Session"
-            className="input input-bordered input-accent"
-            onChange={(e) => setUser({ ...user, session: e.target.value })}
             required
           />
         </div>

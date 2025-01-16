@@ -21,6 +21,20 @@ const Join5 = () => {
       setError("Password didn't match");
       return;
     }
+    if (
+      user.roles.includes("faculty-member") &&
+      user.roles.includes("student-member")
+    ) {
+      toast.error("You can't be both faculty and student member");
+      return;
+    }
+    if (
+      user.roles.includes("student-member") &&
+      (user.roles.includes("gradute-member") || user.roles.includes("alumni"))
+    ) {
+      toast.error("You can't be both student and gradute member/alumni");
+      return;
+    }
     toast.loading("Please wait...");
     try {
       const res = await axios.post("/api/register", user);
@@ -29,7 +43,7 @@ const Join5 = () => {
         toast.error(res?.response?.data?.error || "Something went wrong");
         router.push("/join/1");
       }
-      toast.success("Registration successful! Plase login after approval");
+      toast.success(res?.data?.message);
       router.push("/");
     } catch (error) {
       toast.dismiss();
@@ -73,7 +87,7 @@ const Join5 = () => {
             Previous
           </Link>
           <button type="submit" className="btn btn-accent">
-            Next
+            Submit
           </button>
         </div>
       </form>

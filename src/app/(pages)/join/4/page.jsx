@@ -29,10 +29,10 @@ const Join4 = () => {
     router.push("/join/5");
   };
   return (
-    <div>
-      <Title>Select Societies</Title>
+    <div className="card-body">
+      <Title>Societies</Title>
       <form
-        className="flex flex-col max-w-60 mx-auto gap-3"
+        className="flex flex-col max-w-sm mx-auto gap-3"
         onSubmit={handleSubmit}
       >
         <Check
@@ -47,11 +47,11 @@ const Join4 = () => {
           handleChecked={handleChecked}
         />
         <Check
-          name="woman-in-engineering-society"
+          name="women-in-engineering-society"
           handleChecked={handleChecked}
         />
         <div className="flex w-full items-center justify-between">
-          <Link href="/join/3" type="reset" className="btn btn-accent">
+          <Link href="/join/3-1" type="reset" className="btn btn-accent">
             Previous
           </Link>
           <button type="submit" className="btn btn-accent">

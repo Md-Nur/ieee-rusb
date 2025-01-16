@@ -3,7 +3,7 @@ import { Document, Model, model, models, Schema } from "mongoose";
 export interface Users extends Document {
   name: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   phone: string;
   password: string;
   roles: string[];
@@ -11,7 +11,8 @@ export interface Users extends Document {
   societies: string[];
   isApproved: boolean;
   dept: string;
-  session: string;
+  session?: string;
+  designation?: string;
 }
 
 const UserSchema = new Schema<Users>({
@@ -21,7 +22,6 @@ const UserSchema = new Schema<Users>({
   },
   avatar: {
     type: String,
-    default: "",
   },
   email: {
     type: String,
@@ -57,7 +57,9 @@ const UserSchema = new Schema<Users>({
   },
   session: {
     type: String,
-    required: true,
+  },
+  designation: {
+    type: String,
   },
 });
 

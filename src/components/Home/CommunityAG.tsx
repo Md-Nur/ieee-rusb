@@ -33,8 +33,8 @@ const communityAndAG = [
     img: "https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg"
   },
   {
-    title: "Woman IN Engineering Society",
-    desc: "Woman IN Engineering Society (WIE) is a society. It is a society that is very active in the field of research and development.",
+    title: "Women IN Engineering Society",
+    desc: "Women IN Engineering Society (WIE) is a society. It is a society that is very active in the field of research and development.",
     url: "/wie",
     img: "https://img.freepik.com/free-photo/beautiful-girl-s-day-concept_23-2148594283.jpg"
   },

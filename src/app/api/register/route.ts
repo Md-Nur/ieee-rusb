@@ -4,16 +4,16 @@ import { hash } from "bcryptjs";
 
 export async function POST(req: Request) {
   await dbConnect();
+  console.log("Request body");
   const data = await req.json();
   if (
     !data?.email ||
     !data?.password ||
     !data?.phone ||
     !data?.name ||
-    !data?.dept ||
-    !data?.session
+    !data?.dept
   ) {
-    return Response.json({ message: "All fields are required" });
+    return Response.json({ error: "All fields are required" }, { status: 404 });
   }
 
   const existingUser = await UserModel.findOne({
@@ -30,11 +30,13 @@ export async function POST(req: Request) {
   data.password = await hash(data.password, 12);
 
   const newUser = await UserModel.create(data);
+  console.log(data);
+  console.log(newUser);
   if (!newUser) {
     return Response.json({ error: "Can't create this user" }, { status: 500 });
   }
   return Response.json(
-    { message: "User created successfully" },
+    { message: "Registration successful! Plase login after approval" },
     { status: 201 }
   );
 }

@@ -2,7 +2,7 @@
 import Title from "@/components/Title";
 import axios from "axios";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const Admin = () => {
@@ -38,7 +38,7 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <Title>User Approval</Title>
       <div className="overflow-x-auto">
         <table className="table">
@@ -47,10 +47,10 @@ const Admin = () => {
               <th>Approved</th>
               <th>Name</th>
               <th>
-                Department <br /> & Session
+                Department &<br /> Session/Designation
               </th>
               <th>
-                Email <br /> & Phone
+                Email & <br /> Phone
               </th>
               <th>Roles</th>
               <th>Societies</th>
@@ -88,9 +88,9 @@ const Admin = () => {
                       </div>
                     </td>
                     <td>
-                      {user?.dept || "N/A"}
+                      {user?.dept}
                       <br />
-                      {user?.session || "N/A"}
+                      {user?.session || user?.designation}
                     </td>
                     <td>
                       {user?.email}

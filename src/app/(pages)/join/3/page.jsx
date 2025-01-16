@@ -5,6 +5,7 @@ import { useJoin } from "@/context/join";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Join3 = () => {
   const { user, setUser } = useJoin();
@@ -24,15 +25,30 @@ const Join3 = () => {
       setUser({ ...user, roles: committee });
     } else {
       toast.dismiss();
-      toast.error("Please select at least one society");
+      toast.warning("You don't have any committee selected");
     }
-    router.push("/join/4");
+    if (
+      committee.includes("faculty-member") &&
+      committee.includes("student-member")
+    ) {
+      toast.error("You can't be both faculty and student member");
+      return;
+    }
+    if (
+      committee.includes("student-member") &&
+      (committee.includes("gradute-member") || committee.includes("alumni"))
+    ) {
+      toast.error("You can't be both student and gradute member/alumni");
+      return;
+    }
+
+    router.push("/join/3-1");
   };
   return (
-    <div>
-      <Title>Select Committee</Title>
+    <div className="card-body">
+      <Title>Committee</Title>
       <form
-        className="flex flex-col max-w-52 mx-auto gap-3"
+        className="flex flex-col max-w-sm mx-auto gap-3"
         onSubmit={handleSubmit}
       >
         <Check name="executive-committee" handleChecked={handleChecked} />

@@ -37,5 +37,6 @@ export async function GET() {
     societies: newUser.societies,
     dept: newUser.dept,
     session: newUser.session,
+    designation: newUser.designation
   });
 }
