@@ -37,7 +37,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
       .finally(() => {
         setCloading(false);
       });
-  }, [params]);
+  }, [slug]);
 
   if (cloading || loading)
     return <span className="loading loading-infinity loading-lg"></span>;
