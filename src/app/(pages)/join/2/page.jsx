@@ -10,7 +10,7 @@ import { FaUserAlt } from "react-icons/fa";
 
 const Join2 = () => {
   const { user, setUser } = useJoin();
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState(null);
   const [progress, setProgress] = useState(0);
   const avatarFile = useRef(null);
   const router = useRouter();
@@ -74,7 +74,7 @@ const Join2 = () => {
           type="file"
           className="file-input file-input-accent"
         />
-        {(progress > 0 || preview) && (
+        {progress > 0 && (
           <progress
             className="progress progress-accent w-full block mx-auto"
             value={progress}
@@ -88,9 +88,9 @@ const Join2 = () => {
           <button
             type="submit"
             className="btn btn-accent"
-            // disabled={progress === 100 || !preview}
+            disabled={progress > 0}
           >
-            Upload
+            {preview ? "Uploade" : "Next"}
           </button>
         </div>
       </form>

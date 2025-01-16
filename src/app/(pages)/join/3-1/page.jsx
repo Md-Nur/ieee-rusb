@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
+const depts = ["EEE", "CSE", "MSE", "ICE", "ACCE", "Others"];
+
 const Join31 = () => {
   const { user, setUser } = useJoin();
   const router = useRouter();
@@ -54,15 +56,14 @@ const Join31 = () => {
             onChange={(e) => setUser({ ...user, dept: e.target.value })}
             required
           >
-            <option disabled selected value="">
+            <option key={0.1} disabled selected>
               Select Department
             </option>
-            <option value="EEE">EEE</option>
-            <option value="CSE">CSE</option>
-            <option value="ICE">ICE</option>
-            <otpion value="MSE">MSE</otpion>
-            <option value="ACCE">ACCE</option>
-            <option value="Others">Others</option>
+            {depts.map((dept, i) => (
+              <option key={i} value={dept}>
+                {dept}
+              </option>
+            ))}
           </select>
         </div>
         {user.roles.includes("faculty-member") ? (
@@ -77,7 +78,7 @@ const Join31 = () => {
               }
               required
             >
-              <option disabled selected value="">
+              <option disabled selected>
                 Select Designation
               </option>
               <option value="Professor">Professor</option>
