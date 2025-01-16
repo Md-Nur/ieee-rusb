@@ -10,7 +10,18 @@ import { toast } from "react-toastify";
 
 const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
   const { loading, userAuth } = useUserAuth();
-  const [content, setContent] = useState<any | null>(null);
+  const [content, setContent] = useState<{
+    _id: string;
+    title: string;
+    content: string;
+    date: string;
+    type: string;
+    thumbnail: string;
+    regUrl?: string;
+    userId: string;
+    isApproved: boolean;
+    user: { name: string; avatar: string };
+  } | null>(null);
   const [cloading, setCloading] = useState(true);
   const { slug } = use(params);
   useEffect(() => {
