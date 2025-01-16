@@ -1,7 +1,11 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 
-export async function GET({ params: { id } }: { params: { id: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   await dbConnect();
   const user = await UserModel.findById(id);
   if (!user) {
