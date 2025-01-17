@@ -7,6 +7,7 @@ export interface Users extends Document {
   phone: string;
   password: string;
   roles: string[];
+  position?: string;
   isAdmin: boolean;
   societies: string[];
   isApproved: boolean;
@@ -45,6 +46,27 @@ const UserSchema = new Schema<Users>({
       "gradute-member",
       "alumni",
     ],
+  },
+  position: {
+    type: String,
+    enum: [
+      "Chairperson",
+      "Vice Chairperson",
+      "General Secretary",
+      "Assistant General Secretary",
+      "Treasurer",
+      "Webmaster",
+      "Graphic Designer",
+      "Publication Coordinator",
+      "Public Relation Coordinator",
+      "Member Development Coordinator",
+      "Content Development Coordinator",
+      "Program Coordinator",
+      "Counselor",
+      "Volunteer",
+      "Other",
+    ],
+    default: "Other",
   },
   isAdmin: {
     type: Boolean,

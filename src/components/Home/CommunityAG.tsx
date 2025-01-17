@@ -24,19 +24,19 @@ const communityAndAG = [
     title: "Computer Society",
     desc: "Computer Society (CS) is a society that focuses on computer science and technology. It is a society that is very active in the field of research and development.",
     url: "/cs",
-    img: "https://img.freepik.com/free-vector/cloud-storage-realistic-concept-with-abstract-digital-globe-three-laptop-around_1284-26976.jpg"
+    img: "https://img.freepik.com/free-vector/cloud-storage-realistic-concept-with-abstract-digital-globe-three-laptop-around_1284-26976.jpg",
   },
   {
     title: "Antenna & Propagation Society",
     desc: "Antenna & Propagation Society (APS) is a society that focuses on antenna and propagation. It is a society that is very active in the field of research and development.",
     url: "/aps",
-    img: "https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg"
+    img: "https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg",
   },
   {
-    title: "Women IN Engineering Society",
+    title: "Women In Engineering Society",
     desc: "Women IN Engineering Society (WIE) is a society. It is a society that is very active in the field of research and development.",
     url: "/wie",
-    img: "https://img.freepik.com/free-photo/beautiful-girl-s-day-concept_23-2148594283.jpg"
+    img: "https://img.freepik.com/free-photo/beautiful-girl-s-day-concept_23-2148594283.jpg",
   },
 ];
 
@@ -46,8 +46,9 @@ const CommunityAG = () => {
       <Title>Our Community & AG</Title>
       <div className="flex flex-wrap gap-5 justify-between">
         {communityAndAG.map((item, index) => (
-          <div
-            className="card w-72 md:w-96 mx-auto"
+          <Link
+            href={item.url}
+            className="card w-72 md:w-96 mx-auto h-72"
             key={index}
             style={{
               backgroundImage: `url(${item.img || "/ieee.jpg"})`,
@@ -55,16 +56,18 @@ const CommunityAG = () => {
               backgroundPosition: "center",
             }}
           >
-            <div className="card-body bg-[#000000c3] text-white rounded-2xl w-full h-full">
-              <h2 className="card-title shadow font-bold">{item.title}</h2>
-              <p className="text-justify">{item.desc}</p>
-              <div className="card-actions justify-end">
+            <div className="card-body bg-[#0000008a] text-white rounded-2xl w-full h-full flex justify-center items-center">
+              <h2 className="card-title text-[1.65rem] text-center shadow font-bold hover:text-accent">
+                {item.title}
+              </h2>
+              {/* <p className="text-justify">{item.desc}</p> */}
+              {/* <div className="card-actions justify-end">
                 <Link href={item.url} className="btn">
                   Explore More
                 </Link>
-              </div>
+              </div> */}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
