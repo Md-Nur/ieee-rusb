@@ -158,7 +158,7 @@ const ContentApproval = () => {
               ) : (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={9}
                     className="text-center text-error text-xl font-bold"
                   >
                     There have been no users to approve
