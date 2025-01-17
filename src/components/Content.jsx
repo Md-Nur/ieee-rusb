@@ -132,7 +132,7 @@ const Content = ({ postData, type }) => {
           <input
             type="text"
             placeholder="Title"
-            className="input input-bordered input-accent"
+            className="input input-bordered input-accent w-full"
             required
             {...register("title", { required: true })}
           />
@@ -144,7 +144,7 @@ const Content = ({ postData, type }) => {
             </label>
             <input
               type="date"
-              className="input input-bordered input-accent"
+              className="input input-bordered input-accent w-full"
               required
               {...register("date", { required: true })}
             />
@@ -161,7 +161,7 @@ const Content = ({ postData, type }) => {
               width={500}
               src={preview || postData?.thumbnail}
               alt="Image Preview"
-              className="mx-auto max-h-96 object-cover rounded-md my-3"
+              className="mx-auto max-h-96 object-cover rounded-md my-3 w-full"
             />
           )}
 
