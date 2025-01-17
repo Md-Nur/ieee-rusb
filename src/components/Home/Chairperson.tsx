@@ -38,7 +38,7 @@ const Chairperson = () => {
           July 2017. <br /> The IEEE RU SB is a student branch of the Institute
           of Electrical and Electronics Engineers (IEEE). The IEEE was formed in
           1963 when the American Institute of Electrical Engineers (AIEE) and
-          the Institute of Radio Engineers (IRE) merged. The IEEE RU SB's
+          the Institute of Radio Engineers (IRE) merged. The IEEE RU SB&apos;s
           purpose is to help students learn from faculty members, professionals,
           and other students in the fields of electrical engineering and
           computer sciences.
