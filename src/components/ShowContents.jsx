@@ -3,9 +3,9 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-const ShowContents = ({ query }: { query: string }) => {
-  const [contents, setContents] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const ShowContents = ({ query }) => {
+  const [contents, setContents] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
       .get(`/api/contents?query=${query}&approved=true`)

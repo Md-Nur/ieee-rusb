@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 
-const existingSlug = async (title: string) => {
+const existingSlug = async (title) => {
   await dbConnect();
   const slug = title.toLowerCase().replace(/ /g, "-");
   const exitData = await ContentModel.findOne({ slug });
@@ -12,7 +12,7 @@ const existingSlug = async (title: string) => {
   }
 };
 
-export async function POST(req: Request) {
+export async function POST(req) {
   await dbConnect();
   const data = await req.json();
   if (
@@ -34,13 +34,13 @@ export async function POST(req: Request) {
   return Response.json(content);
 }
 
-export async function GET(req: Request) {
+export async function GET(req) {
   await dbConnect();
   const url = new URL(req.url);
   const approved = url.searchParams.get("approved");
   const query = url.searchParams.get("query");
 
-  let pipeline: any[] = [{ $sort: { date: -1 } }];
+  let pipeline = [{ $sort: { date: -1 } }];
 
   if (approved) {
     pipeline.push({ $match: { isApproved: approved === "true" } });
@@ -82,6 +82,7 @@ export async function GET(req: Request) {
           parsedDate: { $lte: today },
         },
       },
+      { $limit: 3 },
     ];
   }
   pipeline = [
