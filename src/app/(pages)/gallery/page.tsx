@@ -33,7 +33,7 @@ const HomeStats = () => {
                   height={400}
                   src={image.img}
                   alt={image.title}
-                  className="sm:max-h-96 object-cover"
+                  className="sm:max-h-72 object-cover"
                 />
               </figure>
               <div className="card-body">
