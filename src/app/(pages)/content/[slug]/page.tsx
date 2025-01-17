@@ -58,14 +58,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
       <Title>{content.title}</Title>
       <div className="md:p-5">
         <figure>
-          {/* <Image
-            src={content?.thumbnail}
-            alt={content.title}
-            width={1700}
-            height={1000}
-            className="object-cover w-full max-h-[calc(100vh-250px)] rounded-lg"
-          /> */}
-          <img
+          <Image
             src={content?.thumbnail}
             alt={content.title}
             width={1700}
