@@ -18,6 +18,10 @@ export async function POST(req: Request) {
   if (!data.password) {
     return Response.json({ error: "Password is required" }, { status: 400 });
   }
+  if (data.phoneEmail.startsWith("+8801")) {
+    data.phoneEmail = data.phoneEmail.slice(3);
+  }
+
   const user = await UserModel.findOne({
     $or: [{ email: data.phoneEmail }, { phone: data.phoneEmail }],
   });

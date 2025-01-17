@@ -6,7 +6,12 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const approved = url.searchParams.get("approved");
   const position = url.searchParams.get("position");
-  const query = url.searchParams.get("query");
+  let query = url.searchParams.get("query");
+
+  if (query) {
+    query = query?.replace("-and-", "-&-");
+  }
+  
   const pipleline = [];
   if (approved) {
     pipleline.push({ $match: { isApproved: approved === "true" } });
@@ -20,7 +25,7 @@ export async function GET(req: Request) {
     query === "executive-committee" ||
     query === "faculty-member" ||
     query === "student-member" ||
-    query === "gradaute-member" ||
+    query === "graduate-member" ||
     query === "alumni"
   ) {
     pipleline.push({
@@ -32,6 +37,22 @@ export async function GET(req: Request) {
     });
   }
 
+  if (
+    query === "women-in-engineering-society" ||
+    query === "signal-processing-society" ||
+    query === "antenna-&-propagation-society" ||
+    query === "computer-society" ||
+    query === "power-&-energy-society" ||
+    query === "robotics-&-automation-society"
+  ) {
+    pipleline.push({
+      $match: {
+        societies: {
+          $elemMatch: { $eq: query },
+        },
+      },
+    });
+  }
   const users = await UserModel.aggregate(pipleline);
   return Response.json(users, { status: 200 });
 }

@@ -10,7 +10,7 @@ const depts = [
   "Computer Science & Engineering",
   "Materials Science & Engineering",
   "Information & Communication Engineering",
-  "Apllied Chemistry & Chemical Engineering",
+  "Applied Chemistry & Chemical Engineering",
 ];
 
 const Join31 = () => {
@@ -47,7 +47,6 @@ const Join31 = () => {
     router.push("/join/4");
   };
 
-  
   return (
     <div className="card w-full max-w-sm shrink-0">
       <Title>

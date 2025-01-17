@@ -54,7 +54,7 @@ const Join3 = () => {
         <Check name="executive-committee" handleChecked={handleChecked} />
         <Check name="faculty-member" handleChecked={handleChecked} />
         <Check name="student-member" handleChecked={handleChecked} />
-        <Check name="gradaute-member" handleChecked={handleChecked} />
+        <Check name="graduate-member" handleChecked={handleChecked} />
         <Check name="alumni" handleChecked={handleChecked} />
         <div className="flex w-full items-center justify-between">
           <Link href="/join/2" type="reset" className="btn btn-accent">

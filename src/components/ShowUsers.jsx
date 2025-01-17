@@ -11,7 +11,7 @@ const ShowUsers = ({ query }) => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     axios
-      .get(`/api/users?query=${query}&approved=true`)
+      .get(`/api/users?query=${query.replace("-&-", "-and-")}&approved=true`)
       .then((res) => {
         setUsers(res.data);
       })
@@ -37,7 +37,7 @@ const ShowUsers = ({ query }) => {
                   height={400}
                   width={400}
                   alt={user?.name}
-                  className="object-cover max-h-80"
+                  className="object-cover h-80"
                 />
               </figure>
               <div className="card-body text-center">
