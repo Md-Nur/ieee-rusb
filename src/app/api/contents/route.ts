@@ -15,7 +15,6 @@ const existingSlug = async (title: string) => {
 export async function POST(req: Request) {
   await dbConnect();
   const data = await req.json();
-  console.log(data);
   if (
     !data.title ||
     !data.content ||

@@ -22,12 +22,12 @@ const ContentApproval = () => {
   const handleApproved = async (e, id) => {
     try {
       if (e.target.checked) {
-        await axios.post(`/api/content/content-approval`, {
+        await axios.post(`/api/contents/content-approval`, {
           id,
           isApproved: true,
         });
       } else {
-        await axios.post(`/api/content/content-approval`, {
+        await axios.post(`/api/contents/content-approval`, {
           id,
           isApproved: false,
         });
@@ -101,9 +101,9 @@ const ContentApproval = () => {
                     <td>
                       <div
                         className="tooltip tooltip-accent"
-                        data-tip={`${content?.user.name} - ${
+                        data-tip={`${content?.user.name} || ${
                           content?.user?.session || content?.user?.designation
-                        } - ${content?.user?.dept}`}
+                        } || ${content?.user?.dept}`}
                       >
                         <div className="avatar">
                           <div className="mask mask-squircle h-12 w-12">
@@ -167,7 +167,7 @@ const ContentApproval = () => {
               )
             ) : (
               <tr>
-                <td colSpan={6} className="text-center">
+                <td colSpan={9} className="text-center">
                   <span className="loading loading-infinity loading-lg"></span>
                 </td>
               </tr>
