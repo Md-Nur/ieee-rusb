@@ -38,14 +38,54 @@ export async function GET(req: Request) {
   await dbConnect();
   const url = new URL(req.url);
   const approved = url.searchParams.get("approved");
-  const pipleline = [];
-  if (approved) {
-    pipleline.push({ $match: { isApproved: approved === "true" } });
-  }
-  pipleline.push({ $sort: { date: -1 as 1 | -1 } });
+  const query = url.searchParams.get("query");
 
-  const contents = await ContentModel.aggregate([
-    ...pipleline,
+  let pipeline: any[] = [{ $sort: { date: -1 } }];
+
+  if (approved) {
+    pipeline.push({ $match: { isApproved: approved === "true" } });
+  }
+  if (query === "blog") {
+    pipeline.push({ $match: { type: "blog" } });
+  } else if (query !== "all") {
+    pipeline.push({ $match: { type: "event" } });
+  }
+
+  const today = new Date();
+  const datePipe = {
+    $addFields: {
+      parsedDate: {
+        $dateFromString: {
+          dateString: "$date",
+          format: "%Y-%m-%d", // Matches the stored format
+        },
+      },
+    },
+  };
+  if (query === "upcomming-events" || query === "upcomming-event") {
+    pipeline = [
+      ...pipeline,
+      datePipe,
+      {
+        $match: {
+          parsedDate: { $gte: today },
+        },
+      },
+    ];
+  }
+  if (query === "recent-events") {
+    pipeline = [
+      ...pipeline,
+      datePipe,
+      {
+        $match: {
+          parsedDate: { $lte: today },
+        },
+      },
+    ];
+  }
+  pipeline = [
+    ...pipeline,
     {
       $addFields: {
         userId: { $toObjectId: "$userId" },
@@ -69,7 +109,13 @@ export async function GET(req: Request) {
         id: 0,
       },
     },
-  ]);
+  ];
+
+  if (query === "upcomming-event") {
+    pipeline.push({ $limit: 1 });
+  }
+
+  const contents = await ContentModel.aggregate(pipeline);
 
   if (!contents.length) {
     return Response.json(
