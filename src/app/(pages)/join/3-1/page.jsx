@@ -5,7 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-const depts = ["EEE", "CSE", "MSE", "ICE", "ACCE", "Others"];
+const depts = [
+  "Electrical & Electronic Engineering",
+  "Computer Science & Engineering",
+  "Materials Science & Engineering",
+  "Information & Communication Engineering",
+  "Apllied Chemistry & Chemical Engineering",
+];
 
 const Join31 = () => {
   const { user, setUser } = useJoin();
@@ -13,13 +19,13 @@ const Join31 = () => {
 
   function isValidSession(session) {
     const sessionRegex = /^\d{4}-\d{2}$/;
-
+    const yearNow = new Date().getFullYear() - 1;
     // Check if it matches the basic pattern
     if (!sessionRegex.test(session)) return false;
 
     // Split the years and validate the sequence
     const [startYear, endYear] = session.split("-").map(Number);
-    if (startYear < 1953) return false;
+    if (startYear < 1953 || startYear > yearNow) return false;
     if (startYear === 1999 && endYear === 0) return true;
     return endYear === (startYear % 100) + 1;
   }
@@ -40,6 +46,8 @@ const Join31 = () => {
     }
     router.push("/join/4");
   };
+
+  
   return (
     <div className="card w-full max-w-sm shrink-0">
       <Title>
@@ -61,9 +69,15 @@ const Join31 = () => {
             </option>
             {depts.map((dept, i) => (
               <option key={i} value={dept}>
-                {dept}
+                {dept
+                  .replace("&", "")
+                  .split(" ")
+                  .map((word) => word[0])}
               </option>
             ))}
+            <option key={0.2} value="Others">
+              Others
+            </option>
           </select>
         </div>
         {user.roles.includes("faculty-member") ? (

@@ -38,7 +38,7 @@ export default function RootLayout({
         </UserAuthProvider>
         <ToastContainer
           position="top-right"
-          autoClose={1500}
+          autoClose={2000}
           hideProgressBar={false}
           closeOnClick={false}
           rtl={false}

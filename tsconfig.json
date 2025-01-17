@@ -35,6 +35,6 @@
     "src/app/(pages)/join/5/page.jsx",
     "src/app/(pages)/admin/user-approval/page.jsx",
     "src/provider/JoinProvider.jsx"
-, "src/app/(pages)/join/3-1/page.jsx", "src/components/Content.jsx", "src/app/api/contents/route.js", "src/components/ShowContents.jsx"  ],
+, "src/app/(pages)/join/3-1/page.jsx", "src/components/Content.jsx", "src/app/api/contents/route.js", "src/components/ShowContents.jsx", "src/components/ShowUsers.jsx"  ],
   "exclude": ["node_modules"]
 }

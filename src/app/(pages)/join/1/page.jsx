@@ -78,6 +78,17 @@ const Join = () => {
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
         </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Linkedin Link</span>
+          </label>
+          <input
+            type="url"
+            placeholder="Linkedin Url"
+            className="input input-bordered input-accent"
+            onChange={(e) => setUser({ ...user, linkedin: e.target.value })}
+          />
+        </div>
         <div className="form-control mt-6">
           <button className="btn btn-accent">Next</button>
         </div>

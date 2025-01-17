@@ -5,6 +5,7 @@ export interface Users extends Document {
   email: string;
   avatar?: string;
   phone: string;
+  linkedin?: string;
   password: string;
   roles: string[];
   position?: string;
@@ -32,6 +33,9 @@ const UserSchema = new Schema<Users>({
     type: String,
     required: true,
   },
+  linkedin: {
+    type: String,
+  },
   password: {
     type: String,
     required: true,
@@ -43,7 +47,7 @@ const UserSchema = new Schema<Users>({
       "executive-committee",
       "faculty-member",
       "student-member",
-      "gradute-member",
+      "gradaute-member",
       "alumni",
     ],
   },
@@ -91,7 +95,14 @@ const UserSchema = new Schema<Users>({
   dept: {
     type: String,
     required: true,
-    enum: ["EEE", "CSE", "MSE", "ICE", "ACCE", "Others"],
+    enum: [
+      "Electrical & Electronic Engineering",
+      "Computer Science & Engineering",
+      "Materials Science & Engineering",
+      "Information & Communication Engineering",
+      "Apllied Chemistry & Chemical Engineering",
+      "Others",
+    ],
   },
   session: {
     type: String,
