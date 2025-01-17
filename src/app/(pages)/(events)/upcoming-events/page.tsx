@@ -1,8 +1,13 @@
+import ShowContents from "@/components/ShowContents";
+import Title from "@/components/Title";
 
 const UpcomingEvents = () => {
   return (
-    <div>UpcomingEvents</div>
-  )
-}
+    <div className="w-full overflow-x-auto">
+      <Title>Upcoming Events</Title>
+      <ShowContents query="upcoming-events" />
+    </div>
+  );
+};
 
-export default UpcomingEvents
+export default UpcomingEvents;

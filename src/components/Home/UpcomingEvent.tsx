@@ -14,7 +14,7 @@ const UpcomingEvent = () => {
 
   useEffect(() => {
     axios
-      .get("/api/contents?approved=true&query=upcomming-event")
+      .get("/api/contents?approved=true&query=upcoming-event")
       .then((res) => {
         setUpcomingEvent(res.data[0]);
       })

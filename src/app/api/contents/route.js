@@ -4,9 +4,10 @@ import ContentModel from "@/models/content.model";
 const existingSlug = async (title) => {
   await dbConnect();
   const slug = title.toLowerCase().replace(/ /g, "-");
-  const exitData = await ContentModel.findOne({ slug });
-  if (exitData) {
-    existingSlug(slug + "-1");
+  console.log(slug);
+  const existData = await ContentModel.findOne({ slug });
+  if (existData) {
+    return await existingSlug(slug + "-1");
   } else {
     return slug;
   }
@@ -62,7 +63,7 @@ export async function GET(req) {
       },
     },
   };
-  if (query === "upcomming-events" || query === "upcomming-event") {
+  if (query === "upcoming-events" || query === "upcoming-event") {
     pipeline = [
       ...pipeline,
       datePipe,
@@ -83,6 +84,20 @@ export async function GET(req) {
         },
       },
       { $limit: 3 },
+    ];
+  }
+
+  if (query === "upcoming-event") {
+    pipeline = [
+      ...pipeline,
+      {
+        $sort: {
+          date: 1,
+        },
+      },
+      {
+        $limit: 1,
+      },
     ];
   }
   pipeline = [
@@ -111,10 +126,6 @@ export async function GET(req) {
       },
     },
   ];
-
-  if (query === "upcomming-event") {
-    pipeline.push({ $limit: 1 });
-  }
 
   const contents = await ContentModel.aggregate(pipeline);
 

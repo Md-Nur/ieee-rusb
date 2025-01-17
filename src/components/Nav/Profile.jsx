@@ -51,6 +51,7 @@ const Profile = () => {
         <NavLink name={`${userAuth?.name}'s Profile`} route="/dashboard" />
         <NavLink name="Add Blog" route="/add-blog" />
         <NavLink name="Add Event" route="/add-event" />
+        <NavLink name="Add Photo" route="/add-img" />
         <li>
           <button onClick={handleLogout}>LOGOUT</button>
         </li>

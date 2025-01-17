@@ -21,6 +21,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
     type: string;
     thumbnail: string;
     regUrl?: string;
+    slug: string;
     userId: string;
     isApproved: boolean;
     user: { name: string; avatar: string };
@@ -67,7 +68,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
           />
         </figure>
         {content.type == "blog" && (
-          <div className="flex rounded-lg p-5 mt-5 bg-base-200 justify-center md:justify-between items-center flex-wrap gap-3">
+          <div className="flex rounded-lg p-5 my-5 bg-base-200 justify-center md:justify-between items-center flex-wrap gap-3">
             <div className="flex items-center gap-2">
               <Image
                 src={content?.user?.avatar || "/defaultAvatar.jpg"}
@@ -87,7 +88,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
             {(userAuth?._id === content.userId || userAuth?.isAdmin) && (
               <div className="flex gap-2">
                 <Link
-                  href={`/edit-content/${content._id}`}
+                  href={`/edit-content/${content?.slug}`}
                   className="btn btn-info"
                 >
                   Edit

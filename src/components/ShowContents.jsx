@@ -52,16 +52,16 @@ const ShowContents = ({ query }) => {
                     />
                     <div>
                       <p>Author: {content.user.name}</p>
-                      <p>Department: {content.user.dept}</p>
+                      <p>Department of {content.user.dept}</p>
                       <p>
-                        {content.user?.session ? "Session" : "Designation"}:{" "}
+                        {content.user?.session && "Session: "}
                         {content.user?.session || content.user?.designation}
                       </p>
                     </div>
                   </div>
                 )}
                 <div className="card-actions justify-end">
-                  <div className="badge badge-outline">
+                  <div className="badge badge-outline badge-accent">
                     {new Date(content?.date)
                       .toUTCString()
                       .split(" ")

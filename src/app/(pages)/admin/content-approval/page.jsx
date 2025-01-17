@@ -13,7 +13,7 @@ const ContentApproval = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("/api/contents?approved=false")
+      .get("/api/contents?approved=false&query=all")
       .then((res) => setContents(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));

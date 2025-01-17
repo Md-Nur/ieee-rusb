@@ -5,7 +5,7 @@ const AddEvent = () => {
   return (
     <div>
       <Title>Add Event</Title>
-      <Content postData={null} type="event"></Content>
+      <Content postData={null} type="event" />
     </div>
   );
 };
