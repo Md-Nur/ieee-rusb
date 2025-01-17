@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ShowContents = ({ query }) => {
@@ -23,9 +24,10 @@ const ShowContents = ({ query }) => {
     <div className="flex max-w-7xl justify-center gap-5 flex-wrap mx-auto">
       {!loading && contents.length ? (
         contents.map((content) => (
-          <div
+          <Link
+            href={`/contents/${content.slug}`}
             key={content._id}
-            className="card bg-accent text-accent-content w-full max-w-96 shadow-xl"
+            className="card bg-base-300 w-full max-w-96 shadow-xl"
           >
             <figure>
               <Image
@@ -67,7 +69,7 @@ const ShowContents = ({ query }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))
       ) : (
         <span className="loading loading-infinity loading-lg"></span>
