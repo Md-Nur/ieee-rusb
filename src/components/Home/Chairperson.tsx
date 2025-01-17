@@ -22,7 +22,7 @@ const Chairperson = () => {
   return (
     <div className="card card-side bg-base-300 shadow-xl max-w-7xl mx-auto my-20 flex-wrap">
       <figure className="card-body md:max-h-96 h-full w-full md:max-w-96 p-3 m-3 sm:m-0 sm:p-0 rounded-xl">
-        <img
+        <Image
           src={chair?.avatar || "/billaVai.jpg"}
           alt="Chairperson"
           width={300}
