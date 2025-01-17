@@ -48,9 +48,9 @@ const Profile = () => {
         id="profile"
         className="menu menu-sm dropdown-content bg-base-200 w-40 rounded-box z-40 mt-3 p-2 shadow"
       >
-        <NavLink name={`${userAuth?.name}'s Profile`} route="dashboard" />
-        <NavLink name="Add Blog" route="add-blog" />
-        <NavLink name="Add Event" route="add-event" />
+        <NavLink name={`${userAuth?.name}'s Profile`} route="/dashboard" />
+        <NavLink name="Add Blog" route="/add-blog" />
+        <NavLink name="Add Event" route="/add-event" />
         <li>
           <button onClick={handleLogout}>LOGOUT</button>
         </li>

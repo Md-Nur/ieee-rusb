@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const Admin = () => {
+const UserApproval = () => {
   const [users, setUsers] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -141,4 +141,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default UserApproval;

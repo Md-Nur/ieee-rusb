@@ -9,7 +9,7 @@ const Profile = () => {
   return (
     <section className="w-full">
       <Title>{userAuth?.name || "User"}</Title>
-      <div className="flex justify-evenly items-center my-10 flex-wrap gap-5 w-full">
+      <div className="flex md:justify-evenly items-center my-10 flex-wrap gap-5 w-full">
         <div className="avatar">
           <div className="ring-accent ring-offset-base-100 w-full md:w-32 rounded-full ring ring-offset-2">
             <Image
@@ -21,9 +21,9 @@ const Profile = () => {
             />
           </div>
         </div>
-        <div className="grid gap-2 grid-cols-2">
+        <div className="grid gap-2 grid-cols-2 max-w-72">
           <h3 className="font-semibold">Email</h3>
-          <p>{userAuth?.email}</p>
+          <p className="w-full">{userAuth?.email}</p>
 
           <h3 className="font-semibold">Phone</h3>
           <p>{userAuth?.phone}</p>

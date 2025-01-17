@@ -34,3 +34,49 @@ export async function POST(req: Request) {
   }
   return Response.json(content);
 }
+
+export async function GET(req: Request) {
+  await dbConnect();
+  const url = new URL(req.url);
+  const approved = url.searchParams.get("approved");
+  const pipleline = [];
+  if (approved) {
+    pipleline.push({ $match: { isApproved: approved === "true" } });
+  }
+  pipleline.push({ $sort: { date: -1 as 1 | -1 } });
+
+  const contents = await ContentModel.aggregate([
+    ...pipleline,
+    {
+      $addFields: {
+        userId: { $toObjectId: "$userId" },
+        id: { $toString: "$_id" },
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "userId",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: "$user",
+    },
+    {
+      $project: {
+        "user.password": 0,
+        id: 0,
+      },
+    },
+  ]);
+
+  if (!contents.length) {
+    return Response.json(
+      { error: "There have no content left" },
+      { status: 404 }
+    );
+  }
+  return Response.json(contents, { status: 200 });
+}
