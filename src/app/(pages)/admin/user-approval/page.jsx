@@ -21,7 +21,7 @@ const Admin = () => {
   const handleApproved = async (e, id) => {
     try {
       if (e.target.checked) {
-        await axios.post(`/api/user-approval`, {
+        await axios.post(`/api/users/user-approval`, {
           id,
           isApproved: true,
         });
