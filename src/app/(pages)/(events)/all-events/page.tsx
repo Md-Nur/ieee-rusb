@@ -4,7 +4,7 @@ import Title from "@/components/Title";
 const AllEvents = () => {
   return (
     <div className="w-full overflow-x-auto">
-      <Title>Upcoming Events</Title>
+      <Title>All Events</Title>
       <ShowContents query="" />
     </div>
   );

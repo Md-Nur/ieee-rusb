@@ -4,7 +4,7 @@ import Title from "@/components/Title";
 const Blogs = () => {
   return (
     <div className="w-full overflow-x-auto">
-      <Title>Upcoming Events</Title>
+      <Title>Blogs</Title>
       <ShowContents query="blog" />
     </div>
   );
