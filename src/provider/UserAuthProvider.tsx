@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/components/Loading";
 import { UserAuth } from "@/context/userAuth";
 import { Users } from "@/models/user.model";
 import axios from "axios";
@@ -17,8 +18,12 @@ const UserAuthProvider = ({ children }: { children: ReactNode }) => {
       .finally(() => setLoading(false));
   }, []);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
-    <UserAuth.Provider value={{ userAuth, setUserAuth, loading, setLoading }}>
+    <UserAuth.Provider value={{ userAuth, setUserAuth }}>
       {children}
     </UserAuth.Provider>
   );

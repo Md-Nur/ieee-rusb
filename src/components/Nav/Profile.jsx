@@ -2,14 +2,11 @@
 import { useUserAuth } from "@/context/userAuth";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import NavLink from "./NavLink";
 
 const Profile = () => {
   const { userAuth, setUserAuth } = useUserAuth();
-  const router = useRouter();
 
   const handleLogout = async () => {
     try {

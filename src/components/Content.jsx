@@ -124,7 +124,7 @@ const Content = ({ postData, type }) => {
 
   return (
     <section className="card">
-      <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+      <form onSubmit={handleSubmit(onSubmit)} className="card-body p-1 md:p-5 m-1 md:m-5">
         <div className="form-control">
           <label className="label">
             <span className="label-text">Title</span>

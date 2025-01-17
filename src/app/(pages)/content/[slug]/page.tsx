@@ -1,5 +1,6 @@
 "use client";
 import DeleteContentBtn from "@/components/Btns/DeleteContentBtn";
+import Title from "@/components/Title";
 import { useUserAuth } from "@/context/userAuth";
 import axios from "axios";
 import Image from "next/image";
@@ -7,9 +8,11 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import "@/app/(pages)/content/style.css";
+import Loading from "@/components/Loading";
 
 const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { loading, userAuth } = useUserAuth();
+  const { userAuth } = useUserAuth();
   const [content, setContent] = useState<{
     _id: string;
     title: string;
@@ -39,8 +42,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
       });
   }, [slug]);
 
-  if (cloading || loading)
-    return <span className="loading loading-infinity loading-lg"></span>;
+  if (cloading) return <Loading />;
   else if (!content) return <div>Content not found</div>;
   else if (
     !content?.isApproved &&
@@ -52,13 +54,18 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
   }
 
   return (
-    <section className="py-20 px-2">
-      <h1 className="text-xl md:text-4xl font-bold text-center my-10">
-        {content.title}
-      </h1>
-      <div className="md:p-5 max-w-7xl mx-auto">
+    <section className="md:px-2 w-full">
+      <Title>{content.title}</Title>
+      <div className="md:p-5">
         <figure>
-          <Image
+          {/* <Image
+            src={content?.thumbnail}
+            alt={content.title}
+            width={1700}
+            height={1000}
+            className="object-cover w-full max-h-[calc(100vh-250px)] rounded-lg"
+          /> */}
+          <img
             src={content?.thumbnail}
             alt={content.title}
             width={1700}
@@ -98,7 +105,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
           </div>
         )}
         <article
-          className="custom-html-content rounded-lg p-5 mt-5 bg-base-200"
+          className="custom-html-content rounded-lg p-2 md:p-5 my-5 bg-base-200"
           dangerouslySetInnerHTML={{ __html: content.content }}
         ></article>
       </div>

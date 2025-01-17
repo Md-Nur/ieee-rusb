@@ -5,13 +5,9 @@ import { createContext, useContext } from "react";
 const UserAuth = createContext<{
   userAuth: Users | null;
   setUserAuth: (user: Users | null) => void;
-  loading: boolean;
-  setLoading: (loading: boolean) => void;
 }>({
   userAuth: null,
   setUserAuth: () => {},
-  loading: true,
-  setLoading: () => {},
 });
 
 const useUserAuth = () => {
