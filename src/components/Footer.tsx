@@ -159,7 +159,7 @@ const Footer = () => {
           </a>
         </nav>
       </footer>
-      <footer className="footer bg-base-200 text-base-content border-base-300 border-t px-10 py-4">
+      <footer className="footer bg-base-200 text-base-content border-base-300 border-t p-5">
         <aside className="flex flex-wrap items-center">
           <Image
             src="/logo.png"
@@ -168,14 +168,20 @@ const Footer = () => {
             height={150}
           />
           <p>
-            Copyright © 2025 IEEE RUSB All rights reserved. <br />A
-            not-for-profit organization, IEEE is the world&apos; largest
-            technical professional organization dedicated to advancing
-            technology for the benefit of humanity.
+            Copyright &copy; {new Date().getFullYear()} IEEE RUSB All rights
+            reserved. <br />
+            Developed by&nbsp;
+            <a
+              href="
+            https://www.linkedin.com/in/mdnur9211/"
+              target="_blank"
+            >
+              Md. Nur E Alam Siddiquee
+            </a>
           </p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
-          <div className="grid grid-flow-col gap-4 items-center">
+          <div className="grid grid-flow-col gap-4 items-center px-5">
             <a href="https://www.facebook.com/ieeerusb" target="_blank">
               <FaFacebook className="w-6 h-6" />
             </a>

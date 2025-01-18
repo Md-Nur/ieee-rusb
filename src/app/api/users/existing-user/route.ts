@@ -3,7 +3,7 @@ import UserModel from "@/models/user.model";
 
 export async function POST(req: Request) {
   await dbConnect();
-  let data = await req.json();
+  const data = await req.json();
 
   const emailUser = await UserModel.findOne({ email: data.email });
 
