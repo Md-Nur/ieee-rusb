@@ -6,11 +6,12 @@ export async function POST(req: Request) {
   await dbConnect();
   const data = await req.json();
   if (
-    !data?.email ||
-    !data?.password ||
-    !data?.phone ||
     !data?.name ||
-    !data?.dept
+    !data?.email ||
+    !data?.phone ||
+    !data?.password ||
+    !data?.dept ||
+    !data?.position
   ) {
     return Response.json({ error: "All fields are required" }, { status: 404 });
   }

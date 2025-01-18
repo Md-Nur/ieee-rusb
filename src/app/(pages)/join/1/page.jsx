@@ -80,11 +80,11 @@ const Join = () => {
         </div>
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Linkedin Link</span>
+            <span className="label-text">Linkedin Profile Link</span>
           </label>
           <input
             type="url"
-            placeholder="Linkedin Url"
+            placeholder="Linkedin Profile Url"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, linkedin: e.target.value })}
           />
