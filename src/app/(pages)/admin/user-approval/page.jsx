@@ -47,7 +47,7 @@ const UserApproval = () => {
               <th>Approved</th>
               <th>Name</th>
               <th>
-                Department &<br /> Session/Designation
+                Department, Position &<br /> Session/Designation
               </th>
               <th>
                 Email & <br /> Phone
@@ -91,6 +91,8 @@ const UserApproval = () => {
                       {user?.dept}
                       <br />
                       {user?.session || user?.designation}
+                      <br />
+                      {user?.position}
                     </td>
                     <td>
                       {user?.email}

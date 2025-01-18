@@ -13,6 +13,24 @@ const depts = [
   "Applied Chemistry & Chemical Engineering",
 ];
 
+const positions = [
+  "Chairperson",
+  "Vice Chairperson",
+  "General Secretary",
+  "Assistant General Secretary",
+  "Treasurer",
+  "Webmaster",
+  "Graphic Designer",
+  "Publication Coordinator",
+  "Public Relation Coordinator",
+  "Member Development Coordinator",
+  "Content Development Coordinator",
+  "Program Coordinator",
+  "Counselor",
+  "Volunteer",
+  "Other",
+];
+
 const Join31 = () => {
   const { user, setUser } = useJoin();
   const router = useRouter();
@@ -54,6 +72,25 @@ const Join31 = () => {
         {user.roles.includes("faculty-member") ? "Designamtion" : "Session"}
       </Title>
       <form className="card-body mb-10" onSubmit={handleSubmit}>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">Position</span>
+          </label>
+          <select
+            className="select select-bordered select-accent mt-2"
+            onChange={(e) => setUser({ ...user, position: e.target.value })}
+            required
+          >
+            <option key={0.1} disabled selected>
+              Select Your Position
+            </option>
+            {positions.map((position, i) => (
+              <option key={i} value={position}>
+                {position}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Department</span>

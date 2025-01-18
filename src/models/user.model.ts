@@ -8,7 +8,7 @@ export interface Users extends Document {
   linkedin?: string;
   password: string;
   roles: string[];
-  position?: string;
+  position: string;
   isAdmin: boolean;
   societies: string[];
   isApproved: boolean;
@@ -70,6 +70,7 @@ const UserSchema = new Schema<Users>({
       "Volunteer",
       "Other",
     ],
+    required: true,
   },
   isAdmin: {
     type: Boolean,

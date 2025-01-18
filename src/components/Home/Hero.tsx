@@ -1,13 +1,11 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, EffectFade, Autoplay, Pagination } from "swiper/modules";
+import { EffectFade, Autoplay } from "swiper/modules";
 
 // Import Swiper styles
 import "swiper/css/scrollbar";
 import "swiper/css";
 import "swiper/css/effect-fade";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 const HeroData = [
   {
@@ -43,16 +41,11 @@ const Hero = () => {
         grabCursor={true}
         effect={"fade"}
         rewind
-        spaceBetween={0}
         centeredSlides={true}
         autoplay={{
           delay: 3000,
         }}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Autoplay, Navigation, EffectFade, Pagination]}
+        modules={[Autoplay, EffectFade]}
         className="w-full h-[60vh] md:h-[80vh]"
       >
         {HeroData.map((item, index) => (

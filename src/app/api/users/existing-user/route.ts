@@ -3,19 +3,20 @@ import UserModel from "@/models/user.model";
 
 export async function POST(req: Request) {
   await dbConnect();
-  let { phone } = await req.json();
-  const { email } = await req.json();
-  const emailUser = await UserModel.findOne({ email });
+  let data = await req.json();
+
+  const emailUser = await UserModel.findOne({ email: data.email });
+
   if (emailUser) {
     return Response.json(
       { error: "User already exists with this email" },
       { status: 400 }
     );
   }
-  if (phone.startsWith("+8801")) {
-    phone = phone.slice(3);
+  if (data.phone.startsWith("+8801")) {
+    data.phone = data.phone.slice(3);
   }
-  const phoneUser = await UserModel.findOne({ phone });
+  const phoneUser = await UserModel.findOne({ phone: data.phone });
 
   if (phoneUser) {
     return Response.json(

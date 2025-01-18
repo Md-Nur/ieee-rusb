@@ -1,6 +1,24 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 
+const positions = [
+  "Chairperson",
+  "Vice Chairperson",
+  "General Secretary",
+  "Assistant General Secretary",
+  "Treasurer",
+  "Webmaster",
+  "Graphic Designer",
+  "Publication Coordinator",
+  "Public Relation Coordinator",
+  "Member Development Coordinator",
+  "Content Development Coordinator",
+  "Program Coordinator",
+  "Counselor",
+  "Volunteer",
+  "Other",
+];
+
 export async function GET(req: Request) {
   dbConnect();
   const url = new URL(req.url);
@@ -11,8 +29,9 @@ export async function GET(req: Request) {
   if (query) {
     query = query?.replace("-and-", "-&-");
   }
-  
+
   const pipleline = [];
+
   if (approved) {
     pipleline.push({ $match: { isApproved: approved === "true" } });
   }
@@ -20,7 +39,6 @@ export async function GET(req: Request) {
     pipleline.push({ $match: { position } });
   }
 
-  pipleline.push({ $sort: { _id: -1 as 1 | -1 } });
   if (
     query === "executive-committee" ||
     query === "faculty-member" ||
@@ -53,6 +71,26 @@ export async function GET(req: Request) {
       },
     });
   }
-  const users = await UserModel.aggregate(pipleline);
+  const users = await UserModel.aggregate([
+    ...pipleline,
+    {
+      $addFields: {
+        position: { $ifNull: ["$position", "Other"] }, // Default position to "Other" if null or missing
+      },
+    },
+    {
+      $addFields: {
+        sortIndex: { $indexOfArray: [positions, "$position"] },
+      },
+    },
+    {
+      $sort: { sortIndex: 1 }, // Sort by the calculated sort index
+    },
+    {
+      $project: {
+        sortIndex: 0, // Optionally exclude the sortIndex from the final output
+      },
+    },
+  ]);
   return Response.json(users, { status: 200 });
 }
