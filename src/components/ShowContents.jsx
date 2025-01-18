@@ -51,8 +51,8 @@ const ShowContents = ({ query }) => {
                       className="rounded-full h-16 w-16 object-cover"
                     />
                     <div>
-                      <p>Author: {content.user.name}</p>
-                      <p>Department of {content.user.dept}</p>
+                      <p>{content.user.name}</p>
+                      <p>{content.user.position}</p>
                       <p>
                         {content.user?.session && "Session: "}
                         {content.user?.session || content.user?.designation}
