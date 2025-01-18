@@ -26,7 +26,7 @@ const ShowContents = ({ query }) => {
         contents.length ? (
           contents.map((content) => (
             <Link
-              href={`/contents/${content.slug}`}
+              href={`/content/${content.slug}`}
               key={content._id}
               className="card bg-base-300 w-full max-w-96 shadow-xl"
             >
