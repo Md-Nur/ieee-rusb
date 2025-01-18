@@ -54,8 +54,8 @@ const Join31 = () => {
       toast.error("Invalid Session Format!");
       return;
     }
-    if (user.dept === "") {
-      toast.error("Please select department");
+    if (user.dept === "" || user.position === "") {
+      toast.error("Please select department and position");
       return;
     }
     if (user.roles.includes("faculty-member") && user.designation === "") {
