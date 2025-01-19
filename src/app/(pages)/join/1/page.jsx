@@ -48,7 +48,7 @@ const Join = () => {
           </label>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="e.g. John Doe"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, name: e.target.value })}
             required
@@ -60,7 +60,7 @@ const Join = () => {
           </label>
           <input
             type="text"
-            placeholder="Phone"
+            placeholder="e.g. 01XXXXXXXXX"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, phone: e.target.value })}
             required
@@ -72,7 +72,7 @@ const Join = () => {
           </label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="e.g. abc@domain.com"
             className="input input-bordered input-accent"
             required
             onChange={(e) => setUser({ ...user, email: e.target.value })}

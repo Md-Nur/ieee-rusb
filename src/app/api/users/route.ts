@@ -30,13 +30,13 @@ export async function GET(req: Request) {
     query = query?.replace("-and-", "-&-");
   }
 
-  const pipleline = [];
+  const pipeline = [];
 
   if (approved) {
-    pipleline.push({ $match: { isApproved: approved === "true" } });
+    pipeline.push({ $match: { isApproved: approved === "true" } });
   }
   if (position) {
-    pipleline.push({ $match: { position } });
+    pipeline.push({ $match: { position } });
   }
 
   if (
@@ -46,7 +46,7 @@ export async function GET(req: Request) {
     query === "graduate-member" ||
     query === "alumni"
   ) {
-    pipleline.push({
+    pipeline.push({
       $match: {
         roles: {
           $elemMatch: { $eq: query },
@@ -63,16 +63,21 @@ export async function GET(req: Request) {
     query === "power-&-energy-society" ||
     query === "robotics-&-automation-society"
   ) {
-    pipleline.push({
+    pipeline.push({
       $match: {
         societies: {
           $elemMatch: { $eq: query },
         },
       },
     });
+    pipeline.push({
+      $project: {
+        position: 0,
+      },
+    });
   }
   const users = await UserModel.aggregate([
-    ...pipleline,
+    ...pipeline,
     {
       $addFields: {
         position: { $ifNull: ["$position", "Other"] }, // Default position to "Other" if null or missing

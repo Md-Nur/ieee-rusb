@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import { PiLinkedinLogoBold } from "react-icons/pi";
@@ -32,7 +31,7 @@ const ShowUsers = ({ query }) => {
               className="card bg-base-300 w-full max-w-96 shadow-xl"
             >
               <figure>
-                <img
+                <Image
                   src={user?.avatar || "/defaultAvatar.jpg"}
                   height={400}
                   width={400}
@@ -42,7 +41,7 @@ const ShowUsers = ({ query }) => {
               </figure>
               <div className="card-body text-center">
                 <h2 className="text-3xl font-bold text-center">{user?.name}</h2>
-                {user?.position && (
+                {user?.position && user?.position !== "Other" && (
                   <p className="text-center text-lg">{user.position}</p>
                 )}
                 <p>Department of {user?.dept}</p>

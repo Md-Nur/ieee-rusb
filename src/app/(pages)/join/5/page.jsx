@@ -21,7 +21,7 @@ const Join5 = () => {
       setError("Password didn't match");
       return;
     }
-    
+
     toast.loading("Please wait...");
     try {
       const res = await axios.post("/api/users/register", user);
@@ -51,7 +51,7 @@ const Join5 = () => {
           </label>
           <input
             type="password"
-            placeholder="Create Password"
+            placeholder="e.g. aA@123456"
             className="input input-bordered input-accent"
             required
             onChange={(e) => setUser({ ...user, password: e.target.value })}
@@ -63,7 +63,7 @@ const Join5 = () => {
           </label>
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="e.g. aA@123456"
             className="input input-bordered input-accent"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
