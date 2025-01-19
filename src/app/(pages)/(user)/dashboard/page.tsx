@@ -9,14 +9,14 @@ const Profile = () => {
   return (
     <section className="w-full">
       <Title>{userAuth?.name || "User"}</Title>
-      <div className="flex md:justify-evenly items-center my-10 flex-wrap gap-5 w-full">
+      <div className="flex md:justify-evenly items-center my-10 flex-wrap gap-5 w-full justify-center">
         <div className="avatar">
-          <div className="ring-accent ring-offset-base-100 w-full md:w-48 rounded-full ring ring-offset-2">
+          <div className="ring-accent ring-offset-base-100 w-full md:w-60 rounded-full ring ring-offset-2">
             <Image
               src={userAuth?.avatar || "/defaultAvatar.jpg"}
               alt={userAuth?.name || "User"}
-              width={300}
-              height={300}
+              width={500}
+              height={500}
               className="rounded-full"
             />
           </div>
@@ -47,7 +47,7 @@ const Profile = () => {
             </tbody>
           </table>
         </div>
-        <div className="w-auto space-y-5">
+        <div className="w-auto space-y-5 mx-2">
           <h3 className="font-semibold">Community</h3>
           <ul className="space-y-5">
             {userAuth?.roles.map((role, i) => (
@@ -56,8 +56,6 @@ const Profile = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className="w-auto space-y-5">
           <h3 className="text-lg font-semibold">Society & AG</h3>
           <ul className="space-y-5">
             {userAuth?.societies.map((society, i) => (
