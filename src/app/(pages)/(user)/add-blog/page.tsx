@@ -4,7 +4,7 @@ import Title from "@/components/Title";
 const AddBlog = () => {
   return (
     <div>
-      <Title>Add Event</Title>
+      <Title>Add Blog</Title>
       <Content postData={null} type="blog"/>
     </div>
   );
