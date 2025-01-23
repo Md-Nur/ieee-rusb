@@ -60,7 +60,7 @@ const ShowContents = ({ query }) => {
                     </div>
                   </div>
                 )}
-                <div className="card-actions justify-end">
+                <div className="card-actions justify-end h-full items-end">
                   <div className="badge badge-outline badge-accent">
                     {new Date(content?.date)
                       .toUTCString()
