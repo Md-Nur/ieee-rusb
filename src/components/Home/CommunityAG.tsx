@@ -43,7 +43,7 @@ const communityAndAG = [
 const CommunityAG = () => {
   return (
     <section className="max-w-7xl mx-auto px-1 md:px-10 my-3">
-      <Title>Our Community & AG</Title>
+      <Title>Our Societies & AG</Title>
       <div className="flex flex-wrap gap-5 justify-between">
         {communityAndAG.map((item, index) => (
           <Link
