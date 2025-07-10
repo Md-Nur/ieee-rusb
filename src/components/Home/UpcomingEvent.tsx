@@ -3,7 +3,6 @@ import { Content } from "@/models/content.model";
 import Title from "../Title";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import Loading from "../Loading";
 import Image from "next/image";
 import Link from "next/link";
