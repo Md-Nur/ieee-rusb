@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { FaUserAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Join2 = () => {
   const { user, setUser } = useJoin();
@@ -24,12 +25,19 @@ const Join2 = () => {
       setProgress(40);
       formData.append("image", file);
       setProgress(60);
-      const response = await axios.post(
-        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
-        formData
-      );
-      setProgress(80);
-      setUser({ ...user, avatar: response?.data?.data.url });
+      try {
+        const response = await axios.post(
+          `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+          formData
+        );
+        setProgress(80);
+        setUser({ ...user, avatar: response?.data?.data.url });
+      } catch (error) {
+        toast.error("Failed to upload image. Please try again.");
+        setUser({ ...user, avatar: "" });
+        setProgress(0);
+        return;
+      }
       setProgress(100);
     } else {
       setUser({ ...user, avatar: "" });
