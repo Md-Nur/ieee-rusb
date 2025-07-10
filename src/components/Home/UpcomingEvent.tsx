@@ -19,7 +19,8 @@ const UpcomingEvent = () => {
         setUpcomingEvent(res.data[0]);
       })
       .catch((err) => {
-        toast.error(err?.response?.data?.error);
+        // toast.error(err?.response?.data?.error);
+        console.error("Error fetching upcoming event:", err);
       })
       .finally(() => {
         setLoading(false);
