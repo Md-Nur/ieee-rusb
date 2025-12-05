@@ -35,7 +35,8 @@ const Chairperson = () => {
       <div className="md:max-w-[calc(100%-400px)] flex flex-col justify-around h-full p-8 min-h-96">
         <div className="flex justify-between items-start">
           <div>
-            <h2 className="text-2xl font-bold">{chair?.name}</h2>
+            {/* <h2 className="text-2xl font-bold">{chair?.name}</h2> */}
+            <h2 className="text-2xl font-bold">Md. Mutasim Billah </h2>
             <p className="text-xl mt-0">{chair?.position || "Chairperson"}</p>
           </div>
           <div className="flex justify-between gap-2 items-center">
