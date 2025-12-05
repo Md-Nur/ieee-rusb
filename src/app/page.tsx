@@ -4,11 +4,13 @@ import Hero from "@/components/Home/Hero";
 import MissionVission from "@/components/Home/MissionVission";
 import RecentEvents from "@/components/Home/RecentEvents";
 import UpcomingEvent from "@/components/Home/UpcomingEvent";
+import About from "@/components/Home/About";
 
 export default function Home() {
   return (
     <div className="">
       <Hero />
+      <About />
       <MissionVission />
       <CommunityAG />
       <UpcomingEvent />
