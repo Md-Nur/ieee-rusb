@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -11,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -19,7 +23,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
   "include": [
@@ -34,7 +40,15 @@
     "src/components/Nav/Profile.jsx",
     "src/app/(pages)/join/5/page.jsx",
     "src/app/(pages)/admin/user-approval/page.jsx",
-    "src/provider/JoinProvider.jsx"
-, "src/app/(pages)/join/3-1/page.jsx", "src/components/Content.jsx", "src/app/api/contents/route.js", "src/components/ShowContents.jsx", "src/components/ShowUsers.jsx"  ],
-  "exclude": ["node_modules"]
+    "src/provider/JoinProvider.jsx",
+    "src/app/(pages)/join/3-1/page.jsx",
+    "src/components/Content.jsx",
+    "src/app/api/contents/route.js",
+    "src/components/ShowContents.jsx",
+    "src/components/ShowUsers.jsx",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
