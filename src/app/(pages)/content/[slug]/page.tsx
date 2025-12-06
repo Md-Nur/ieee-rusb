@@ -83,7 +83,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
               </div>
             </div>
             <div className="flex flex-col gap-2 items-center flex-wrap">
-              <div className="badge badge-primary">Type: {content.type}</div>
+              <div className="badge badge-primary">{content.type}</div>
             </div>
             {(userAuth?._id === content.userId || userAuth?.isAdmin) && (
               <div className="flex gap-2">
