@@ -103,7 +103,9 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
           dangerouslySetInnerHTML={{ __html: content.content }}
         ></article>
       </div>
-      {content?.regUrl && (
+      {content?.regUrl &&
+        new Date(content.date) > new Date() && (
+        // If the date is in the future, show the register button
         <div className="flex justify-center">
           <a
             href={content.regUrl}
