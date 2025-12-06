@@ -30,6 +30,7 @@ const ShowContents = ({ query }) => {
               key={content._id}
               className="card bg-base-300 w-full max-w-96 shadow-xl"
             >
+              
               <figure>
                 <Image
                   src={content.thumbnail}

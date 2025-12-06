@@ -124,7 +124,10 @@ const Content = ({ postData, type }) => {
 
   return (
     <section className="card">
-      <form onSubmit={handleSubmit(onSubmit)} className="card-body p-1 md:p-5 m-1 md:m-5">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="card-body p-1 md:p-5 m-1 md:m-5"
+      >
         <div className="form-control">
           <label className="label">
             <span className="label-text">Title</span>
@@ -153,7 +156,7 @@ const Content = ({ postData, type }) => {
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Thumbnail</span>
+            <span className="label-text">Thumbnail (384 X 288)</span>
           </label>
           {(preview || postData?.thumbnail) && (
             <Image
