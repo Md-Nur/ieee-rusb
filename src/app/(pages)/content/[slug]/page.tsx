@@ -62,9 +62,9 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
           <Image
             src={content?.thumbnail}
             alt={content.title}
-            width={1700}
-            height={1000}
-            className="object-cover w-full max-h-[calc(100vh-250px)] rounded-lg"
+            width={1600}
+            height={1200}
+            className="object-cover w-full max-h-[1200px] rounded-lg"
           />
         </figure>
         {content.type == "blog" && (

@@ -43,9 +43,9 @@ const UpcomingEvent = () => {
           <Image
             src={upcomingEvent.thumbnail}
             alt={upcomingEvent.title}
-            width={1300}
-            height={1300}
-            className="max-h-96 object-cover"
+            width={1600}
+            height={900}
+            className="max-h-[900px] object-cover"
           />
         </figure>
         <div className="card-body w-full">

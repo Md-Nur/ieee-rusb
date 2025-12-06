@@ -39,3 +39,9 @@ International Number Validation
 Every socity have like main home page: carosel,About, Mission Vision, Speaches
 
 Exe Committee, Volunteer, Alumni
+
+Expiration of Registration Date
+
+Show content: content & thumbnail align
+
+Thumbnail Aspect Ratio: 16:9

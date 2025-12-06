@@ -52,6 +52,7 @@ export async function GET(req) {
     pipeline.push({ $match: { type: "event" } });
   }
 
+  // Dates
   const today = new Date();
   const datePipe = {
     $addFields: {
@@ -63,6 +64,7 @@ export async function GET(req) {
       },
     },
   };
+
   if (query === "upcoming-events" || query === "upcoming-event") {
     pipeline = [
       ...pipeline,
@@ -100,6 +102,7 @@ export async function GET(req) {
       },
     ];
   }
+
   pipeline = [
     ...pipeline,
     {
@@ -127,8 +130,8 @@ export async function GET(req) {
     },
   ];
 
-  const contents = await ContentModel.aggregate(pipeline);
 
+  const contents = await ContentModel.aggregate(pipeline);
   if (!contents.length) {
     return Response.json(
       { error: "There have no content left" },
