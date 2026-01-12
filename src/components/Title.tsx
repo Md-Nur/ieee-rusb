@@ -1,8 +1,15 @@
 import { ReactNode } from "react";
 
-const Title = ({ children }: { children: ReactNode }) => {
+interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+  children: ReactNode;
+}
+
+const Title = ({ children, className = "", ...props }: TitleProps) => {
   return (
-    <h1 className="text-3xl md:text-5xl text-center my-10 font-bold font-serif">
+    <h1 
+      className={`text-3xl md:text-5xl text-center my-20 font-extrabold ${className}`}
+      {...props}
+    >
       {children}
     </h1>
   );

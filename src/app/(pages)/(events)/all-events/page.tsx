@@ -5,7 +5,7 @@ const AllEvents = () => {
   return (
     <div className="w-full overflow-x-auto">
       <Title>All Events</Title>
-      <ShowContents query="" />
+      <ShowContents query="" society={undefined} />
     </div>
   );
 };

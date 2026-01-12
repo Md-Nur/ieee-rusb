@@ -13,23 +13,27 @@ const depts = [
   "Applied Chemistry & Chemical Engineering",
 ];
 
-const positions = [
-  "Chairperson",
-  "Vice Chairperson",
-  "General Secretary",
-  "Assistant General Secretary",
-  "Treasurer",
-  "Webmaster",
-  "Graphic Designer",
-  "Publication Coordinator",
-  "Public Relation Coordinator",
-  "Member Development Coordinator",
-  "Content Development Coordinator",
-  "Program Coordinator",
-  "Counselor",
-  "Volunteer",
-  "Other",
-];
+  const positions = [
+    "Counselor",
+    "Advisor",
+    "Senior member",
+    "Alumni",
+    "Chairperson",
+    "Vice Chair",
+    "General Sec",
+    "Ass GS",
+    "Treasuerer",
+    "Webmaster",
+    "Programm coordinator",
+    "Graphic Designer",
+    "Content Development",
+    "Membership Development",
+    "Public Relation",
+    "Photographer",
+    "Publication coordinator",
+    "Volunteer",
+    "Other",
+  ];
 
 const Join31 = () => {
   const { user, setUser } = useJoin();
@@ -74,7 +78,7 @@ const Join31 = () => {
       <form className="card-body mb-10" onSubmit={handleSubmit}>
         <div className="form-control">
           <label className="label">
-            <span className="label-text">Position</span>
+            <span className="label-text">Main Branch Position</span>
           </label>
           <select
             className="select select-bordered select-accent mt-2"

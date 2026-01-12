@@ -15,6 +15,8 @@ export interface Users extends Document {
   dept: string;
   session?: string;
   designation?: string;
+  ieee_id?: string;
+  society_designations?: { society: string; designation: string }[];
 }
 
 const UserSchema = new Schema<Users>({
@@ -54,19 +56,23 @@ const UserSchema = new Schema<Users>({
   position: {
     type: String,
     enum: [
-      "Chairperson",
-      "Vice Chairperson",
-      "General Secretary",
-      "Assistant General Secretary",
-      "Treasurer",
-      "Webmaster",
-      "Graphic Designer",
-      "Publication Coordinator",
-      "Public Relation Coordinator",
-      "Member Development Coordinator",
-      "Content Development Coordinator",
-      "Program Coordinator",
       "Counselor",
+      "Advisor",
+      "Senior member",
+      "Alumni",
+      "Chairperson",
+      "Vice Chair",
+      "General Sec",
+      "Ass GS",
+      "Treasuerer",
+      "Webmaster",
+      "Programm coordinator",
+      "Graphic Designer",
+      "Content Development",
+      "Membership Development",
+      "Public Relation",
+      "Photographer",
+      "Publication coordinator",
       "Volunteer",
       "Other",
     ],
@@ -116,6 +122,14 @@ const UserSchema = new Schema<Users>({
       "Lecturer",
       "Other",
     ],
+  },
+  ieee_id: {
+    type: String,
+    required: true,
+  },
+  society_designations: {
+    type: [{ society: String, designation: String }],
+    default: [],
   },
 });
 

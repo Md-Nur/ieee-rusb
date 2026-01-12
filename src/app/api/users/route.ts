@@ -1,101 +1,234 @@
+import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 
 const positions = [
-  "Chairperson",
-  "Vice Chairperson",
-  "General Secretary",
-  "Assistant General Secretary",
-  "Treasurer",
-  "Webmaster",
-  "Graphic Designer",
-  "Publication Coordinator",
-  "Public Relation Coordinator",
-  "Member Development Coordinator",
-  "Content Development Coordinator",
-  "Program Coordinator",
   "Counselor",
+  "Advisor",
+  "Senior member",
+  "Alumni",
+  "Chairperson",
+  "Vice Chair",
+  "General Sec",
+  "Ass GS",
+  "Treasuerer",
+  "Webmaster",
+  "Programm coordinator",
+  "Graphic Designer",
+  "Content Development",
+  "Membership Development",
+  "Public Relation",
+  "Photographer",
+  "Publication coordinator",
   "Volunteer",
   "Other",
 ];
 
-export async function GET(req: Request) {
-  dbConnect();
-  const url = new URL(req.url);
-  const approved = url.searchParams.get("approved");
-  const position = url.searchParams.get("position");
-  let query = url.searchParams.get("query");
+export async function GET(req: NextRequest) {
+  try {
+    await dbConnect();
+    const { searchParams } = new URL(req.url);
 
-  if (query) {
-    query = query?.replace("-and-", "-&-");
-  }
+    const approved = searchParams.get("approved");
+    const position = searchParams.get("position");
+    let query = searchParams.get("query");
 
-  const pipeline = [];
+    if (query) {
+      query = query?.replace("-and-", "-&-");
+    }
 
-  if (approved) {
-    pipeline.push({ $match: { isApproved: approved === "true" } });
-  }
-  if (position) {
-    pipeline.push({ $match: { position } });
-  }
+    const match: any = {};
+    if (approved !== null) match.isApproved = approved === "true";
+    if (position) match.position = position;
 
-  if (
-    query === "executive-committee" ||
-    query === "faculty-member" ||
-    query === "student-member" ||
-    query === "graduate-member" ||
-    query === "alumni"
-  ) {
+    const pipeline: any[] = [{ $match: match }];
+
+    // Handle Roles
+    if (
+      query === "executive-committee" ||
+      query === "faculty-member" ||
+      query === "student-member" ||
+      query === "graduate-member" ||
+      query === "alumni"
+    ) {
+      pipeline.push({
+        $match: {
+          roles: {
+            $elemMatch: { $eq: query },
+          },
+        },
+      });
+    }
+
+    // Handle Societies
+    let isSocietyQuery = false;
+    if (
+      query === "women-in-engineering-society" ||
+      query === "signal-processing-society" ||
+      query === "antenna-&-propagation-society" ||
+      query === "computer-society" ||
+      query === "power-&-energy-society" ||
+      query === "robotics-&-automation-society"
+    ) {
+      isSocietyQuery = true;
+      pipeline.push({
+        $match: {
+          societies: {
+            $elemMatch: { $eq: query },
+          },
+        },
+      });
+    }
+
     pipeline.push({
-      $match: {
-        roles: {
-          $elemMatch: { $eq: query },
+      $addFields: {
+        sortingPosition: {
+          $cond: {
+            if: { $eq: [isSocietyQuery, true] },
+            then: {
+              $let: {
+                vars: {
+                  techDesignation: {
+                    $first: {
+                      $filter: {
+                        input: { $ifNull: ["$society_designations", []] },
+                        as: "sd",
+                        cond: { $eq: ["$$sd.society", query] },
+                      },
+                    },
+                  },
+                },
+                in: { $ifNull: ["$$techDesignation.designation", "$position"] },
+              },
+            },
+            else: { $ifNull: ["$position", "Other"] },
+          },
         },
       },
     });
-  }
 
-  if (
-    query === "women-in-engineering-society" ||
-    query === "signal-processing-society" ||
-    query === "antenna-&-propagation-society" ||
-    query === "computer-society" ||
-    query === "power-&-energy-society" ||
-    query === "robotics-&-automation-society"
-  ) {
     pipeline.push({
-      $match: {
-        societies: {
-          $elemMatch: { $eq: query },
+      $addFields: {
+        normalizedPosition: {
+          $switch: {
+            branches: [
+              {
+                case: {
+                  $in: ["$sortingPosition", ["Vice Chairperson", "Vice Chair"]],
+                },
+                then: "Vice Chair",
+              },
+              {
+                case: {
+                  $in: ["$sortingPosition", ["General Secretary", "General Sec"]],
+                },
+                then: "General Sec",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Assistant General Secretary", "Ass GS"],
+                  ],
+                },
+                then: "Ass GS",
+              },
+              {
+                case: {
+                  $in: ["$sortingPosition", ["Treasurer", "Treasuerer"]],
+                },
+                then: "Treasuerer",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Program Coordinator", "Programm coordinator"],
+                  ],
+                },
+                then: "Programm coordinator",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Content Development Coordinator", "Content Development"],
+                  ],
+                },
+                then: "Content Development",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Member Development Coordinator", "Membership Development"],
+                  ],
+                },
+                then: "Membership Development",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Public Relation Coordinator", "Public Relation"],
+                  ],
+                },
+                then: "Public Relation",
+              },
+              {
+                case: {
+                  $in: [
+                    "$sortingPosition",
+                    ["Publication Coordinator", "Publication coordinator"],
+                  ],
+                },
+                then: "Publication coordinator",
+              },
+            ],
+            default: "$sortingPosition",
+          },
         },
       },
     });
+
     pipeline.push({
-      $project: {
-        position: 0,
+      $addFields: {
+        sortIndex: { $indexOfArray: [positions, "$normalizedPosition"] },
       },
     });
-  }
-  const users = await UserModel.aggregate([
-    ...pipeline,
-    {
+
+    pipeline.push({
       $addFields: {
-        position: { $ifNull: ["$position", "Other"] }, // Default position to "Other" if null or missing
+        sortIndex: {
+          $cond: {
+            if: { $eq: ["$sortIndex", -1] },
+            then: 999,
+            else: "$sortIndex",
+          },
+        },
       },
-    },
-    {
-      $addFields: {
-        sortIndex: { $indexOfArray: [positions, "$position"] },
-      },
-    },
-    {
-      $sort: { sortIndex: 1 }, // Sort by the calculated sort index
-    },
-    {
+    });
+
+    pipeline.push({
+      $sort: { sortIndex: 1, name: 1 },
+    });
+
+    pipeline.push({
       $project: {
-        sortIndex: 0, // Optionally exclude the sortIndex from the final output
+        sortIndex: 0,
+        rawPosition: 0,
+        normalizedPosition: 0,
+        sortingPosition: 0,
       },
-    },
-  ]);
-  return Response.json(users, { status: 200 });
+    });
+
+    const users = await UserModel.aggregate(pipeline);
+    return NextResponse.json(users);
+  } catch (error: any) {
+    console.error("Fetch Users Error:", error);
+    return NextResponse.json(
+      { error: error?.message || "Failed to fetch users" },
+      { status: 500 }
+    );
+  }
 }

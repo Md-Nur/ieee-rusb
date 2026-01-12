@@ -11,7 +11,9 @@ export async function POST(req: Request) {
     !data?.phone ||
     !data?.password ||
     !data?.dept ||
-    !data?.position
+    !data?.dept ||
+    !data?.position ||
+    !data?.ieee_id
   ) {
     return Response.json({ error: "All fields are required" }, { status: 404 });
   }
@@ -21,7 +23,7 @@ export async function POST(req: Request) {
   }
 
   const existingUser = await UserModel.findOne({
-    $or: [{ email: data.email }, { phone: data.phone }],
+    $or: [{ email: data.email }, { phone: data.phone }, ...(data.ieee_id ? [{ ieee_id: data.ieee_id }] : [])],
   });
 
   if (existingUser) {

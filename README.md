@@ -1,17 +1,10 @@
-Todo:
-Sociaty & AG serial:
-SPS
-RAS
-CS
-PES
-APS
-WIE
 
 Designation serial:
 
 Counselor
 Advisor
 Senior member
+Alumni
 Chairperson
 Vice Chair
 General Sec
@@ -25,6 +18,8 @@ Membership Development
 Public Relation 
 Photographer
 Publication coordinator
+Volunteer
+Other
 
 
 Speach Home page:

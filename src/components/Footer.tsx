@@ -172,9 +172,9 @@ const Footer = () => {
             reserved. <br />
             Developed by&nbsp;
             <a
-              href="
-            https://www.linkedin.com/in/mdnur9211/"
+              href="https://www.linkedin.com/in/mdnur9211/"
               target="_blank"
+              rel="noopener noreferrer"
             >
               Md. Nur E Alam Siddiquee
             </a>

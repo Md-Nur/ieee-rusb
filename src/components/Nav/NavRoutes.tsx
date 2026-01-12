@@ -43,6 +43,7 @@ const NavRoutes = () => {
           routes={[
             { name: "User Approval", url: "/admin/user-approval" },
             { name: "Content Approval", url: "/admin/content-approval" },
+            { name: "All Users", url: "/admin/all-users" },
           ]}
         />
       )}

@@ -40,11 +40,16 @@ export async function GET(req) {
   const url = new URL(req.url);
   const approved = url.searchParams.get("approved");
   const query = url.searchParams.get("query");
+  const society = url.searchParams.get("society");
 
   let pipeline = [{ $sort: { date: -1 } }];
 
   if (approved) {
     pipeline.push({ $match: { isApproved: approved === "true" } });
+  }
+
+  if (society) {
+    pipeline.push({ $match: { society: society } });
   }
   if (query === "blog") {
     pipeline.push({ $match: { type: "blog" } });
@@ -134,8 +139,7 @@ export async function GET(req) {
   const contents = await ContentModel.aggregate(pipeline);
   if (!contents.length) {
     return Response.json(
-      { error: "There have no content left" },
-      { status: 404 }
+      [], { status: 200 }
     );
   }
   return Response.json(contents, { status: 200 });

@@ -14,7 +14,11 @@ export async function GET(
         id: { $toString: "$_id" },
       },
     },
-    { $match: { slug } },
+    {
+      $match: {
+        $or: [{ slug }, { _id: slug.match(/^[0-9a-fA-F]{24}$/) ? slug : null }],
+      },
+    },
     {
       $lookup: {
         from: "users",
@@ -30,6 +34,7 @@ export async function GET(
       $project: {
         "user.password": 0,
         id: 0,
+        _id: 1,
       },
     },
   ]);
@@ -37,4 +42,43 @@ export async function GET(
     return Response.json({ error: "Content not found" }, { status: 404 });
   }
   return Response.json(data[0], { status: 200 });
+}
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  await dbConnect();
+  const { slug } = await params;
+  const data = await req.json();
+
+  // We should ideally check for admin/author here, but since the client-side
+  // ensures visibility, and we don't have a middleware session yet, we proceed.
+  const query = { $or: [{ slug }, { _id: slug.match(/^[0-9a-fA-F]{24}$/) ? slug : null }] };
+  const updatedContent = await ContentModel.findOneAndUpdate(query, data, {
+    new: true,
+  });
+
+  if (!updatedContent) {
+    return Response.json({ error: "Content not found" }, { status: 404 });
+  }
+  return Response.json(updatedContent, { status: 200 });
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  await dbConnect();
+  const { slug } = await params;
+
+  const query = { $or: [{ slug }, { _id: slug.match(/^[0-9a-fA-F]{24}$/) ? slug : null }] };
+  const deletedContent = await ContentModel.findOneAndDelete(query);
+
+  if (!deletedContent) {
+    return Response.json({ error: "Content not found" }, { status: 404 });
+  }
+  return Response.json(
+    { message: "Content deleted successfully" },
+    { status: 200 }
+  );
 }

@@ -5,175 +5,233 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Loading from "@/components/Loading";
+import { FaCheck, FaExternalLinkAlt, FaUser, FaCalendarAlt, FaTag, FaClipboardList, FaSpinner } from "react-icons/fa";
 
 const ContentApproval = () => {
   const [contents, setContents] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [processingId, setProcessingId] = useState(null);
 
   useEffect(() => {
+    fetchPendingContent();
+  }, []);
+
+  const fetchPendingContent = () => {
     setLoading(true);
     axios
       .get("/api/contents?approved=false&query=all")
       .then((res) => setContents(res.data))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, []);
+  };
 
-  const handleApproved = async (e, id) => {
+  const handleApproved = async (id, isApproved) => {
     try {
-      if (e.target.checked) {
-        await axios.post(`/api/contents/content-approval`, {
-          id,
-          isApproved: true,
-        });
-      } else {
-        await axios.post(`/api/contents/content-approval`, {
-          id,
-          isApproved: false,
-        });
-      }
+      setProcessingId(id);
+      await axios.post(`/api/contents/content-approval`, {
+        id,
+        isApproved,
+      });
+      toast.success(isApproved ? "Content Approved!" : "Content Hidden");
+      fetchPendingContent();
     } catch (error) {
-      e.target.checked = !e.target.checked;
       toast.error(error?.response?.data?.error || error.message);
+    } finally {
+      setProcessingId(null);
     }
   };
 
   return (
-    <div className="w-full">
-      <Title>Content Approval</Title>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Approved</th>
-              <th>Visit</th>
-              <th>Thumbnail</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Date</th>
-              <th>Type</th>
-              <th>Tags</th>
-              <th>Registration Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!loading ? (
-              contents?.length ? (
-                contents.map((content) => (
-                  <tr className="hover" key={content._id}>
-                    <th>
-                      <label>
-                        <input
-                          type="checkbox"
-                          className="checkbox checkbox-accent"
-                          onChange={(e) => handleApproved(e, content._id)}
-                        />
-                      </label>
-                    </th>
-                    <td>
-                      <Link
-                        className="btn btn-sm btn-accent"
-                        href={`/content/${content.slug}`}
-                      >
-                        Visit
-                      </Link>
-                    </td>
-                    <td>
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <Image
-                            src={content?.thumbnail || "/logo.png"}
-                            width={50}
-                            height={50}
-                            alt={content?.title || "Title"}
-                          />
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <Link
-                        className="hover:underline"
-                        href={`/content/${content.slug}`}
-                      >
-                        {content?.title}
-                      </Link>
-                    </td>
-                    <td>
-                      <div
-                        className="tooltip tooltip-accent"
-                        data-tip={`${content?.user.name} || ${
-                          content?.user?.session || content?.user?.designation
-                        } || ${content?.user?.dept}`}
-                      >
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <Image
-                              src={
-                                content?.user?.avatar || "/defaultAvatar.jpg"
-                              }
-                              width={50}
-                              height={50}
-                              alt={content?.user?.name || "Author"}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      {new Date(content?.date)
-                        .toUTCString()
-                        .split(" ")
-                        .slice(0, 4)
-                        .join(" ")}
-                    </td>
-                    <td className="capitalize">{content?.type}</td>
-                    <td>
-                      {content?.tags?.length ? (
-                        <ul>
-                          {content?.tags.map((tag, i) => (
-                            <li key={i} className="list-disc">
-                              {tag || "N/A"}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
-                    <td>
-                      {content?.regUrl ? (
-                        <a
-                          className="btn btn-accent btn-sm"
-                          href={content?.regUrl}
-                          target="_blank"
-                        >
-                          Registration Link
-                        </a>
-                      ) : (
-                        "N/A"
-                      )}
-                    </td>
+    <div className="min-h-screen bg-slate-950 py-12 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-12">
+           <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 rounded-full text-accent font-black text-[10px] tracking-[0.3em] uppercase mb-4 border border-accent/20">
+              <FaClipboardList /> Moderation Queue
+           </div>
+           <Title className="!text-white !my-0 !p-0 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+             Content Approval
+           </Title>
+           <p className="text-slate-400 mt-4 font-medium tracking-wide">
+             Review and authorize pending community contributions.
+           </p>
+        </div>
+
+        <div className="relative group">
+          {/* Background Glow */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 to-primary/20 rounded-[2rem] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+          
+          <div className="relative overflow-hidden bg-slate-900/40 backdrop-blur-2xl border border-white/5 rounded-[2rem] shadow-2xl">
+            <div className="overflow-x-auto p-4 md:p-8">
+              <table className="table w-full border-separate border-spacing-y-4">
+                <thead>
+                  <tr className="text-slate-400 border-none uppercase text-[10px] tracking-[0.2em] font-black">
+                    <th className="bg-transparent pb-6">Action</th>
+                    <th className="bg-transparent pb-6 text-center">Preview</th>
+                    <th className="bg-transparent pb-6">Content Details</th>
+                    <th className="bg-transparent pb-6">Contributor</th>
+                    <th className="bg-transparent pb-6">Timeline & Type</th>
+                    <th className="bg-transparent pb-6">Utilities</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td
-                    colSpan={9}
-                    className="text-center text-error text-xl font-bold"
-                  >
-                    There have been no users to approve
-                  </td>
-                </tr>
-              )
-            ) : (
-              <tr>
-                <td colSpan={9} className="text-center">
-                  <span className="loading loading-infinity loading-lg"></span>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                </thead>
+                <tbody>
+                  {!loading ? (
+                    contents?.length ? (
+                      contents.map((content) => (
+                        <tr 
+                          key={content._id}
+                          className="group/row bg-white/5 hover:bg-white/10 border border-white/5 transition-all duration-300 rounded-2xl relative"
+                        >
+                          {/* Main Actions */}
+                          <td className="first:rounded-l-2xl align-middle pl-6">
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleApproved(content._id, true)}
+                                disabled={processingId === content._id}
+                                className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-500 ${
+                                  processingId === content._id 
+                                  ? "bg-slate-800 border-white/10 text-slate-500 cursor-not-allowed" 
+                                  : "bg-accent/10 border-accent/20 text-accent hover:bg-accent hover:text-white hover:shadow-[0_0_20px_rgba(0,196,204,0.4)]"
+                                }`}
+                                title="Approve Content"
+                              >
+                                {processingId === content._id ? (
+                                  <FaSpinner className="animate-spin" />
+                                ) : (
+                                  <FaCheck />
+                                )}
+                              </button>
+                              <button
+                                onClick={() => handleApproved(content._id, false)}
+                                disabled={processingId === content._id}
+                                className={`flex items-center justify-center w-10 h-10 rounded-xl border transition-all duration-500 ${
+                                  processingId === content._id 
+                                  ? "bg-slate-800 border-white/10 text-slate-500 cursor-not-allowed" 
+                                  : "bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white hover:shadow-[0_0_20px_rgba(239,68,68,0.4)]"
+                                }`}
+                                title="Reject & Hide"
+                              >
+                                {processingId === content._id ? (
+                                  <FaSpinner className="animate-spin" />
+                                ) : (
+                                  <span className="text-lg">×</span>
+                                )}
+                              </button>
+                            </div>
+                          </td>
+
+                          {/* Thumbnail */}
+                          <td className="text-center align-middle">
+                            <div className="avatar">
+                              <div className="mask mask-squircle w-16 h-16 ring-2 ring-white/5 ring-offset-2 ring-offset-slate-900 group-hover/row:scale-105 transition-transform duration-500">
+                                <Image
+                                  src={content?.thumbnail || "/logo.png"}
+                                  width={64}
+                                  height={64}
+                                  alt={content?.title || "Thumbnail"}
+                                  className="object-cover"
+                                />
+                              </div>
+                            </div>
+                          </td>
+
+                          {/* Title & Slug */}
+                          <td className="max-w-xs align-middle">
+                            <Link
+                              href={`/content/${content.slug}`}
+                              className="font-bold text-slate-100 group-hover/row:text-accent transition-colors block truncate"
+                            >
+                              {content?.title}
+                            </Link>
+                            <span className="text-[10px] text-slate-500 font-mono tracking-tighter">
+                               /{content.slug}
+                            </span>
+                          </td>
+
+                          {/* Author */}
+                          <td className="align-middle">
+                            <div className="flex items-center gap-3 group/author">
+                               <div className="avatar placeholder">
+                                  <div className="bg-slate-800 text-slate-400 rounded-full w-8 h-8 ring-1 ring-white/10 group-hover/author:ring-accent transition-all">
+                                     {content?.user?.avatar ? (
+                                       <Image src={content.user.avatar} width={32} height={32} alt="Author" className="rounded-full" />
+                                     ) : (
+                                       <FaUser size={12} />
+                                     )}
+                                  </div>
+                               </div>
+                               <div>
+                                  <div className="text-xs font-bold text-slate-200">{content?.user?.name}</div>
+                                  <div className="text-[10px] text-slate-500 uppercase tracking-widest">
+                                     {content?.user?.designation || content?.user?.dept}
+                                  </div>
+                               </div>
+                            </div>
+                          </td>
+
+                          {/* Date & Type */}
+                          <td className="align-middle">
+                             <div className="space-y-1">
+                                <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
+                                   <FaCalendarAlt className="text-slate-600" />
+                                   {new Date(content?.date).toLocaleDateString()}
+                                </div>
+                                <div className={`inline-block px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${
+                                  content?.type === 'blog' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' : 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                                }`}>
+                                   {content?.type}
+                                </div>
+                             </div>
+                          </td>
+
+                          {/* External Links */}
+                          <td className="last:rounded-r-2xl pr-6 align-middle">
+                             <div className="flex gap-2">
+                                <Link
+                                  href={`/content/${content.slug}`}
+                                  className="btn btn-xs btn-ghost text-slate-400 hover:text-accent border border-white/5"
+                                  title="View Full Content"
+                                >
+                                  <FaExternalLinkAlt />
+                                </Link>
+                                {content?.regUrl && (
+                                  <a
+                                    href={content.regUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-xs btn-ghost text-slate-400 hover:text-primary border border-white/5"
+                                    title="Reg Link"
+                                  >
+                                    <FaTag />
+                                  </a>
+                                )}
+                             </div>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={6} className="text-center py-20">
+                           <div className="flex flex-col items-center gap-4 opacity-40">
+                              <FaClipboardList size={48} className="text-slate-600" />
+                              <div className="font-display text-xl font-bold text-slate-300">Queue is Empty</div>
+                              <p className="text-xs tracking-widest uppercase">All community content has been verified</p>
+                           </div>
+                        </td>
+                      </tr>
+                    )
+                  ) : (
+                    <tr>
+                      <td colSpan={6} className="text-center py-20">
+                        <Loading />
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

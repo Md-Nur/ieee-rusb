@@ -12,6 +12,7 @@ const UserAuthProvider = ({ children }: { children: ReactNode }) => {
     axios
       .get("/api/jwt")
       .then((res) => setUserAuth(res.data))
+      .then(() => console.log(userAuth))
       .catch((error) => {
         console.log(error?.response?.data?.error || error.message);
       })

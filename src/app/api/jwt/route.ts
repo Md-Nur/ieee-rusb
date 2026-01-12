@@ -37,6 +37,8 @@ export async function GET() {
     societies: newUser.societies,
     dept: newUser.dept,
     session: newUser.session,
-    designation: newUser.designation
+    designation: newUser.designation,
+    ieee_id: newUser.ieee_id,
+    society_designations: newUser.society_designations,
   });
 }

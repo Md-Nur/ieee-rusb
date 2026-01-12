@@ -13,7 +13,7 @@ const Join = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bdPhoneRegex = /^(?:\+88)?01[3-9]\d{8}$/;
-    if (user.name === "" || user.email === "") {
+    if (user.name === "" || user.email === "" || !user.ieee_id) {
       toast.error("Please fill all the fields");
       return;
     } else if (!bdPhoneRegex.test(user.phone)) {
@@ -21,7 +21,7 @@ const Join = () => {
       return;
     }
 
-    if (user.email && user.phone) {
+    if (user.email && user.phone && user.ieee_id) {
       try {
         await axios.post("/api/users/existing-user", {
           email: user.email,
@@ -76,6 +76,18 @@ const Join = () => {
             className="input input-bordered input-accent"
             required
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+          />
+        </div>
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text">IEEE ID</span>
+          </label>
+          <input
+            type="text"
+            placeholder="e.g. 12345678"
+            className="input input-bordered input-accent"
+            onChange={(e) => setUser({ ...user, ieee_id: e.target.value })}
+            required
           />
         </div>
         <div className="form-control">

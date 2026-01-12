@@ -10,6 +10,7 @@ export interface Content extends Document {
   regUrl?: string;
   tags?: string[];
   userId: string;
+  society?: string;
   isApproved: boolean;
 }
 
@@ -23,6 +24,19 @@ const ContentSchema = new Schema<Content>({
   regUrl: { type: String },
   tags: { type: [String] },
   userId: { type: String, required: true },
+  society: {
+    type: String,
+    enum: [
+      "robotics-&-automation-society",
+      "signal-processing-society",
+      "power-&-energy-society",
+      "computer-society",
+      "antenna-&-propagation-society",
+      "women-in-engineering-society",
+      "main",
+    ],
+    default: "main",
+  },
   isApproved: { type: Boolean, default: false },
 });
 

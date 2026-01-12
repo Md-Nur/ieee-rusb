@@ -14,7 +14,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-300 w-full sticky top-0 z-10 shadow-lg">
+        <div className="navbar bg-white/80 dark:bg-slate-900/80 backdrop-blur-md w-full sticky top-0 z-[50] shadow-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -61,13 +61,13 @@ const Navbar = ({ children }: { children: ReactNode }) => {
         </div>
         {children}
       </div>
-      <div className="drawer-side z-20">
+      <div className="drawer-side z-[60]">
         <label
           htmlFor="my-drawer-3"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 min-h-full w-80 p-4">
+        <ul className="menu bg-white dark:bg-slate-900 min-h-full w-80 p-4 shadow-2xl transition-colors duration-300">
           {/* Sidebar content here */}
           <NavRoutes />
         </ul>
