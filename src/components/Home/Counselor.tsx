@@ -72,7 +72,7 @@ const Counselor = () => {
               <div className="relative">
                 <FaQuoteLeft className="text-primary/20 text-6xl absolute -top-4 -left-4" />
                 <p className="relative z-10 text-xl md:text-2xl font-medium text-base-content/80 leading-relaxed italic">
-                  "Dr. Foez Ahmed is a dedicated Branch Counselor for IEEE RUSB. Under his visionary guidance, our branch has evolved into a powerhouse of technical innovation and student leadership at the University of Rajshahi."
+                  "{counselor.name} is a dedicated Branch Counselor for IEEE RUSB. Under his visionary guidance, our branch has evolved into a powerhouse of technical innovation and student leadership at the University of Rajshahi.
                 </p>
               </div>
 
