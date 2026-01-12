@@ -80,7 +80,7 @@ const Counselor = () => {
                 <h3 className="text-3xl font-black text-primary">{counselor.name}</h3>
                 <p className="text-lg font-bold opacity-60 uppercase tracking-widest">{counselor.position}</p>
                 <div className="mt-2 text-sm font-medium text-base-content/40">
-                   Department of Electrical and Electronic Engineering <br/>
+                   Department of {counselor.dept}<br/>
                    University of Rajshahi
                 </div>
               </div>

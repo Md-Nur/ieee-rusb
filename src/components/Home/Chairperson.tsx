@@ -84,7 +84,7 @@ const Chairperson = () => {
               <div className="pt-8 border-t border-base-content/10">
                 <h3 className="text-3xl font-black text-secondary">{chair?.name}</h3>
                 <p className="text-lg font-bold opacity-60 uppercase tracking-widest">{chair?.position || "Chairperson"}</p>
-                <p className="text-xs font-medium opacity-40 mt-1 uppercase tracking-tighter">IEEE RU SB | Session 2024-25</p>
+                <p className="text-xs font-medium opacity-40 mt-1 uppercase tracking-tighter">IEEE RU SB | Session {chair?.session}</p>
               </div>
             </div>
           </div>
