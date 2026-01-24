@@ -8,6 +8,7 @@ import { getUsers } from "@/lib/user-data";
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
+import { serializeData } from "@/lib/serialize";
 
 export const dynamic = "force-dynamic";
 
@@ -30,10 +31,7 @@ const PES = async () => {
 
   // Fetch Users
   const { users } = await getUsers({ query: "power-&-energy-society", approved: true });
-  const serializedUsers = users.map((u: any) => ({
-    ...u,
-    _id: u._id.toString(),
-  }));
+  const serializedUsers = serializeData(users);
 
   // Fetch Events
   await connectDB();
@@ -48,16 +46,7 @@ const PES = async () => {
   .populate("userId", "name avatar position")
   .lean();
 
-  const serializedEvents = events.map(event => ({
-    ...event,
-    _id: event._id.toString(),
-    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString(),
-    user: event.userId ? {
-        name: (event.userId as any).name,
-        avatar: (event.userId as any).avatar,
-        position: (event.userId as any).position,
-    } : null
-  }));
+  const serializedEvents = serializeData(events);
 
   return (
     <div className="w-full">

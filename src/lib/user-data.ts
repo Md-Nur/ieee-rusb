@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
+import { serializeData } from "./serialize";
 
 const positions = [
   "Counselor",
@@ -235,10 +236,10 @@ export async function getUsers({
 
     const result = await UserModel.aggregate(pipeline);
     const total = result[0]?.metadata[0]?.total || 0;
-    const users = result[0]?.users || [];
+    const users = serializeData(result[0]?.users || []);
     return { users, total };
   } else {
-    const users = await UserModel.aggregate(pipeline);
+    const users = serializeData(await UserModel.aggregate(pipeline));
     return { users };
   }
 }

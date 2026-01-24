@@ -38,15 +38,11 @@ export const metadata: Metadata = {
   },
 };
 
-import { getUserFromCookie } from "@/lib/auth";
-
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUserFromCookie();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -54,7 +50,7 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         {/* @ts-ignore */}
-        <UserAuthProvider initialUser={user}>
+        <UserAuthProvider>
           <Navbar>{children}
           <Footer />
           </Navbar>

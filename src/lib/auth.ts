@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { verify } from "jsonwebtoken";
 import dbConnect from "./dbConnect";
 import UserModel from "@/models/user.model";
+import { serializeData } from "./serialize";
 
 export async function getUserFromCookie() {
   try {
@@ -24,11 +25,7 @@ export async function getUserFromCookie() {
 
     if (!user) return null;
 
-    // Serialize _id and other ObjectId fields
-    return {
-      ...user,
-      _id: user._id.toString(),
-    };
+    return serializeData(user);
   } catch (error) {
     console.error("Auth Error:", error);
     return null;
