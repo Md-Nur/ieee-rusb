@@ -6,8 +6,14 @@ import Hero from "@/components/Home/Hero";
 
 import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
+import { getUsers } from "@/lib/user-data";
+import connectDB from "@/lib/dbConnect";
+import ContentModel from "@/models/content.model";
+import UserModel from "@/models/user.model";
 
-const CS = () => {
+export const dynamic = "force-dynamic";
+
+const CS = async () => {
   const slides = [
     {
       image: "https://img.freepik.com/free-vector/cloud-storage-realistic-concept-with-abstract-digital-globe-three-laptop-around_1284-26976.jpg",
@@ -24,6 +30,38 @@ const CS = () => {
     "Promote ethical standards and excellence in computer science education and practice."
   ];
 
+  // Fetch Users
+  const { users } = await getUsers({ query: "computer-society", approved: true });
+  const serializedUsers = users.map((u: any) => ({
+    ...u,
+    _id: u._id.toString(),
+    // Handle ObjectId fields in society_designations or others if necessary, usually they are strings or embedded docs
+  }));
+
+  // Fetch Events
+  await connectDB();
+  const _ = UserModel;
+  const events = await ContentModel.find({ 
+    society: "computer-society",
+    type: "event",
+    isApproved: true
+  })
+  .sort({ date: -1 })
+  .limit(3)
+  .populate("userId", "name avatar position")
+  .lean();
+
+  const serializedEvents = events.map(event => ({
+    ...event,
+    _id: event._id.toString(),
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString(),
+    user: event.userId ? {
+        name: (event.userId as any).name,
+        avatar: (event.userId as any).avatar,
+        position: (event.userId as any).position,
+    } : null
+  }));
+
   return (
     <div className="w-full">
       <Hero slides={slides} className="rounded-[40px] overflow-hidden my-5" />
@@ -33,9 +71,11 @@ const CS = () => {
         image="https://img.freepik.com/free-photo/standard-quality-control-concept-m_23-2150041851.jpg"
       />
       <MissionVission vision={vision} mission={mission} />
-      <RecentEvents society="computer-society" title="Events" />
+      {/* @ts-ignore */}
+      <RecentEvents society="computer-society" title="Events" events={serializedEvents} />
       <Title>Members</Title>
-      <ShowUsers query="computer-society" />
+      {/* @ts-ignore */}
+      <ShowUsers query="computer-society" initialData={serializedUsers} />
     </div>
   )
 }

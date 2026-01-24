@@ -1,81 +1,73 @@
-"use client";
-import DeleteContentBtn from "@/components/Btns/DeleteContentBtn";
+import ContentActions from "@/components/Content/ContentActions";
+import ReadingProgress from "@/components/Content/ReadingProgress";
+import AuthCheck from "@/components/Content/AuthCheck"; // We will create this
 import Title from "@/components/Title";
-import { useUserAuth } from "@/context/userAuth";
-import axios from "axios";
+import connectDB from "@/lib/dbConnect";
+import ContentModel from "@/models/content.model";
+import UserModel from "@/models/user.model";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { use, useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { notFound } from "next/navigation";
 import "@/app/(pages)/content/style.css";
-import Loading from "@/components/Loading";
 import { FaCalendarAlt, FaUserEdit, FaArrowLeft, FaExternalLinkAlt } from "react-icons/fa";
+import { Metadata } from "next";
 
-const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { userAuth } = useUserAuth();
-  const [content, setContent] = useState<{
-    _id: string;
-    title: string;
-    content: string;
-    date: string;
-    type: string;
-    thumbnail: string;
-    regUrl?: string;
-    slug: string;
-    userId: string;
-    isApproved: boolean;
-    user: { name: string; avatar: string; position?: string };
-  } | null>(null);
-  const [cloading, setCloading] = useState(true);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const { slug } = use(params);
+export const dynamic = "force-dynamic";
 
-  useEffect(() => {
-    const updateScrollProgress = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollHeight > 0) {
-        setScrollProgress((window.scrollY / scrollHeight) * 100);
-      }
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  await connectDB();
+  const content = await ContentModel.findOne({ slug }).lean();
+
+  if (!content) {
+    return {
+      title: "Content Not Found",
     };
-
-    window.addEventListener("scroll", updateScrollProgress);
-    return () => window.removeEventListener("scroll", updateScrollProgress);
-  }, []);
-
-  useEffect(() => {
-    setCloading(true);
-    axios
-      .get(`/api/contents/${slug}`)
-      .then((res) => {
-        setContent(res.data);
-      })
-      .catch((err) => {
-        toast.error(err?.response?.data?.error || "Something went wrong");
-      })
-      .finally(() => {
-        setCloading(false);
-      });
-  }, [slug]);
-
-  if (cloading) return <Loading />;
-  else if (!content) return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6">
-      <div className="text-8xl font-black text-slate-200 dark:text-slate-800 animate-pulse">404</div>
-      <h1 className="text-2xl font-display font-black text-slate-400">Content Not Found</h1>
-      <Link href="/" className="btn btn-primary btn-outline rounded-full px-8">Return Home</Link>
-    </div>
-  );
-  else if (
-    !content?.isApproved &&
-    userAuth?._id !== content.userId &&
-    !userAuth?.isAdmin
-  ) {
-    toast.error("Content not approved");
-    redirect("/");
   }
 
-  const formattedDate = new Date(content?.date).toLocaleDateString('en-US', {
+  return {
+    title: content.title,
+    description: content.content.substring(0, 160).replace(/<[^>]*>/g, ""), // Strip HTML for description
+    openGraph: {
+      title: content.title,
+      description: content.content.substring(0, 160).replace(/<[^>]*>/g, ""),
+      images: [content.thumbnail],
+      type: "article",
+    },
+  };
+}
+
+const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+  await connectDB();
+  
+  // Ensure User model is registered
+  const _ = UserModel;
+
+  const contentDoc = await ContentModel.findOne({ slug })
+    .populate("userId", "name avatar position")
+    .lean();
+
+  if (!contentDoc) {
+    return notFound();
+  }
+
+  // Serialize for passing to client components
+  const content = {
+    ...contentDoc,
+    _id: contentDoc._id.toString(),
+    userId: (contentDoc.userId as any)?._id?.toString() || (contentDoc.userId as any)?.toString(),
+    user: contentDoc.userId ? {
+       // @ts-ignore
+       name: (contentDoc.userId as any).name,
+        // @ts-ignore
+       avatar: (contentDoc.userId as any).avatar,
+        // @ts-ignore
+       position: (contentDoc.userId as any).position
+    } : { name: "Unknown", avatar: "", position: "" },
+  };
+
+  const formattedDate = new Date(content.date).toLocaleDateString('en-US', {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
@@ -83,13 +75,8 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <section className="w-full bg-base-100 min-h-screen pb-24 relative">
-      {/* Reading Progress Bar */}
-      <div className="fixed top-[64px] md:top-[68px] left-0 w-full h-1.5 z-[60] bg-transparent pointer-events-none">
-        <div 
-          className="h-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-text-shimmer transition-all duration-150 ease-out shadow-[0_0_10px_rgba(var(--p),0.5)]"
-          style={{ width: `${scrollProgress}%` }}
-        />
-      </div>
+      <ReadingProgress />
+      <AuthCheck isApproved={content.isApproved} contentUserId={content.userId.toString()} />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-10">
         {/* Back Button & Metadata */}
@@ -165,18 +152,7 @@ const ContentOne = ({ params }: { params: Promise<{ slug: string }> }) => {
                        <p className="text-slate-500 font-medium italic">{content.user.position || "Member, IEEE University of Rajshahi"}</p>
                        <p className="text-sm text-slate-400 max-w-md">Dedicated to advancing technology for humanity through collaboration and innovation within the RU Student Branch.</p>
                     </div>
-                    {(userAuth?._id === content.userId || userAuth?.isAdmin) && (
-                      <div className="flex gap-3">
-                        <Link
-                          href={`/edit-content/${content?.slug}`}
-                          className="btn btn-primary btn-outline btn-circle hover:bg-primary hover:text-white"
-                          title="Edit Post"
-                        >
-                          <FaUserEdit />
-                        </Link>
-                        <DeleteContentBtn slug={content.slug} type={content.type} />
-                      </div>
-                    )}
+                    <ContentActions contentSlug={content.slug} contentUserId={content.userId.toString()} contentType={content.type} />
                  </div>
               </div>
 

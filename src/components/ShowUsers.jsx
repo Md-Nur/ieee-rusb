@@ -15,11 +15,12 @@ const societyAcronyms = {
   "women-in-engineering-society": "WIE",
 };
 
-const ShowUsers = ({ query }) => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+const ShowUsers = ({ query, initialData }) => {
+  const [users, setUsers] = useState(initialData || []);
+  const [loading, setLoading] = useState(!initialData);
 
   useEffect(() => {
+    if (initialData) return;
     axios
       .get(`/api/users?query=${query.replace("-&-", "-and-")}&approved=true`)
       .then((res) => {
@@ -31,7 +32,7 @@ const ShowUsers = ({ query }) => {
       .finally(() => {
         setLoading(false);
       });
-  }, [query]);
+  }, [query, initialData]);
 
   return (
     <div className="flex max-w-7xl justify-center gap-8 flex-wrap mx-auto px-4 py-10">

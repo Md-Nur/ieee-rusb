@@ -4,8 +4,14 @@ import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";
 import RecentEvents from "@/components/Home/RecentEvents";
+import { getUsers } from "@/lib/user-data";
+import connectDB from "@/lib/dbConnect";
+import ContentModel from "@/models/content.model";
+import UserModel from "@/models/user.model";
 
-const SPS = () => {
+export const dynamic = "force-dynamic";
+
+const SPS = async () => {
   const slides = [
     {
       image: "https://signalprocessingsociety.org/sites/default/files/SPS_Newsletter_slider_sized.jpg",
@@ -22,6 +28,37 @@ const SPS = () => {
     "Provide a platform for members to share knowledge and stay updated with emerging signal processing trends."
   ];
 
+  // Fetch Users
+  const { users } = await getUsers({ query: "signal-processing-society", approved: true });
+  const serializedUsers = users.map((u: any) => ({
+    ...u,
+    _id: u._id.toString(),
+  }));
+
+  // Fetch Events
+  await connectDB();
+  const _ = UserModel;
+  const events = await ContentModel.find({ 
+    society: "signal-processing-society",
+    type: "event",
+    isApproved: true
+  })
+  .sort({ date: -1 })
+  .limit(3)
+  .populate("userId", "name avatar position")
+  .lean();
+
+  const serializedEvents = events.map(event => ({
+    ...event,
+    _id: event._id.toString(),
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString(),
+    user: event.userId ? {
+        name: (event.userId as any).name,
+        avatar: (event.userId as any).avatar,
+        position: (event.userId as any).position,
+    } : null
+  }));
+
   return (
     <div className="w-full">
       <Hero slides={slides} className="rounded-[40px] overflow-hidden my-5" />
@@ -31,9 +68,11 @@ const SPS = () => {
         image="/sps-about.png"
       />
       <MissionVission vision={vision} mission={mission} />
-      <RecentEvents society="signal-processing-society" title="Events" />
+      {/* @ts-ignore */}
+      <RecentEvents society="signal-processing-society" title="Events" events={serializedEvents} />
       <Title>Members</Title>
-      <ShowUsers query="signal-processing-society" />
+      {/* @ts-ignore */}
+      <ShowUsers query="signal-processing-society" initialData={serializedUsers} />
     </div>
   );
 };

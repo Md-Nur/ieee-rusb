@@ -17,9 +17,21 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "IEEE - RUSB",
-  description:
-    "Institute of Electrical and Electronics Engineers - Rajshahi University Student Branch",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "https://ieee-rusb.org"),
+  title: {
+    default: "IEEE - RUSB",
+    template: "%s | IEEE - RUSB",
+  },
+  description: "Institute of Electrical and Electronics Engineers - Rajshahi University Student Branch",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "/",
+    siteName: "IEEE - RUSB",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

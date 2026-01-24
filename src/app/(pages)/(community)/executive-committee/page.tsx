@@ -1,11 +1,21 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+import { getUsers } from "@/lib/user-data";
 
-const ExecutiveCommittee = () => {
+export const dynamic = "force-dynamic";
+
+const ExecutiveCommittee = async () => {
+  const { users } = await getUsers({ query: "executive-committee", approved: true });
+  const serializedUsers = users.map((u: any) => ({
+    ...u,
+    _id: u._id.toString(),
+  }));
+
   return (
     <div className="w-full">
       <Title>Executive Committee</Title>
-      <ShowUsers query="executive-committee" />
+      {/* @ts-ignore */}
+      <ShowUsers query="executive-committee" initialData={serializedUsers} />
     </div>
   );
 };

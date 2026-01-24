@@ -8,33 +8,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCalendarAlt, FaArrowRight, FaBullhorn } from "react-icons/fa";
 
-const UpcomingEvent = ({ society }: { society?: string }) => {
-  const [upcomingEvent, setUpcomingEvent] = useState<Content | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+const UpcomingEvent = ({ 
+  society, 
+  event 
+}: { 
+  society?: string, 
+  event?: Content | null 
+}) => {
+  if (!event) return null;
 
-  useEffect(() => {
-    let url = "/api/contents?approved=true&query=upcoming-event";
-    if (society) {
-      url += `&society=${society}`;
-    }
-    axios
-      .get(url)
-      .then((res) => {
-        setUpcomingEvent(res.data[0]);
-      })
-      .catch((err) => {
-        console.error("Error fetching upcoming event:", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+  const upcomingEvent = event;
 
-  if (loading) {
-    return <Loading />;
-  } else if (!upcomingEvent) {
-    return null;
-  }
 
   return (
     <section id="events" className="py-24 bg-base-200/30">
