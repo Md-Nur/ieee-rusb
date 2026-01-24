@@ -5,8 +5,8 @@ import { IoIosMail } from "react-icons/io";
 
 const Footer = () => {
   return (
-    <section className="mt-10">
-      <footer className="footer bg-base-200 text-base-content p-6 md:p-10">
+    <section className="mt-10 overflow-hidden">
+      <footer className="footer bg-base-200 text-base-content p-6 md:p-10 overflow-hidden">
         <nav>
           <h6 className="footer-title">Membership</h6>
           <Link href="/join/1" className="link link-hover">
@@ -159,15 +159,16 @@ const Footer = () => {
           </a>
         </nav>
       </footer>
-      <footer className="footer bg-base-200 text-base-content border-base-300 border-t p-5">
-        <aside className="flex flex-wrap items-center">
+      <footer className="footer bg-base-200 text-base-content border-base-300 border-t p-5 overflow-hidden">
+        <aside className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left w-full overflow-hidden">
           <Image
             src="/logo.png"
             alt="IEEE RUSB Logo"
             width={150}
             height={150}
+            className="w-32 h-auto"
           />
-          <p>
+          <p className="max-w-full break-words">
             Copyright &copy; {new Date().getFullYear()} IEEE RUSB All rights
             reserved. <br />
             Developed by&nbsp;
@@ -175,6 +176,7 @@ const Footer = () => {
               href="https://www.linkedin.com/in/mdnur9211/"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-primary hover:underline"
             >
               Md. Nur E Alam Siddiquee
             </a>

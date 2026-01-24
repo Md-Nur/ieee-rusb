@@ -41,10 +41,10 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
         contents.length ? (
           contents.map((content) => (
             <Link
-              href={`/content/${content.slug}`}
-              key={content._id}
-              className="group relative w-full sm:w-[380px] bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-black/5 dark:border-white/5 flex flex-col"
-            >
+                href={`/content/${content.slug}`}
+                key={content._id}
+                className="group relative w-full sm:w-[380px] bg-white dark:bg-slate-900 rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-black/5 dark:border-white/5 flex flex-col"
+              >
               {/* Image Section */}
               <div className="relative h-64 overflow-hidden">
                 <Image
@@ -81,7 +81,7 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
               </div>
 
               {/* Content Section */}
-              <div className="p-8 flex flex-col flex-1 gap-6">
+              <div className="p-6 md:p-8 flex flex-col flex-1 gap-6">
                 <div className="space-y-4">
                   <h2 className="font-display text-2xl font-black tracking-tight text-slate-800 dark:text-white line-clamp-2 leading-tight group-hover:text-primary transition-colors">
                     {content.title}
@@ -95,14 +95,14 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
                     <div className="relative w-12 h-12 rounded-xl overflow-hidden ring-2 ring-primary/10">
                       <Image
                         src={content?.user?.avatar || "/defaultAvatar.jpg"}
-                        alt={content?.user?.name}
+                        alt={content?.user?.name || "Author"}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="overflow-hidden">
-                      <p className="text-sm font-black text-slate-800 dark:text-white truncate">{content.user.name}</p>
-                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">{content.user.position || 'Author'}</p>
+                      <p className="text-sm font-black text-slate-800 dark:text-white truncate">{content.user?.name || "Member"}</p>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider truncate">{content.user?.position || 'Author'}</p>
                     </div>
                   </div>
                 )}

@@ -11,7 +11,11 @@ export interface Content extends Document {
   tags?: string[];
   userId: string;
   society?: string;
+  societyId?: string;
+  societySlug?: string;
   isApproved: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 const ContentSchema = new Schema<Content>({
@@ -23,7 +27,7 @@ const ContentSchema = new Schema<Content>({
   slug: { type: String, required: true },
   regUrl: { type: String },
   tags: { type: [String] },
-  userId: { type: String, required: true },
+  userId: { type: String, ref: "User", required: true },
   society: {
     type: String,
     enum: [
@@ -37,8 +41,10 @@ const ContentSchema = new Schema<Content>({
     ],
     default: "main",
   },
+  societyId: { type: String },
+  societySlug: { type: String },
   isApproved: { type: Boolean, default: false },
-});
+}, { timestamps: true });
 
 const ContentModel =
   (models.Content as Model<Content>) ||

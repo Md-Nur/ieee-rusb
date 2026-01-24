@@ -37,7 +37,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = decodeURIComponent(rawSlug);
   await connectDB();
   
   // Ensure User model is registered
@@ -73,11 +74,11 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
   });
 
   return (
-    <section className="w-full bg-base-100 min-h-screen pb-24 relative">
+    <section className="w-full bg-base-100 min-h-screen pb-24 relative overflow-x-hidden">
       <ReadingProgress />
       <AuthCheck isApproved={content.isApproved} contentUserId={content.userId.toString()} />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-10">
+      <div className="max-w-7xl mx-auto px-4 md:px-12 pt-10">
         {/* Back Button & Metadata */}
         <div className="flex items-center justify-between mb-10">
            <Link href="/blogs" className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
@@ -93,9 +94,9 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
         </div>
 
         {/* Content Hero */}
-        <div className="max-w-4xl mx-auto space-y-10 mb-16">
+        <div className="max-w-4xl mx-auto space-y-10 mb-16 px-2 md:px-0">
           <div className="text-center space-y-6">
-             <h1 className="text-4xl md:text-6xl font-black leading-tight font-display bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-primary to-slate-900 dark:from-white dark:via-primary dark:to-white bg-[length:200%_auto] animate-text-shimmer">
+             <h1 className="text-3xl md:text-6xl font-black leading-tight font-display bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-primary to-slate-900 dark:from-white dark:via-primary dark:to-white bg-[length:200%_auto] animate-text-shimmer">
                {content.title}
              </h1>
              <div className="flex flex-wrap items-center justify-center gap-6 text-slate-500 font-medium">
@@ -111,7 +112,7 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
              </div>
           </div>
 
-          <div className="relative aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5 dark:border-white/5">
+          <div className="relative aspect-[16/9] w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden shadow-2xl border border-black/5 dark:border-white/5">
             <Image
               src={content?.thumbnail}
               alt={content.title}
@@ -129,15 +130,15 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
            {/* Left: Article Content */}
            <div className="flex-1 max-w-4xl mx-auto">
               <article
-                className="custom-html-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-p:leading-relaxed prose-img:rounded-3xl shadow-sm bg-base-200/30 p-8 md:p-12 rounded-[2.5rem] border border-black/5 dark:border-white/5"
+                className="custom-html-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-p:leading-relaxed prose-img:rounded-3xl shadow-sm bg-base-200/30 p-6 md:p-12 rounded-3xl md:rounded-[2.5rem] border border-black/5 dark:border-white/5"
                 dangerouslySetInnerHTML={{ __html: content.content }}
               ></article>
 
               {/* Author Spotlight Card */}
-              <div className="mt-16 p-8 md:p-10 rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 border border-black/5 dark:border-white/5 shadow-xl relative overflow-hidden group">
+              <div className="mt-16 p-6 md:p-10 rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 border border-black/5 dark:border-white/5 shadow-xl relative overflow-hidden group">
                  <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
                  <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden ring-4 ring-primary/10 shadow-lg">
+                    <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-2xl md:rounded-3xl overflow-hidden ring-4 ring-primary/10 shadow-lg">
                        <Image
                          src={content?.user?.avatar || "/defaultAvatar.jpg"}
                          alt={content?.user?.name}

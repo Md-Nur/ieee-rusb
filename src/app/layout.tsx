@@ -17,7 +17,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "https://ieee-rusb.org"),
+  metadataBase: new URL(
+    (process.env.NEXT_PUBLIC_URL?.startsWith("http") 
+      ? process.env.NEXT_PUBLIC_URL 
+      : `http://${process.env.NEXT_PUBLIC_URL}`) || "https://ieee-rusb.org"
+  ),
   title: {
     default: "IEEE - RUSB",
     template: "%s | IEEE - RUSB",
@@ -51,8 +55,9 @@ export default async function RootLayout({
       >
         {/* @ts-ignore */}
         <UserAuthProvider initialUser={user}>
-          <Navbar>{children}</Navbar>
+          <Navbar>{children}
           <Footer />
+          </Navbar>
         </UserAuthProvider>
         <ToastContainer
           position="top-right"

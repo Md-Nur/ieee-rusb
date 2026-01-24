@@ -12,7 +12,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
   return (
     <div className="drawer">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex flex-col min-h-screen">
         {/* Navbar */}
         <div className="navbar bg-white/80 dark:bg-slate-900/80 backdrop-blur-md w-full sticky top-0 z-[50] shadow-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
           <div className="flex-none lg:hidden">
