@@ -35,7 +35,7 @@ const ShowUsers = ({ query, initialData }) => {
   }, [query, initialData]);
 
   return (
-    <div className="flex max-w-7xl justify-center gap-8 flex-wrap mx-auto px-4 py-10">
+    <div id="members" className="flex max-w-7xl justify-center gap-8 flex-wrap mx-auto px-4 py-10">
       {!loading ? (
         users.length ? (
           users.map((user) => (

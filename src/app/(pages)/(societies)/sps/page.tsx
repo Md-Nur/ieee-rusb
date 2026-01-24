@@ -17,6 +17,10 @@ const SPS = async () => {
     {
       image: "https://signalprocessingsociety.org/sites/default/files/SPS_Newsletter_slider_sized.jpg",
       title: "IEEE Signal Processing Society RUSBC",
+      cta: "View Members",
+      link: "#members",
+      secondaryText: "About Society",
+      secondaryLink: "#about"
     },
   ];
 
@@ -46,7 +50,11 @@ const SPS = async () => {
   .populate("userId", "name avatar position")
   .lean();
 
-  const serializedEvents = serializeData(events);
+  const serializedEvents = serializeData(events.map(event => ({
+    ...event,
+    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
+  })));
 
   return (
     <div className="w-full">

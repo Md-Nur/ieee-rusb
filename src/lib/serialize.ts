@@ -17,6 +17,11 @@ export function serializeData(data: any): any {
     return data.toString();
   }
 
+  // Handle Buffers (e.g., societyId: {buffer: ...})
+  if (data.constructor && data.constructor.name === 'Buffer') {
+    return "[Buffer]";
+  }
+
   // Handle Dates
   if (data instanceof Date) {
     return data.toISOString();
@@ -24,9 +29,12 @@ export function serializeData(data: any): any {
 
   // Handle objects
   if (typeof data === 'object') {
+    // If it's not a plain object, try to convert it
     const serialized: any = {};
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
+        // Skip internal Mongoose keys if they somehow leak
+        if (key.startsWith('$') || key.startsWith('__')) continue;
         serialized[key] = serializeData(data[key]);
       }
     }

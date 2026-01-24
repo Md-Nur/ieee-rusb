@@ -17,6 +17,10 @@ const APS = async () => {
     {
       image: "https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg",
       title: "IEEE Antenna & Propagation Society RUSBC",
+      cta: "View Members",
+      link: "#members",
+      secondaryText: "About Society",
+      secondaryLink: "#about"
     },
   ];
 
@@ -46,7 +50,11 @@ const APS = async () => {
   .populate("userId", "name avatar position")
   .lean();
 
-  const serializedEvents = serializeData(events);
+  const serializedEvents = serializeData(events.map(event => ({
+    ...event,
+    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
+  })));
 
   return (
     <div className="w-full">

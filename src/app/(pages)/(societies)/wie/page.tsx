@@ -17,6 +17,10 @@ const WIE = async () => {
     {
       image: "https://img.freepik.com/free-photo/beautiful-girl-s-day-concept_23-2148594283.jpg",
       title: "IEEE Women In Engineering RUSBC",
+      cta: "View Members",
+      link: "#members",
+      secondaryText: "About AG",
+      secondaryLink: "#about"
     },
   ];
 
@@ -46,7 +50,11 @@ const WIE = async () => {
   .populate("userId", "name avatar position")
   .lean();
 
-  const serializedEvents = serializeData(events);
+  const serializedEvents = serializeData(events.map(event => ({
+    ...event,
+    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
+  })));
 
   return (
     <div className="w-full">

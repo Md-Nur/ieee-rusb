@@ -38,6 +38,9 @@ export const metadata: Metadata = {
   },
 };
 
+import ProgressBar from "@/components/Nav/ProgressBar";
+import { Suspense } from "react";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -49,6 +52,9 @@ export default async function RootLayout({
         className={`${outfit.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
+        <Suspense fallback={null}>
+          <ProgressBar />
+        </Suspense>
         {/* @ts-ignore */}
         <UserAuthProvider>
           <Navbar>{children}

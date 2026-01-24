@@ -17,21 +17,27 @@ const HeroData = [
     title: "Advancing Technology for Humanity",
     subtitle: "Empowering students through innovation, collaboration, and ethical engineering.",
     cta: "Become a Member",
-    link: "/join/1"
+    link: "/join/1",
+    secondaryText: "Learn More",
+    secondaryLink: "/#about"
   },
   {
     image: "https://jobs.ieee.org/headers/cc/responsive/partner_lib/23764/img/hero23764.jpg",
     title: "Global Network of Innovators",
     subtitle: "Join the world's largest technical professional organization for the advancement of technology.",
     cta: "Explore Societies",
-    link: "#societies"
+    link: "#societies",
+    secondaryText: "Learn More",
+    secondaryLink: "/#about"
   },
   {
     image: "https://standards.ieee.org/wp-content/uploads/2024/03/iStock-1413210242-DM-r1.jpg",
     title: "Engineering the Future",
     subtitle: "Setting global standards and driving technological breakthroughs at RU.",
     cta: "Upcoming Events",
-    link: "#events"
+    link: "#events",
+    secondaryText: "Learn More",
+    secondaryLink: "/#about"
   },
 ];
 
@@ -86,21 +92,25 @@ const Hero = ({ slides = HeroData, className = "" }: { slides?: any[]; className
                    <p className="text-lg md:text-2xl text-white/80 mb-10 max-w-2xl font-medium leading-relaxed">
                      {item.subtitle}
                    </p>
-                    <div className="flex flex-wrap gap-4 animate-fade-in-up duration-1000 delay-500 mt-2">
-                      <Link 
-                        href={(item.link || "/").startsWith('#') ? `/${item.link}` : (item.link || "/")} 
-                        className="btn btn-primary btn-md md:btn-lg rounded-full px-6 md:px-10 gap-3 group transition-all shadow-xl shadow-primary/20"
-                      >
-                        {item.cta}
-                        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                      </Link>
-                      <Link 
-                        href="/#about" 
-                        className="btn btn-outline btn-md md:btn-lg border-white/50 text-white hover:bg-white hover:text-slate-900 rounded-full px-6 md:px-10 backdrop-blur-sm transition-all"
-                      >
-                        Learn More
-                      </Link>
-                    </div>
+                     <div className="flex flex-wrap gap-4 animate-fade-in-up duration-1000 delay-500 mt-2">
+                       {item.cta && (
+                         <Link 
+                           href={(item.link || "#").startsWith('#') && !item.link?.startsWith('/#') ? item.link : (item.link || "#")} 
+                           className="btn btn-primary btn-md md:btn-lg rounded-full px-6 md:px-10 gap-3 group transition-all shadow-xl shadow-primary/20"
+                         >
+                           {item.cta}
+                           <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                         </Link>
+                       )}
+                       {item.secondaryText && (
+                         <Link 
+                           href={item.secondaryLink || "#about"} 
+                           className="btn btn-outline btn-md md:btn-lg border-white/50 text-white hover:bg-white hover:text-slate-900 rounded-full px-6 md:px-10 backdrop-blur-sm transition-all"
+                         >
+                           {item.secondaryText}
+                         </Link>
+                       )}
+                     </div>
                 </div>
               </div>
             </div>

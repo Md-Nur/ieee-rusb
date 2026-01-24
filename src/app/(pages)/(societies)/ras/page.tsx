@@ -17,6 +17,10 @@ const RAS = async () => {
     {
       image: "https://img.freepik.com/free-photo/futuristic-scene-with-high-tech-robot-used-construction-industry_23-2151329542.jpg",
       title: "IEEE Robotics & Automation Society RUSBC",
+      cta: "View Members",
+      link: "#members",
+      secondaryText: "About Society",
+      secondaryLink: "#about"
     },
   ];
 
@@ -46,7 +50,11 @@ const RAS = async () => {
   .populate("userId", "name avatar position")
   .lean();
 
-  const serializedEvents = serializeData(events);
+  const serializedEvents = serializeData(events.map(event => ({
+    ...event,
+    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
+    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
+  })));
 
   return (
     <div className="w-full">
