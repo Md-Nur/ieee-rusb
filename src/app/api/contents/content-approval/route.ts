@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   }
 
   revalidatePath("/", "layout");
-  revalidateTag("content");
+  revalidateTag("content", "page");
   return Response.json(
     { message: "Content updated successfully" },
     { status: 200 }

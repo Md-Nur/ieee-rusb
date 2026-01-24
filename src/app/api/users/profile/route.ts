@@ -43,7 +43,7 @@ export async function PUT(req: NextRequest) {
     }
 
     revalidatePath("/", "layout");
-    revalidateTag("users");
+    revalidateTag("users", "page");
 
     // Return the updated user (omitting sensitive fields if necessary, 
     // but findByIdAndUpdate returns the full doc by default)

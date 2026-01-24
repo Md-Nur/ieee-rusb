@@ -10,6 +10,6 @@ export async function POST(req: Request) {
   });
 
   revalidatePath("/", "layout");
-  revalidateTag("users");
+  revalidateTag("users", "page");
   return Response.json(updateUser, { status: 200 });
 }

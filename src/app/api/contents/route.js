@@ -35,7 +35,7 @@ export async function POST(req) {
   }
 
   revalidatePath("/", "layout");
-  revalidateTag("content");
+  revalidateTag("content", "page");
   return Response.json(content);
 }
 
