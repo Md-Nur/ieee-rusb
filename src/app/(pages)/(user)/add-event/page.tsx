@@ -1,5 +1,8 @@
+"use client";
+export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
 import Content from "@/components/Content";
+import axios from "axios";
 
 const AddEvent = () => {
   return (

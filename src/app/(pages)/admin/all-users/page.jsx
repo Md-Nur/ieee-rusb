@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
 import axios from "axios";
 import Image from "next/image";

@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
 import { useUserAuth } from "@/context/userAuth";
 import Image from "next/image";

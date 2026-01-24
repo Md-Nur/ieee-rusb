@@ -1,10 +1,12 @@
+"use client";
+export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
 import UserApprovalTable from "@/components/Admin/UserApprovalTable";
 import connectDB from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
+import React, { useEffect, useState } from "react";
 import { FaUserCircle, FaSearch } from "react-icons/fa";
 
-export const dynamic = "force-dynamic";
 
 const UserApproval = async () => {
   await connectDB();

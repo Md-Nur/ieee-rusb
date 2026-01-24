@@ -1,8 +1,10 @@
+"use client";
 import ContentApprovalTable from "@/components/Admin/ContentApprovalTable";
 import Title from "@/components/Title";
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
+import React, { useState, useEffect } from "react";
 import { FaClipboardList } from "react-icons/fa";
 
 export const dynamic = "force-dynamic";
