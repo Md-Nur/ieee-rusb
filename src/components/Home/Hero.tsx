@@ -65,7 +65,6 @@ const Hero = ({ slides = HeroData, className = "" }: { slides?: any[]; className
                   priority={index === 0}
                   className="object-cover"
                   sizes="100vw"
-                  sizes="100vw"
                 />
               </div>
 
