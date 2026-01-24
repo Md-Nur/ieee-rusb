@@ -32,6 +32,15 @@ export async function GET(req: NextRequest) {
     const approved = searchParams.get("approved");
     const position = searchParams.get("position");
     let query = searchParams.get("query");
+    
+    // Pagination params
+    const pageParam = searchParams.get("page");
+    const limitParam = searchParams.get("limit");
+    const isPaginated = pageParam && limitParam;
+
+    const page = parseInt(pageParam || "1", 10);
+    const limit = parseInt(limitParam || "10", 10);
+    const skip = (page - 1) * limit;
 
     if (query) {
       query = query?.replace("-and-", "-&-");
@@ -222,8 +231,33 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const users = await UserModel.aggregate(pipeline);
-    return NextResponse.json(users);
+    if (isPaginated) {
+      pipeline.push({
+        $facet: {
+          metadata: [{ $count: "total" }],
+          users: [{ $skip: skip }, { $limit: limit }],
+        },
+      });
+
+      const result = await UserModel.aggregate(pipeline);
+      
+      const total = result[0]?.metadata[0]?.total || 0;
+      const users = result[0]?.users || [];
+      const totalPages = Math.ceil(total / limit);
+
+      return NextResponse.json({
+        users,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages,
+        },
+      });
+    } else {
+      const users = await UserModel.aggregate(pipeline);
+      return NextResponse.json(users);
+    }
   } catch (error: any) {
     console.error("Fetch Users Error:", error);
     return NextResponse.json(

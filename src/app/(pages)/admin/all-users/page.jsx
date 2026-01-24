@@ -50,17 +50,32 @@ const AllUsers = () => {
   const [editUser, setEditUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10);
+
   // For Edit Modal
   const [formData, setFormData] = useState({});
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [currentPage, limit]);
 
   const fetchUsers = () => {
+    setLoading(true);
     axios
-      .get("/api/users?approved=true") // Fetch all approved users
-      .then((res) => setUsers(res.data))
+      .get(`/api/users?approved=true&page=${currentPage}&limit=${limit}`) // Fetch users with pagination
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+           // Fallback if API returns array (should not happen with new logic but good for safety)
+           setUsers(res.data);
+           setTotalPages(1);
+        } else {
+           setUsers(res.data.users);
+           setTotalPages(res.data.pagination.totalPages);
+        }
+      })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
   };
@@ -139,6 +154,27 @@ const AllUsers = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-6">
+        <div className="join">
+          <button 
+            className="join-item btn" 
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            «
+          </button>
+          <button className="join-item btn">Page {currentPage} of {totalPages}</button>
+          <button 
+            className="join-item btn" 
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            »
+          </button>
+        </div>
       </div>
 
       {/* Edit Modal */}
