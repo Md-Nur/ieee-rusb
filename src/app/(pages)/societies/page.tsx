@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
 import { FaArrowRight, FaUsers, FaAtom, FaMicrochip, FaBolt, FaSatelliteDish, FaFemale, FaProjectDiagram } from "react-icons/fa";
 
