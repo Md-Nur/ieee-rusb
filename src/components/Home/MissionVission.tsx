@@ -46,7 +46,7 @@ const MissionVission = ({ vision, mission }: MissionVissionProps) => {
                </div>
                
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {defaultMission.map((item, index) => (
+                  {(mission ? mission.map((text, i) => ({ text, icon: defaultMission[i % defaultMission.length].icon })) : defaultMission).map((item, index) => (
                     <div 
                       key={index} 
                       className="group p-6 bg-base-100 rounded-3xl border border-base-content/5 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300"

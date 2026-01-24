@@ -69,7 +69,6 @@ const GalleryPage = () => {
                   src={image.img}
                   alt={image.title}
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-                  unoptimized={image.img.includes('ieee.org')}
                 />
 
                 {/* Technical Overlay */}
@@ -122,7 +121,6 @@ const GalleryPage = () => {
                   alt={selectedImage.title}
                   fill
                   className="object-contain"
-                  unoptimized={selectedImage.img.includes('ieee.org')}
                 />
               </div>
 

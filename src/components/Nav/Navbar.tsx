@@ -31,6 +31,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
                 alt="IEEE RUSB Logo"
                 width={150}
                 height={150}
+                className="w-28 md:w-40 h-auto"
               />
             </Link>
           </div>
