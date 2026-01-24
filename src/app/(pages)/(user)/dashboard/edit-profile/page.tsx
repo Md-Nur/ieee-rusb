@@ -213,9 +213,15 @@ const EditProfile = () => {
             </label>
             <input
               type="text"
-              placeholder="01712345678"
+              placeholder="+1234567890"
               className={`input input-bordered w-full ${errors.phone ? 'input-error' : ''}`}
-              {...register("phone", { required: "Phone number is required" })}
+              {...register("phone", { 
+                required: "Phone number is required",
+                pattern: {
+                  value: /^\+?[1-9]\d{1,14}$/,
+                  message: "Invalid phone number format"
+                }
+              })}
             />
           </div>
         </div>

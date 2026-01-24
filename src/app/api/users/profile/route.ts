@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function PUT(req: NextRequest) {
   try {
@@ -40,6 +41,9 @@ export async function PUT(req: NextRequest) {
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    revalidatePath("/", "layout");
+    revalidateTag("users");
 
     // Return the updated user (omitting sensitive fields if necessary, 
     // but findByIdAndUpdate returns the full doc by default)

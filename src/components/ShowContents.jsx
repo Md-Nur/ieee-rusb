@@ -3,7 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Loading from "./Loading";
+import ContentSkeleton from "./Skeletons/ContentSkeleton";
 import { FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
 
 /**
@@ -46,7 +46,7 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
                 className="group relative w-full sm:w-[380px] bg-white dark:bg-slate-900 rounded-3xl md:rounded-[2.5rem] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-black/5 dark:border-white/5 flex flex-col"
               >
               {/* Image Section */}
-              <div className="relative h-64 overflow-hidden">
+              <div className="relative aspect-video overflow-hidden">
                 <Image
                   src={content.thumbnail || "/logo.png"}
                   height={600}
@@ -127,7 +127,7 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
           </div>
         )
       ) : (
-        <Loading />
+        <ContentSkeleton />
       )}
     </div>
   );

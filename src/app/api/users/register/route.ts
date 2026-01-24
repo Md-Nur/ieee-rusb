@@ -18,9 +18,7 @@ export async function POST(req: Request) {
     return Response.json({ error: "All fields are required" }, { status: 404 });
   }
 
-  if (data.phone.startsWith("+8801")) {
-    data.phone = data.phone.slice(3);
-  }
+  // Removed Bangladesh-specific phone normalization to support international numbers
 
   const existingUser = await UserModel.findOne({
     $or: [{ email: data.email }, { phone: data.phone }, ...(data.ieee_id ? [{ ieee_id: data.ieee_id }] : [])],

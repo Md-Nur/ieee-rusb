@@ -9,8 +9,10 @@ import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
 import { serializeData } from "@/lib/serialize";
+import { getRecentEvents } from "@/lib/content-data";
+import SocietySpeech from "@/components/Home/SocietySpeech";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 const PES = async () => {
   const slides = [
@@ -38,23 +40,7 @@ const PES = async () => {
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  await connectDB();
-  const _ = UserModel;
-  const events = await ContentModel.find({ 
-    society: "power-&-energy-society",
-    type: "event",
-    isApproved: true
-  })
-  .sort({ date: -1 })
-  .limit(3)
-  .populate("userId", "name avatar position")
-  .lean();
-
-  const serializedEvents = serializeData(events.map(event => ({
-    ...event,
-    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
-    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
-  })));
+  const serializedEvents = await getRecentEvents(3, "power-&-energy-society");
 
   return (
     <div className="w-full">
@@ -65,6 +51,7 @@ const PES = async () => {
         image="https://img.freepik.com/free-photo/solar-panels-wind-turbines-electricity-station-at-sunset_335224-1188.jpg"
       />
       <MissionVission vision={vision} mission={mission} />
+      <SocietySpeech society="power-&-energy-society" />
       {/* @ts-ignore */}
       <RecentEvents society="power-&-energy-society" title="Events" events={serializedEvents} />
       <Title>Members</Title>

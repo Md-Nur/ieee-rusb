@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const existingSlug = async (title) => {
   await dbConnect();
@@ -32,6 +33,9 @@ export async function POST(req) {
   if (!content) {
     return Response.json({ error: "content didn't added" }, { status: 400 });
   }
+
+  revalidatePath("/", "layout");
+  revalidateTag("content");
   return Response.json(content);
 }
 

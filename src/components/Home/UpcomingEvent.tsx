@@ -40,6 +40,7 @@ const UpcomingEvent = ({
                   src={upcomingEvent.thumbnail}
                   alt={upcomingEvent.title}
                   fill
+                  priority
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 lg:hidden">

@@ -107,7 +107,7 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
              </div>
           </div>
 
-          <div className="relative aspect-[16/9] w-full md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5">
+          <div className="relative aspect-video w-full md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5">
             <Image
               src={content?.thumbnail}
               alt={content.title}

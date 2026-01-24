@@ -71,22 +71,40 @@ export async function GET(req: NextRequest) {
 
     // Handle Societies
     let isSocietyQuery = false;
+    const society = searchParams.get("society");
+    const designation = searchParams.get("designation");
+
     if (
       query === "women-in-engineering-society" ||
       query === "signal-processing-society" ||
       query === "antenna-&-propagation-society" ||
       query === "computer-society" ||
       query === "power-&-energy-society" ||
-      query === "robotics-&-automation-society"
+      query === "robotics-&-automation-society" ||
+      society
     ) {
       isSocietyQuery = true;
+      const targetSociety = query || society;
       pipeline.push({
         $match: {
           societies: {
-            $elemMatch: { $eq: query },
+            $elemMatch: { $eq: targetSociety },
           },
         },
       });
+
+      if (designation) {
+        pipeline.push({
+          $match: {
+            society_designations: {
+              $elemMatch: {
+                society: targetSociety,
+                designation: designation
+              }
+            }
+          }
+        });
+      }
     }
 
     pipeline.push({

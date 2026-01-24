@@ -4,7 +4,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import { PiLinkedinLogoBold } from "react-icons/pi";
-import Loading from "./Loading";
+import { sortUsersByDesignation } from "@/lib/designation";
+import UserSkeleton from "./Skeletons/UserSkeleton";
 
 const societyAcronyms = {
   "robotics-&-automation-society": "RAS",
@@ -16,7 +17,7 @@ const societyAcronyms = {
 };
 
 const ShowUsers = ({ query, initialData }) => {
-  const [users, setUsers] = useState(initialData || []);
+  const [users, setUsers] = useState(initialData ? sortUsersByDesignation(initialData) : []);
   const [loading, setLoading] = useState(!initialData);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ const ShowUsers = ({ query, initialData }) => {
     axios
       .get(`/api/users?query=${query.replace("-&-", "-and-")}&approved=true`)
       .then((res) => {
-        setUsers(res.data);
+        setUsers(sortUsersByDesignation(res.data));
       })
       .catch((err) => {
         console.error(err);
@@ -130,7 +131,7 @@ const ShowUsers = ({ query, initialData }) => {
           </div>
         )
       ) : (
-        <Loading />
+        <UserSkeleton />
       )}
     </div>
   );

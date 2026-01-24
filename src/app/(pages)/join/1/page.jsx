@@ -12,12 +12,12 @@ const Join = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const bdPhoneRegex = /^(?:\+88)?01[3-9]\d{8}$/;
+    const intPhoneRegex = /^\+?[1-9]\d{1,14}$/;
     if (user.name === "" || user.email === "" || !user.ieee_id) {
       toast.error("Please fill all the fields");
       return;
-    } else if (!bdPhoneRegex.test(user.phone)) {
-      toast.error("Invalid Phone Number");
+    } else if (!intPhoneRegex.test(user.phone)) {
+      toast.error("Invalid Phone Number. Please use international format (e.g. +1234567890)");
       return;
     }
 

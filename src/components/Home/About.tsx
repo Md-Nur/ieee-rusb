@@ -25,6 +25,7 @@ const About = ({ title, description, image }: AboutProps) => {
                 alt="IEEE Community"
                 width={800}
                 height={600}
+                priority
                 className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>

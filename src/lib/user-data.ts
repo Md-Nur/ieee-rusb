@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { serializeData } from "./serialize";
+import { unstable_cache } from "next/cache";
 
 const positions = [
   "Counselor",
@@ -24,7 +25,7 @@ const positions = [
   "Other",
 ];
 
-export async function getUsers({
+async function getUsersInternal({
   approved,
   query,
   limit,
@@ -243,3 +244,11 @@ export async function getUsers({
     return { users };
   }
 }
+
+export const getUsers = (params: { approved?: boolean; query?: string; limit?: number; page?: number }) => {
+  return unstable_cache(
+    async () => getUsersInternal(params),
+    [`users-${JSON.stringify(params)}`],
+    { revalidate: 3600, tags: ["users"] }
+  )();
+};

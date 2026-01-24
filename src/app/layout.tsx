@@ -57,8 +57,11 @@ export default async function RootLayout({
         </Suspense>
         {/* @ts-ignore */}
         <UserAuthProvider>
-          <Navbar>{children}
-          <Footer />
+          <Navbar>
+            <main className="animate-page-fade">
+              {children}
+            </main>
+            <Footer />
           </Navbar>
         </UserAuthProvider>
         <ToastContainer
