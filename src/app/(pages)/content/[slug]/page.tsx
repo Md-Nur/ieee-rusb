@@ -107,13 +107,13 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
              </div>
           </div>
 
-          <div className="relative aspect-video w-full md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5">
+          <div className="relative aspect-video w-full md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-slate-900">
             <Image
               src={content?.thumbnail}
               alt={content.title}
               fill
               priority
-              className="object-cover transition-transform duration-[10000ms] hover:scale-105"
+              className="object-contain transition-transform duration-[10000ms] hover:scale-105"
               sizes="(max-width: 896px) 100vw, 896px"
               unoptimized={content?.thumbnail?.includes('ieee.org')}
             />

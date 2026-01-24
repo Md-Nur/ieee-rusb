@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 /**
- * A simple navigation progress bar that provides immediate feedback 
- * when the URL changes. In Next.js App Router, this helps with SSR latency.
+ * A smart navigation progress bar that only shows when navigation
+ * takes longer than a threshold (150ms). This prevents the bar from
+ * appearing on fast client-side navigations while still providing
+ * feedback for slower SSR fetches.
  */
 const ProgressBar = () => {
   const pathname = usePathname();
@@ -12,9 +14,25 @@ const ProgressBar = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1200);
-    return () => clearTimeout(timer);
+    let delayTimer: NodeJS.Timeout;
+    let hideTimer: NodeJS.Timeout;
+
+    // Only show loading bar if navigation takes longer than 150ms
+    delayTimer = setTimeout(() => {
+      setLoading(true);
+      
+      // Auto-hide after 600ms max
+      hideTimer = setTimeout(() => {
+        setLoading(false);
+      }, 600);
+    }, 150);
+
+    // Cleanup function - navigation completed
+    return () => {
+      clearTimeout(delayTimer);
+      clearTimeout(hideTimer);
+      setLoading(false);
+    };
   }, [pathname, searchParams]);
 
   if (!loading) return null;
@@ -36,7 +54,7 @@ const ProgressBar = () => {
           100% { transform: scaleX(1); opacity: 0; }
         }
         .animate-progress-trickle {
-          animation: progress-trickle 1.5s cubic-bezier(0.1, 0.5, 0.5, 1) forwards;
+          animation: progress-trickle 0.8s cubic-bezier(0.1, 0.5, 0.5, 1) forwards;
         }
       `}</style>
     </div>
