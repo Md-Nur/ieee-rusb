@@ -1,7 +1,6 @@
 import ContentActions from "@/components/Content/ContentActions";
 import ReadingProgress from "@/components/Content/ReadingProgress";
-import AuthCheck from "@/components/Content/AuthCheck"; // We will create this
-import Title from "@/components/Title";
+import AuthCheck from "@/components/Content/AuthorizationCheck"; // We will create this
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";

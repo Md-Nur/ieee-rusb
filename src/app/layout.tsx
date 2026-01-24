@@ -34,18 +34,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+import { getUserFromCookie } from "@/lib/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getUserFromCookie();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${outfit.variable} ${inter.variable} antialiased`}
         suppressHydrationWarning
       >
-        <UserAuthProvider>
+        {/* @ts-ignore */}
+        <UserAuthProvider initialUser={user}>
           <Navbar>{children}</Navbar>
           <Footer />
         </UserAuthProvider>

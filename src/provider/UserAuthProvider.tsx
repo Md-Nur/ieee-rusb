@@ -5,23 +5,28 @@ import { Users } from "@/models/user.model";
 import axios from "axios";
 import { ReactNode, useEffect, useState } from "react";
 
-const UserAuthProvider = ({ children }: { children: ReactNode }) => {
-  const [userAuth, setUserAuth] = useState<Users | null>(null);
-  const [loading, setLoading] = useState(true);
+const UserAuthProvider = ({ 
+  children, 
+  initialUser 
+}: { 
+  children: ReactNode; 
+  initialUser?: Users | null;
+}) => {
+  const [userAuth, setUserAuth] = useState<Users | null>(initialUser || null);
+  const [loading, setLoading] = useState(!initialUser);
+
   useEffect(() => {
+    if (initialUser) return;
+    
     axios
       .get("/api/jwt")
       .then((res) => setUserAuth(res.data))
-      .then(() => console.log(userAuth))
       .catch((error) => {
-        console.log(error?.response?.data?.error || error.message);
+        // Silently fail or log, user just won't be logged in
+        console.log("Auth check failed:", error?.message);
       })
       .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
+  }, [initialUser]);
 
   return (
     <UserAuth.Provider value={{ userAuth, setUserAuth }}>

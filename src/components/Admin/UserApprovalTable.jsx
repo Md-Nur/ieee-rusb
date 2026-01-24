@@ -1,35 +1,17 @@
 "use client";
-import Title from "@/components/Title";
-import axios from "axios";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 import { FaCheck, FaTimes, FaSearch, FaUserCircle, FaEnvelope, FaPhone, FaUndo } from "react-icons/fa";
 import Loading from "@/components/Loading";
 
-const UserApproval = () => {
-  const [users, setUsers] = useState(null);
-  const [loading, setLoading] = useState(true);
+const UserApprovalTable = ({ initialUsers }) => {
+  const [users, setUsers] = useState(initialUsers || []);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [processingId, setProcessingId] = useState(null);
   const [activeTab, setActiveTab] = useState("pending");
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get("/api/users"); // Fetch all users
-      setUsers(res.data);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to fetch users");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleStatusChange = async (id, isApproved) => {
     setProcessingId(id);
@@ -100,13 +82,10 @@ const UserApproval = () => {
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-4 md:p-6 min-h-screen">
+    <>
       <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
         <div>
-          <Title>Member Management</Title>
-          <p className="text-base-content/60 mt-1">
-            Manage pending registrations and active members
-          </p>
+          {/* Header left empty here as it's passed from parent or handled separately */}
         </div>
         
         <div className="relative w-full md:w-96">
@@ -268,8 +247,8 @@ const UserApproval = () => {
           </table>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default UserApproval;
+export default UserApprovalTable;
