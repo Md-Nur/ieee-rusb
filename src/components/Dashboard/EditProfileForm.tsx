@@ -10,6 +10,7 @@ import Image from "next/image";
 import { FaUpload } from "react-icons/fa";
 import Loading from "@/components/Loading";
 import { positions, memberRoles } from "@/lib/constants";
+import { Users } from "@/models/user.model";
 
 const availableSocieties = [
   { id: "robotics-&-automation-society", name: "Robotics & Automation Society" },
@@ -20,15 +21,18 @@ const availableSocieties = [
   { id: "women-in-engineering-society", name: "Women In Engineering" },
 ];
 
-const EditProfileForm = () => {
+const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
   const router = useRouter();
   const { userAuth, setUserAuth } = useUserAuth();
+  // Use initialUser if available, otherwise fall back to context userAuth
+  const currentUser = initialUser || userAuth;
+
   const [image, setImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(currentUser?.avatar || null);
   const [loading, setLoading] = useState(false);
-  const [selectedSocieties, setSelectedSocieties] = useState<string[]>([]);
-  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
-  const [societyDesignations, setSocietyDesignations] = useState<{ society: string; designation: string }[]>([]);
+  const [selectedSocieties, setSelectedSocieties] = useState<string[]>(currentUser?.societies || []);
+  const [selectedRoles, setSelectedRoles] = useState<string[]>(currentUser?.roles || []);
+  const [societyDesignations, setSocietyDesignations] = useState<{ society: string; designation: string }[]>(currentUser?.society_designations || []);
 
   const {
     register,
@@ -37,30 +41,30 @@ const EditProfileForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      phone: "",
-      linkedin: "",
-      ieee_id: "",
-      position: "",
-    },
+      name: currentUser?.name || "",
+      phone: currentUser?.phone || "",
+      linkedin: currentUser?.linkedin || "",
+      ieee_id: currentUser?.ieee_id || "",
+      position: currentUser?.position || "",
+    }
   });
 
+  // Sync with context updates if they happen (e.g. after save)
   useEffect(() => {
-    if (userAuth) {
-   reset({
+    if (userAuth && !initialUser) {
+      reset({
         name: userAuth.name || "",
         phone: userAuth.phone || "",
-        // @ts-ignore
-        linkedin: userAuth.linkedin || userAuth.linkedIn || "",
-        ieee_id: userAuth.ieee_id || "",
-        position: userAuth.position || "",
+        linkedin: userAuth?.linkedin || "",
+        ieee_id: userAuth?.ieee_id || "",
+        position: userAuth?.position || "",
       });
       setPreview(userAuth.avatar || null);
       setSelectedSocieties(userAuth.societies || []);
       setSelectedRoles(userAuth.roles || []);
       setSocietyDesignations(userAuth.society_designations || []);
     }
-  }, [userAuth, reset]);
+  }, [userAuth, reset, initialUser]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
