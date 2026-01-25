@@ -50,7 +50,8 @@ const EditProfileForm = () => {
       reset({
         name: userAuth.name || "",
         phone: userAuth.phone || "",
-        linkedin: userAuth.linkedin || "",
+        // @ts-ignore - Check for camelCase just in case
+        linkedin: userAuth.linkedin || userAuth.linkedIn || "",
         ieee_id: userAuth.ieee_id || "",
         position: userAuth.position || "",
       });
