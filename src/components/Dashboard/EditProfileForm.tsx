@@ -47,10 +47,10 @@ const EditProfileForm = () => {
 
   useEffect(() => {
     if (userAuth) {
-      reset({
+   reset({
         name: userAuth.name || "",
         phone: userAuth.phone || "",
-        // @ts-ignore - Check for camelCase just in case
+        // @ts-ignore
         linkedin: userAuth.linkedin || userAuth.linkedIn || "",
         ieee_id: userAuth.ieee_id || "",
         position: userAuth.position || "",
