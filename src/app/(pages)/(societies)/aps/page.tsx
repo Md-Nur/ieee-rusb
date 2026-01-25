@@ -1,5 +1,10 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+
+export const metadata = {
+  title: "Antennas and Propagation Society",
+  description: "Learn about electromagnetic wave propagation and antenna design at IEEE APS rusbc.",
+};
 import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";

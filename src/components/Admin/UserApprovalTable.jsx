@@ -3,8 +3,9 @@ import Image from "next/image";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { FaCheck, FaTimes, FaSearch, FaUserCircle, FaEnvelope, FaPhone, FaUndo } from "react-icons/fa";
+import { FaCheck, FaTimes, FaSearch, FaUserCircle, FaEnvelope, FaPhone, FaUndo, FaUserShield } from "react-icons/fa";
 import Loading from "@/components/Loading";
+import { deptShorthands } from "@/lib/constants";
 
 const UserApprovalTable = ({ initialUsers }) => {
   const [users, setUsers] = useState(initialUsers || []);
@@ -43,6 +44,8 @@ const UserApprovalTable = ({ initialUsers }) => {
       setProcessingId(null);
     }
   };
+
+
 
   const handleReject = async (id, name) => {
     if (!window.confirm(`Are you sure you want to reject and DELETE ${name}'s registration?`)) return;
@@ -126,7 +129,7 @@ const UserApprovalTable = ({ initialUsers }) => {
                 <th>Member</th>
                 <th className="hidden lg:table-cell">Contact</th>
                 <th>Academic/Role</th>
-                <th className="hidden md:table-cell">Societies</th>
+
                 <th className="text-right">Actions</th>
               </tr>
             </thead>
@@ -168,7 +171,7 @@ const UserApprovalTable = ({ initialUsers }) => {
                     <td>
                       <div className="flex flex-col gap-1 min-w-[150px]">
                         <div className="font-bold text-sm leading-tight text-primary">
-                          {user?.dept}
+                          {deptShorthands[user?.dept] || user?.dept}
                         </div>
                         <div className="text-xs font-medium opacity-60">
                           {user?.session || user?.designation}
@@ -178,15 +181,7 @@ const UserApprovalTable = ({ initialUsers }) => {
                         </div>
                       </div>
                     </td>
-                    <td className="hidden md:table-cell">
-                      <div className="flex flex-wrap gap-1.5 min-w-[180px] max-w-[250px]">
-                        {user?.societies?.map((soc, i) => (
-                          <span key={i} className="badge badge-accent badge-outline badge-sm capitalize h-auto py-1 px-2 text-center whitespace-normal font-medium">
-                            {soc.split("-").join(" ")}
-                          </span>
-                        )) || <span className="text-xs opacity-30 italic">None</span>}
-                      </div>
-                    </td>
+
                     <td className="text-right">
                       <div className="flex justify-end gap-2">
                         {user.isApproved ? (

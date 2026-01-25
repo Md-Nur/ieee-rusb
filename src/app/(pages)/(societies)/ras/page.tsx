@@ -14,6 +14,11 @@ import SocietySpeech from "@/components/Home/SocietySpeech";
 
 export const revalidate = 3600;
 
+export const metadata = {
+  title: "Robotics & Automation Society",
+  description: "Explore the cutting-edge robotics projects and automated systems developed by IEEE RAS rusbc.",
+};
+
 const RAS = async () => {
   const slides = [
     {

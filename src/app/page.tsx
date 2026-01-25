@@ -17,6 +17,11 @@ import { getUpcomingEvent, getRecentEvents } from "@/lib/content-data";
 // Revalidate every hour
 export const revalidate = 3600;
 
+export const metadata = {
+  title: "Home",
+  description: "Official website of IEEE Rajshahi University Student Branch (RUSB). Discover our mission, members, and upcoming events in the world of technology and engineering.",
+};
+
 export default async function Home() {
   await connectDB();
 

@@ -1,5 +1,10 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+
+export const metadata = {
+  title: "Power & Energy Society",
+  description: "Building a sustainable future through power engineering and energy innovation at IEEE PES rusbc.",
+};
 import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";

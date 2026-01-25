@@ -14,7 +14,7 @@ const Navbar = ({ children }: { children: ReactNode }) => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col min-h-screen">
         {/* Navbar */}
-        <div className="navbar bg-white/80 dark:bg-slate-900/80 backdrop-blur-md w-full sticky top-0 z-[50] shadow-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
+        <div className="navbar bg-white/80 dark:bg-slate-900/80 backdrop-blur-md w-full fixed top-0 left-0 right-0 z-[50] shadow-md border-b border-black/5 dark:border-white/5 transition-all duration-300">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -60,7 +60,9 @@ const Navbar = ({ children }: { children: ReactNode }) => {
             <Profile />
           )}
         </div>
-        {children}
+        <div className="pt-16 md:pt-20">
+          {children}
+        </div>
       </div>
       <div className="drawer-side z-[60]">
         <label

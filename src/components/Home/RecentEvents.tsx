@@ -17,7 +17,7 @@ const RecentEvents = ({
   if (!events || events.length === 0) return null;
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div className="w-full">
       <Title>{title}</Title>
       {/* @ts-ignore */}
       <ShowContents query="recent-events" society={society} initialData={events} />

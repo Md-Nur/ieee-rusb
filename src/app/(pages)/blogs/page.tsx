@@ -1,39 +1,40 @@
 import ShowContents from "@/components/ShowContents";
 import Title from "@/components/Title";
-import connectDB from "@/lib/dbConnect";
-import ContentModel from "@/models/content.model";
-import UserModel from "@/models/user.model";
+
+export const metadata = {
+  title: "Blogs",
+  description: "Read technical articles, experience sharing, and insights from the members of IEEE RUSB.",
+};
 
 export const dynamic = "force-dynamic";
 
 const Blogs = async () => {
-  await connectDB();
-  const _ = UserModel; // Ensure registration
+  const baseUrl = process.env.NEXT_PUBLIC_URL?.startsWith("http") 
+    ? process.env.NEXT_PUBLIC_URL 
+    : `http://${process.env.NEXT_PUBLIC_URL}`;
+  
+  const res = await fetch(`${baseUrl}/api/contents?query=blog&approved=true`, {
+    cache: "no-store",
+  });
 
-  const blogs = await ContentModel.find({ 
-    type: "blog", 
-    isApproved: true 
-  })
-  .sort({ date: -1 })
-  .populate("userId", "name avatar position")
-  .lean();
+  if (!res.ok) {
+    console.error("Failed to fetch blogs:", res.statusText);
+    return (
+      <div className="w-full overflow-x-auto">
+        <Title>Blogs</Title>
+        {/* @ts-ignore */}
+        <ShowContents query="blog" initialData={[]} hideIfEmpty={false} />
+      </div>
+    );
+  }
 
-  const serializedBlogs = blogs.map(blog => ({
-    ...blog,
-    _id: blog._id.toString(),
-    userId: (blog.userId as any)?._id?.toString() || (blog.userId as any)?.toString(),
-    user: blog.userId ? {
-        name: (blog.userId as any).name,
-        avatar: (blog.userId as any).avatar,
-        position: (blog.userId as any).position,
-    } : null
-  }));
+  const blogs = await res.json();
 
   return (
     <div className="w-full overflow-x-auto">
       <Title>Blogs</Title>
       {/* @ts-ignore */}
-      <ShowContents query="blog" initialData={serializedBlogs} hideIfEmpty={false} />
+      <ShowContents query="blog" initialData={blogs} hideIfEmpty={false} />
     </div>
   );
 };

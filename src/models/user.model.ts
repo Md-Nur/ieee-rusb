@@ -17,12 +17,15 @@ export interface Users extends Document {
   designation?: string;
   ieee_id?: string;
   society_designations?: { society: string; designation: string }[];
+  forgotPasswordToken?: string;
+  forgotPasswordTokenExpiry?: Date;
 }
 
 const UserSchema = new Schema<Users>({
   name: {
     type: String,
     required: true,
+    trim: true,
   },
   avatar: {
     type: String,
@@ -30,13 +33,19 @@ const UserSchema = new Schema<Users>({
   email: {
     type: String,
     required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    index: true,
   },
   phone: {
     type: String,
     required: true,
+    trim: true,
   },
   linkedin: {
     type: String,
+    trim: true,
   },
   password: {
     type: String,
@@ -45,6 +54,7 @@ const UserSchema = new Schema<Users>({
   roles: {
     type: [String],
     default: [],
+    index: true,
     enum: [
       "executive-committee",
       "faculty-member",
@@ -58,25 +68,26 @@ const UserSchema = new Schema<Users>({
     enum: [
       "Counselor",
       "Advisor",
-      "Senior member",
+      "Senior Member",
       "Alumni",
       "Chairperson",
-      "Vice Chair",
-      "General Sec",
-      "Ass GS",
-      "Treasuerer",
+      "Vice Chairperson",
+      "General Secretary",
+      "Assistant General Secretary",
+      "Treasurer",
       "Webmaster",
-      "Programm coordinator",
+      "Program Coordinator",
       "Graphic Designer",
       "Content Development",
       "Membership Development",
-      "Public Relation",
+      "Public Relation Coordinator",
       "Photographer",
-      "Publication coordinator",
+      "Publication Coordinator",
       "Volunteer",
       "Other",
     ],
     required: true,
+    index: true,
   },
   isAdmin: {
     type: Boolean,
@@ -97,6 +108,7 @@ const UserSchema = new Schema<Users>({
   isApproved: {
     type: Boolean,
     default: false,
+    index: true,
   },
   dept: {
     type: String,
@@ -112,6 +124,7 @@ const UserSchema = new Schema<Users>({
   },
   session: {
     type: String,
+    trim: true,
   },
   designation: {
     type: String,
@@ -122,14 +135,24 @@ const UserSchema = new Schema<Users>({
       "Lecturer",
       "Other",
     ],
+    trim: true,
   },
   ieee_id: {
     type: String,
     required: true,
+    unique: true,
+    index: true,
+    trim: true,
   },
   society_designations: {
     type: [{ society: String, designation: String }],
     default: [],
+  },
+  forgotPasswordToken: {
+    type: String,
+  },
+  forgotPasswordTokenExpiry: {
+    type: Date,
   },
 });
 

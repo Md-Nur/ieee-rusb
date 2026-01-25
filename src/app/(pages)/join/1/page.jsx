@@ -12,7 +12,7 @@ const Join = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const intPhoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const intPhoneRegex = /^\+?[0-9]\d{1,14}$/;
     if (user.name === "" || user.email === "" || !user.ieee_id) {
       toast.error("Please fill all the fields");
       return;

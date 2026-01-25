@@ -1,21 +1,21 @@
 export const designationPriority: Record<string, number> = {
   "Counselor": 1,
   "Advisor": 2,
-  "Senior member": 3,
-  "Alumni": 4,
+  "Alumni": 3,
+  "Senior Member": 4,
   "Chairperson": 5,
-  "Vice Chair": 6,
-  "General Sec": 7,
-  "Ass GS": 8,
-  "Treasuerer": 9,
+  "Vice Chairperson": 6,
+  "General Secretary": 7,
+  "Assistant General Secretary": 8,
+  "Treasurer": 9,
   "Webmaster": 10,
-  "Programm coordinator": 11,
+  "Program Coordinator": 11,
   "Graphic Designer": 12,
   "Content Development": 13,
   "Membership Development": 14,
-  "Public Relation": 15,
+  "Public Relation Coordinator": 15,
   "Photographer": 16,
-  "Publication coordinator": 17,
+  "Publication Coordinator": 17,
   "Volunteer": 18,
   "Other": 19,
 };
@@ -25,11 +25,24 @@ export const getDesignationPriority = (designation?: string): number => {
   return designationPriority[designation] || designationPriority["Other"];
 };
 
-export const sortUsersByDesignation = (users: any[]) => {
+export const sortUsersByDesignation = (users: any[], society?: string) => {
   return [...users].sort((a, b) => {
-    const priorityA = getDesignationPriority(a.position || "Member");
-    const priorityB = getDesignationPriority(b.position || "Member");
+    let priorityA = getDesignationPriority(a.position || "Member");
+    let priorityB = getDesignationPriority(b.position || "Member");
     
+    // If society context is provided, check for society-specific designation
+    if (society) {
+      const societyDesignationA = a.society_designations?.find((sd: any) => sd.society === society)?.designation;
+      const societyDesignationB = b.society_designations?.find((sd: any) => sd.society === society)?.designation;
+      
+      if (societyDesignationA) {
+        priorityA = getDesignationPriority(societyDesignationA);
+      }
+      if (societyDesignationB) {
+        priorityB = getDesignationPriority(societyDesignationB);
+      }
+    }
+
     if (priorityA !== priorityB) {
       return priorityA - priorityB;
     }

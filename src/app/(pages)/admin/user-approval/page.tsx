@@ -1,25 +1,28 @@
-"use client";
-export const dynamic = "force-dynamic";
 import Title from "@/components/Title";
-import UserApprovalTable from "@/components/Admin/UserApprovalTable";
-import connectDB from "@/lib/dbConnect";
-import UserModel from "@/models/user.model";
-import React, { useEffect, useState } from "react";
-import { FaUserCircle, FaSearch } from "react-icons/fa";
 
+export const metadata = {
+  title: "User Approval",
+};
+import UserApprovalTable from "@/components/Admin/UserApprovalTable";
+import React from "react";
+
+export const dynamic = "force-dynamic";
 
 const UserApproval = async () => {
-  await connectDB();
-  
-  const users = await UserModel.find({}).sort({ createdAt: -1 }).lean();
-  
-  const serializedUsers = users.map(user => ({
-    ...user,
-    _id: user._id.toString(),
-    societies: user.societies || [],
-    roles: user.roles || [],
-    society_designations: user.society_designations || [],
-  }));
+  const baseUrl = process.env.NEXT_PUBLIC_URL?.startsWith("http") 
+    ? process.env.NEXT_PUBLIC_URL 
+    : `http://${process.env.NEXT_PUBLIC_URL}`;
+
+  const res = await fetch(`${baseUrl}/api/users`, {
+    cache: "no-store",
+  });
+
+  let users = [];
+  if (res.ok) {
+    users = await res.json();
+  } else {
+    console.error("Failed to fetch users");
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto p-4 md:p-6 min-h-screen">
@@ -27,13 +30,13 @@ const UserApproval = async () => {
         <div>
           <Title>Member Management</Title>
           <p className="text-base-content/60 mt-1">
-            Manage pending registrations and active members
+            Review pending registrations and manage approved members
           </p>
         </div>
       </div>
 
       {/* @ts-ignore */}
-      <UserApprovalTable initialUsers={serializedUsers} />
+      <UserApprovalTable initialUsers={users} />
     </div>
   );
 };

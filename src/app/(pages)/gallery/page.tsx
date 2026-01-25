@@ -1,13 +1,26 @@
-import GalleryViewer, { Photo } from "@/components/Gallery/GalleryViewer";
 import Title from "@/components/Title";
-import connectDB from "@/lib/dbConnect";
-import PhotosModel from "@/models/photos.model";
+import GalleryViewer, { Photo } from "@/components/Gallery/GalleryViewer";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Gallery",
+  description: "Experience the milestones and community moments of IEEE RUSB through our visual gallery.",
+};
+
 const GalleryPage = async () => {
-  await connectDB();
-  const images = await PhotosModel.find({}).sort({ date: -1 }).lean();
+  const baseUrl = process.env.NEXT_PUBLIC_URL?.startsWith("http") 
+    ? process.env.NEXT_PUBLIC_URL 
+    : `http://${process.env.NEXT_PUBLIC_URL}`;
+
+  const res = await fetch(`${baseUrl}/api/img`, {
+    cache: "no-store",
+  });
+
+  let images = [];
+  if (res.ok) {
+    images = await res.json();
+  }
 
   const serializedImages: Photo[] = images.map((img: any) => ({
     _id: img._id.toString(),

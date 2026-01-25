@@ -1,28 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useSpring } from "framer-motion";
 
 const ReadingProgress = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const updateScrollProgress = () => {
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollHeight > 0) {
-        setScrollProgress((window.scrollY / scrollHeight) * 100);
-      }
-    };
-
-    window.addEventListener("scroll", updateScrollProgress);
-    return () => window.removeEventListener("scroll", updateScrollProgress);
-  }, []);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   return (
-    <div className="fixed top-[64px] md:top-[68px] left-0 w-full h-1.5 z-[40] bg-transparent pointer-events-none overflow-hidden">
+    <motion.div 
+      className="fixed top-[64px] md:top-[68px] left-0 right-0 h-1.5 z-[100] bg-transparent pointer-events-none overflow-hidden origin-left"
+      style={{ scaleX }}
+    >
       <div 
-        className={`h-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-text-shimmer transition-all duration-300 ease-out shadow-[0_0_10px_rgba(var(--p),0.5)] ${scrollProgress >= 100 ? 'opacity-0' : 'opacity-100'}`}
-        style={{ width: `${scrollProgress}%` }}
+        className="h-full w-full bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-text-shimmer shadow-[0_0_10px_rgba(var(--p),0.5)]"
       />
-    </div>
+    </motion.div>
   );
 };
 

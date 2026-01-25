@@ -1,5 +1,10 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+
+export const metadata = {
+  title: "Women in Engineering",
+  description: "Empowering women and promoting diversity in technical fields at IEEE WIE rusbc.",
+};
 import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";

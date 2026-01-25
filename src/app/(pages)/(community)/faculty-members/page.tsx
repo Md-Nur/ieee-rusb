@@ -4,6 +4,11 @@ import { getUsers } from "@/lib/user-data";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Faculty Members",
+  description: "Honoring the faculty members and mentors providing guidance to IEEE RUSB.",
+};
+
 const facultyMembers = async () => {
   const { users } = await getUsers({ query: "faculty-member", approved: true });
   const serializedUsers = users.map((u: any) => ({

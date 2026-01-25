@@ -31,7 +31,7 @@ const SpeechSection = ({
   const themeColor = badgeIcon === "tie" ? "secondary" : "primary";
 
   return (
-    <section className={`py-24 ${bgClass}`}>
+    <section className={`py-24 overflow-hidden ${bgClass}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex flex-col items-center mb-16">
           <div className={`inline-flex items-center gap-2 text-${themeColor} font-bold uppercase tracking-widest text-sm mb-4`}>
@@ -48,7 +48,7 @@ const SpeechSection = ({
             {/* Image Section */}
             <div className="lg:w-2/5 relative h-[400px] lg:h-[500px] w-full">
               <Image
-                src={user?.avatar || (badgeIcon === "tie" ? "/billaVai.jpg" : "/foez_ahmed.jpg")}
+                src={user?.avatar || (badgeIcon === "tie" ? "/defaultAvatar.jpg" : "/foez_ahmed.jpg")}
                 alt={user.name}
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

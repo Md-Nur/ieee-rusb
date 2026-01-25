@@ -4,6 +4,7 @@ import { useJoin } from "@/context/join";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { positions } from "@/lib/constants";
 
 const depts = [
   "Electrical & Electronic Engineering",
@@ -13,27 +14,6 @@ const depts = [
   "Applied Chemistry & Chemical Engineering",
 ];
 
-  const positions = [
-    "Counselor",
-    "Advisor",
-    "Senior member",
-    "Alumni",
-    "Chairperson",
-    "Vice Chair",
-    "General Sec",
-    "Ass GS",
-    "Treasuerer",
-    "Webmaster",
-    "Programm coordinator",
-    "Graphic Designer",
-    "Content Development",
-    "Membership Development",
-    "Public Relation",
-    "Photographer",
-    "Publication coordinator",
-    "Volunteer",
-    "Other",
-  ];
 
 const Join31 = () => {
   const { user, setUser } = useJoin();
@@ -82,10 +62,11 @@ const Join31 = () => {
           </label>
           <select
             className="select select-bordered select-accent mt-2"
+            value={user?.position || ""}
             onChange={(e) => setUser({ ...user, position: e.target.value })}
             required
           >
-            <option key={0.1} disabled selected>
+            <option key={0.1} disabled value="">
               Select Your Position
             </option>
             {positions.map((position, i) => (
@@ -101,10 +82,11 @@ const Join31 = () => {
           </label>
           <select
             className="select select-bordered select-accent mt-2"
+            value={user?.dept || ""}
             onChange={(e) => setUser({ ...user, dept: e.target.value })}
             required
           >
-            <option key={0.1} disabled selected>
+            <option key={0.1} disabled value="">
               Select Department
             </option>
             {depts.map((dept, i) => (
@@ -127,12 +109,13 @@ const Join31 = () => {
             </label>
             <select
               className="select select-bordered select-accent mt-2"
+              value={user?.designation || ""}
               onChange={(e) =>
                 setUser({ ...user, designation: e.target.value })
               }
               required
             >
-              <option disabled selected>
+              <option disabled value="">
                 Select Designation
               </option>
               <option value="Professor">Professor</option>

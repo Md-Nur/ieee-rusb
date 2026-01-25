@@ -1,35 +1,40 @@
 import ShowContents from "@/components/ShowContents";
 import Title from "@/components/Title";
-import connectDB from "@/lib/dbConnect";
-import ContentModel from "@/models/content.model";
-import UserModel from "@/models/user.model";
-import { serializeData } from "@/lib/serialize";
+
+export const metadata = {
+  title: "All Events",
+  description: "Explore all the workshops, seminars, and competitions organized by IEEE Rajshahi University Student Branch.",
+};
 
 export const dynamic = "force-dynamic";
 
 const AllEvents = async () => {
-  await connectDB();
-  const _ = UserModel;
+  const baseUrl = process.env.NEXT_PUBLIC_URL?.startsWith("http") 
+    ? process.env.NEXT_PUBLIC_URL 
+    : `http://${process.env.NEXT_PUBLIC_URL}`;
+  
+  const res = await fetch(`${baseUrl}/api/contents?query=event&approved=true`, {
+    cache: "no-store",
+  });
 
-  const events = await ContentModel.find({ 
-    type: "event", 
-    isApproved: true 
-  })
-  .sort({ date: -1 })
-  .populate("userId", "name avatar position")
-  .lean();
+  if (!res.ok) {
+    console.error("Failed to fetch events:", res.statusText);
+    return (
+      <div className="w-full overflow-x-auto">
+        <Title>All Events</Title>
+        {/* @ts-ignore */}
+        <ShowContents query="" initialData={[]} hideIfEmpty={false} />
+      </div>
+    );
+  }
 
-  const serializedEvents = serializeData(events.map(event => ({
-    ...event,
-    user: event.userId && typeof event.userId === 'object' ? event.userId : null,
-    userId: (event.userId as any)?._id?.toString() || (event.userId as any)?.toString() || ""
-  })));
+  const events = await res.json();
 
   return (
     <div className="w-full overflow-x-auto">
       <Title>All Events</Title>
       {/* @ts-ignore */}
-      <ShowContents query="" initialData={serializedEvents} hideIfEmpty={false} />
+      <ShowContents query="" initialData={events} hideIfEmpty={false} />
     </div>
   );
 };

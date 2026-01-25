@@ -1,5 +1,10 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+
+export const metadata = {
+  title: "Signal Processing Society",
+  description: "Mastering the science of signal interpretation and digital processing at IEEE SPS rusbc.",
+};
 import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";

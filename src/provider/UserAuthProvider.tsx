@@ -28,6 +28,8 @@ const UserAuthProvider = ({
       .finally(() => setLoading(false));
   }, [initialUser]);
 
+  if (loading) return <Loading />;
+
   return (
     <UserAuth.Provider value={{ userAuth, setUserAuth }}>
       {children}

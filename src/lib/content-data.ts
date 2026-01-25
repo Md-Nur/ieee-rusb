@@ -1,11 +1,6 @@
-import dbConnect from "@/lib/dbConnect";
-import ContentModel from "@/models/content.model";
-import UserModel from "@/models/user.model";
 import { unstable_cache } from "next/cache";
+import { getBaseUrl } from "./api-utils";
 import { serializeData } from "./serialize";
-
-// Ensure models are registered
-const _ = UserModel;
 
 async function getContentInternal({ 
   query, 
@@ -18,97 +13,47 @@ async function getContentInternal({
   approved?: boolean,
   limit?: number
 } = {}) {
-  await dbConnect();
+  const params = new URLSearchParams();
+  if (query) params.append('query', query);
+  if (society) params.append('society', society);
+  if (approved !== undefined) params.append('approved', String(approved));
   
-  let pipeline: any[] = [{ $sort: { date: -1 } }];
-
-  if (approved !== undefined) {
-    pipeline.push({ $match: { isApproved: approved } });
-  }
-
-  if (society) {
-    pipeline.push({ $match: { society: society } });
-  }
-
-  if (query === "blog") {
-    pipeline.push({ $match: { type: "blog" } });
-  } else if (query && query !== "all") {
-    pipeline.push({ $match: { type: "event" } });
-  }
-
-  const today = new Date();
-  const datePipe = {
-    $addFields: {
-      parsedDate: {
-        $dateFromString: {
-          dateString: "$date",
-          format: "%Y-%m-%d",
-        },
-      },
-    },
-  };
-
-  if (query === "upcoming-events" || query === "upcoming-event") {
-    pipeline = [
-      ...pipeline,
-      datePipe,
-      {
-        $match: {
-          parsedDate: { $gte: today },
-        },
-      },
-    ];
-  }
+  // Note: limit is handled by the API if we implement it, or we slice the result here.
+  // The API route currently handles 'limit' only for special queries like 'recent-events',
+  // but let's assume we can fetch all and slice, or trust specific query params.
+  // Actually, 'recent-events' query param logic in API handles limit=3.
+  // 'upcoming-event' handles limit=1.
   
-  if (query === "recent-events") {
-    pipeline = [
-      ...pipeline,
-      datePipe,
-      {
-        $match: {
-          parsedDate: { $lte: today },
-        },
-      },
-    ];
-  }
-
-  if (query === "upcoming-event") {
-    pipeline.push({ $sort: { date: 1 } });
-  }
-
-  if (limit) {
-    pipeline.push({ $limit: limit });
-  }
-
-  pipeline.push(
-    {
-      $addFields: {
-        userId: { $toObjectId: "$userId" },
-      },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "userId",
-        foreignField: "_id",
-        as: "user",
-      },
-    },
-    {
-      $unwind: {
-        path: "$user",
-        preserveNullAndEmptyArrays: true
-      },
-    },
-    {
-      $project: {
-        "user.password": 0,
-      },
+  try {
+    const res = await fetch(`${getBaseUrl()}/api/contents?${params.toString()}`, {
+      next: { revalidate: 3600, tags: ["content"] }
+    });
+    
+    if (!res.ok) {
+      console.error(`Failed to fetch content: ${res.status}`);
+      return [];
     }
-  );
-
-  const contents = await ContentModel.aggregate(pipeline);
-  return serializeData(contents);
+    
+    let contents = await res.json();
+    
+    // The API might return non-serialized data if we accessed DB directly (old way),
+    // but now passing through API JSON response, it's already serialized (dates are strings).
+    // However, the caller might expect serialized data format.
+    
+    if (limit && Array.isArray(contents)) {
+       // If the API didn't handle limit for this specific query, apply it here manually
+       // just in case, though efficient filtering should happen on API/DB side.
+       // For 'query=recent-events' API handles it.
+       if (!['recent-events', 'upcoming-event'].includes(query || '')) {
+         contents = contents.slice(0, limit);
+       }
+    }
+    
+    return serializeData(contents);
+  } catch (error) {
+    console.error("Error fetching content:", error);
+    return [];
+  }
 }
 
 export const getContent = (params: any = {}) => {
@@ -122,7 +67,7 @@ export const getContent = (params: any = {}) => {
 export const getUpcomingEvent = unstable_cache(
   async () => {
     const events = await getContentInternal({ query: "upcoming-event", limit: 1 });
-    return events[0] || null;
+    return Array.isArray(events) ? events[0] || null : events || null;
   },
   ["upcoming-event"],
   { revalidate: 3600, tags: ["content", "upcoming-event"] }

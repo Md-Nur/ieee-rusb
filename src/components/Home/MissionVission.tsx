@@ -1,6 +1,8 @@
 "use client";
 import Title from "../Title";
+import Link from "next/link";
 import { FaRocket, FaLightbulb, FaGlobe, FaHandsHelping } from "react-icons/fa";
+import { useUserAuth } from "@/context/userAuth";
 
 interface MissionVissionProps {
   vision?: string;
@@ -8,6 +10,7 @@ interface MissionVissionProps {
 }
 
 const MissionVission = ({ vision, mission }: MissionVissionProps) => {
+  const { userAuth } = useUserAuth();
   const defaultVision = "To build IEEE RU SB as a leading center of academic excellence and technological innovation in Bangladesh—where students grow as skilled engineers, responsible professionals, and impactful leaders.";
   const defaultMission = [
     { text: "Inspire innovation in emerging technological fields.", icon: <FaLightbulb /> },
@@ -68,9 +71,9 @@ const MissionVission = ({ vision, mission }: MissionVissionProps) => {
                   <h4 className="text-2xl font-bold mb-1">Ready to start journey?</h4>
                   <p className="opacity-80 font-medium">Join the ranks of innovators at Rajshahi University.</p>
                </div>
-               <button className="btn btn-white btn-lg rounded-full px-10 relative z-10 border-none shadow-lg hover:scale-105 transition-transform">
+               <Link href="/join/1" className="btn btn-white btn-lg rounded-full px-10 relative z-10 border-none shadow-lg hover:scale-105 transition-transform flex items-center justify-center">
                   Join IEEE SB
-               </button>
+               </Link>
                {/* Decorative Circles */}
                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
                <div className="absolute -bottom-20 -left-10 w-60 h-60 bg-black opacity-5 rounded-full"></div>

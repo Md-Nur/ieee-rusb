@@ -17,15 +17,14 @@ const societyAcronyms = {
 };
 
 const ShowUsers = ({ query, initialData }) => {
-  const [users, setUsers] = useState(initialData ? sortUsersByDesignation(initialData) : []);
+  const [users, setUsers] = useState(initialData ? sortUsersByDesignation(initialData, query) : []);
   const [loading, setLoading] = useState(!initialData);
 
   useEffect(() => {
     if (initialData) return;
     axios
-      .get(`/api/users?query=${query.replace("-&-", "-and-")}&approved=true`)
       .then((res) => {
-        setUsers(sortUsersByDesignation(res.data));
+        setUsers(sortUsersByDesignation(res.data, query));
       })
       .catch((err) => {
         console.error(err);
@@ -36,76 +35,79 @@ const ShowUsers = ({ query, initialData }) => {
   }, [query, initialData]);
 
   return (
-    <div id="members" className="flex max-w-7xl justify-center gap-8 flex-wrap mx-auto px-4 py-10">
+    <div id="members" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-8 px-4 md:px-10 py-16">
       {!loading ? (
         users.length ? (
           users.map((user) => (
             <div
               key={user._id}
-              className="group relative w-full sm:w-[350px] bg-white dark:bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-black/5 dark:border-white/5"
+              className="group relative w-full bg-white dark:bg-slate-900/60 backdrop-blur-xl rounded-[2.5rem] overflow-hidden shadow-2xl hover:shadow-primary/20 transition-all duration-700 hover:-translate-y-3 border border-black/5 dark:border-white/10 flex flex-col"
             >
-              {/* Image Section */}
+              {/* Image Section with cinematic overlay */}
               <div className="relative h-80 overflow-hidden">
                 <Image
                   src={user?.avatar || "/defaultAvatar.jpg"}
                   height={600}
                   width={600}
                   alt={user?.name}
-                  className="object-cover h-full w-full transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover h-full w-full transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
-                {/* Floating Social Icons */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 translate-y-10 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                {/* Modern Cinematic Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#001c30] via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
+                
+                {/* Floating Social Hub */}
+                <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-primary/20 backdrop-blur-[2px]">
                   {user?.phone && (
-                    <a href={`tel:${user?.phone}`} target="_blank" className="p-3 bg-white/20 backdrop-blur-md rounded-2xl text-white hover:bg-accent hover:scale-110 transition-all shadow-lg">
+                    <a href={`tel:${user?.phone}`} className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
                       <MdOutlinePhone className="text-xl" />
                     </a>
                   )}
                   {user?.email && (
-                    <a href={`mailto:${user?.email}`} target="_blank" className="p-3 bg-white/20 backdrop-blur-md rounded-2xl text-white hover:bg-accent hover:scale-110 transition-all shadow-lg">
+                    <a href={`mailto:${user?.email}`} className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
                       <MdOutlineMailOutline className="text-xl" />
                     </a>
                   )}
                   {user?.linkedin && (
-                    <a href={user?.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 bg-white/20 backdrop-blur-md rounded-2xl text-white hover:bg-accent hover:scale-110 transition-all shadow-lg">
+                    <a href={user?.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
                       <PiLinkedinLogoBold className="text-xl" />
                     </a>
                   )}
                 </div>
               </div>
 
-              {/* Content Section */}
-              <div className="p-8 text-center space-y-4">
-                <div className="space-y-1">
-                  <h2 className="font-display text-2xl font-black tracking-tight text-slate-800 dark:text-white capitalize leading-tight group-hover:text-primary transition-colors">
+              {/* Technical Profile Data */}
+              <div className="p-8 flex flex-col flex-1 gap-6 relative z-10">
+                <div className="space-y-2">
+                  <h2 className="font-display text-2xl font-black tracking-tight text-slate-800 dark:text-white capitalize line-clamp-1 group-hover:text-primary transition-colors duration-500">
                     {user?.name}
                   </h2>
-                  <p className="text-xs font-mono font-bold text-primary/60 tracking-widest uppercase">
-                    IEEE ID: {user.ieee_id || "PENDING"}
-                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="h-[2px] w-8 bg-primary/30 rounded-full group-hover:animate-pulse"></div>
+                    <span className="text-[10px] font-mono font-bold text-primary/60 tracking-widest uppercase">
+                      ID: {user.ieee_id || "NOT_ASSIGNED"}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
-                  <div className="inline-flex flex-col items-center">
-                    <span className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-tighter tabular-nums mb-1">
-                      Main Branch Position
-                    </span>
-                    <div className="px-4 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-full border border-primary/10">
-                      <span className="text-primary font-black text-sm uppercase italic">
-                        {user.position || "Member"}
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Core Position</p>
+                    <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
+                      <span className="text-sm font-black text-slate-700 dark:text-slate-200 uppercase italic leading-none">
+                        {user.position || "Branch Member"}
                       </span>
                     </div>
                   </div>
 
                   {user?.society_designations?.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-2 mt-2 pt-4 border-t border-black/5 dark:border-white/5">
+                    <div className="flex flex-wrap gap-2 pt-4 border-t border-black/5 dark:border-white/5">
                       {user.society_designations.map((sd, idx) => (
-                        <div key={idx} className="flex flex-col items-center">
-                          <span className="text-[10px] font-black text-slate-400 uppercase leading-none mb-1">
-                            {societyAcronyms[sd.society] || sd.society.split("-")[0]}
+                        <div key={idx} className="group/badge px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 flex items-center gap-2 hover:bg-primary/20 transition-colors">
+                          <span className="text-[9px] font-black text-primary/70">
+                            {societyAcronyms[sd.society] || sd.society.split("-")[0].toUpperCase()}
                           </span>
-                          <span className="text-xs font-bold text-slate-700 dark:text-slate-300 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg border border-black/5 dark:border-white/5 italic">
+                          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">
                             {sd.designation}
                           </span>
                         </div>
@@ -114,24 +116,32 @@ const ShowUsers = ({ query, initialData }) => {
                   )}
                 </div>
 
-                <div className="pt-4 space-y-1 text-sm text-slate-500 dark:text-slate-400 font-medium border-t border-black/5 dark:border-white/5">
-                  <p className="leading-tight">Dept of {user?.dept}</p>
-                  <p className="opacity-60">{user?.designation || user?.session}</p>
+                <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Department</p>
+                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 mt-1">{user?.dept}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Record</p>
+                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 mt-1">{user?.designation || user?.session || 'N/A'}</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Decorative Corner Accent */}
-              <div className="absolute top-0 right-0 w-24 h-24 -mr-12 -mt-12 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors duration-500" />
+              {/* Pulsing Energy Glow */}
+              <div className="absolute top-0 right-0 w-32 h-32 -mr-16 -mt-16 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/20 transition-all duration-1000" />
             </div>
           ))
         ) : (
-          <div className="w-full text-center py-20 flex flex-col items-center gap-4">
-             <div className="text-6xl text-slate-200 dark:text-slate-800 font-black">404</div>
-             <h1 className="text-2xl font-display font-black text-slate-400">No Members Found</h1>
+          <div className="w-full text-center py-24 flex flex-col items-center gap-6 col-span-full opacity-60">
+             <div className="text-8xl font-display font-black tracking-tighter text-slate-200 dark:text-white/5">NULL</div>
+             <h1 className="text-xl font-mono font-bold text-slate-400 uppercase tracking-[0.4em]">Grid Empty: 0 Members</h1>
           </div>
         )
       ) : (
-        <UserSkeleton />
+        <div className="col-span-full">
+           <UserSkeleton />
+        </div>
       )}
     </div>
   );

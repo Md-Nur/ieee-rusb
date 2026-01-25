@@ -1,6 +1,11 @@
 import ShowUsers from "@/components/ShowUsers"
 import Title from "@/components/Title"
 
+export const metadata = {
+  title: "Computer Society",
+  description: "The IEEE Computer Society at RUSB is the community for computing professionals and student enthusiasts. Join us for technical workshops, innovation in software engineering, and the latest trends in computer science.",
+};
+
 import RecentEvents from "@/components/Home/RecentEvents";
 import Hero from "@/components/Home/Hero";
 

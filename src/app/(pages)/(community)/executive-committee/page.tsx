@@ -1,5 +1,10 @@
 import ShowUsers from "@/components/ShowUsers";
 import Title from "@/components/Title";
+
+export const metadata = {
+  title: "Executive Committee",
+  description: "Meet the dedicated student leaders and volunteers of the IEEE RUSB Executive Committee.",
+};
 import { getUsers } from "@/lib/user-data";
 
 export const dynamic = "force-dynamic";

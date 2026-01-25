@@ -23,8 +23,8 @@ export const metadata: Metadata = {
       : `http://${process.env.NEXT_PUBLIC_URL}`) || "https://ieee-rusb.org"
   ),
   title: {
-    default: "IEEE - RUSB",
-    template: "%s | IEEE - RUSB",
+    default: "IEEE RUSB",
+    template: "%s | IEEE RUSB",
   },
   description: "Institute of Electrical and Electronics Engineers - Rajshahi University Student Branch",
   openGraph: {
@@ -47,9 +47,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="overflow-x-hidden">
       <body
-        className={`${outfit.variable} ${inter.variable} antialiased`}
+        className={`${outfit.variable} ${inter.variable} antialiased overflow-x-hidden`}
         suppressHydrationWarning
       >
         <Suspense fallback={null}>

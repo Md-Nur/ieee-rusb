@@ -9,13 +9,13 @@ Chairperson
 Vice Chair
 General Sec
 Ass GS
-Treasuerer
+Treasurer
 Webmaster
 Programm coordinator
 Graphic Designer
 Content Development 
 Membership Development
-Public Relation 
+Public Relation Coordinator 
 Photographer
 Publication coordinator
 Volunteer

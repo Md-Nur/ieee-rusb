@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { FaCheck, FaExternalLinkAlt, FaUser, FaCalendarAlt, FaTag, FaClipboardList, FaSpinner } from "react-icons/fa";
+import { deptShorthands } from "@/lib/constants";
 
 const ContentApprovalTable = ({ initialContents }) => {
   const [contents, setContents] = useState(initialContents || []);
@@ -47,9 +48,9 @@ const ContentApprovalTable = ({ initialContents }) => {
           <table className="table w-full border-separate border-spacing-y-4">
             <thead>
               <tr className="text-slate-400 border-none uppercase text-[10px] tracking-[0.2em] font-black">
-                <th className="bg-transparent pb-6">Action</th>
-                <th className="bg-transparent pb-6 text-center">Preview</th>
-                <th className="bg-transparent pb-6">Content Details</th>
+                <th className="bg-transparent pb-6 text-slate-500 dark:text-slate-400">Action</th>
+                <th className="bg-transparent pb-6 text-center text-slate-500 dark:text-slate-400">Preview</th>
+                <th className="bg-transparent pb-6 text-slate-500 dark:text-slate-400">Content Details</th>
                 <th className="bg-transparent pb-6">Contributor</th>
                 <th className="bg-transparent pb-6">Timeline & Type</th>
                 <th className="bg-transparent pb-6">Utilities</th>
@@ -103,11 +104,11 @@ const ContentApprovalTable = ({ initialContents }) => {
                     {/* Thumbnail */}
                     <td className="text-center align-middle">
                       <div className="avatar">
-                        <div className="mask mask-squircle w-16 h-16 ring-2 ring-white/5 ring-offset-2 ring-offset-slate-900 group-hover/row:scale-105 transition-transform duration-500">
+                        <div className="mask mask-squircle w-20 h-20 ring-2 ring-white/5 ring-offset-2 ring-offset-slate-900 group-hover/row:scale-105 transition-transform duration-500">
                           <Image
                             src={content?.thumbnail || "/logo.png"}
-                            width={64}
-                            height={64}
+                            width={80}
+                            height={80}
                             alt={content?.title || "Thumbnail"}
                             className="object-cover"
                           />
@@ -119,11 +120,11 @@ const ContentApprovalTable = ({ initialContents }) => {
                     <td className="max-w-xs align-middle">
                       <Link
                         href={`/content/${content.slug}`}
-                        className="font-bold text-slate-100 group-hover/row:text-accent transition-colors block truncate"
+                        className="font-black text-slate-900 dark:text-slate-100 group-hover/row:text-accent transition-colors block truncate text-lg tracking-tight"
                       >
                         {content?.title}
                       </Link>
-                      <span className="text-[10px] text-slate-500 font-mono tracking-tighter">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono tracking-tighter">
                          /{content.slug}
                       </span>
                     </td>
@@ -141,9 +142,9 @@ const ContentApprovalTable = ({ initialContents }) => {
                             </div>
                          </div>
                          <div>
-                            <div className="text-xs font-bold text-slate-200">{content?.user?.name}</div>
-                            <div className="text-[10px] text-slate-500 uppercase tracking-widest">
-                               {content?.user?.designation || content?.user?.dept}
+                            <div className="text-sm font-black text-slate-900 dark:text-slate-100">{content?.user?.name}</div>
+                            <div className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">
+                               {content?.user?.designation || (content?.user?.dept && (deptShorthands[content.user.dept] || content.user.dept))}
                             </div>
                          </div>
                       </div>
@@ -152,8 +153,8 @@ const ContentApprovalTable = ({ initialContents }) => {
                     {/* Date & Type */}
                     <td className="align-middle">
                        <div className="space-y-1">
-                          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-tighter">
-                             <FaCalendarAlt className="text-slate-600" />
+                          <div className="flex items-center gap-2 text-[10px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-tighter">
+                             <FaCalendarAlt className="text-primary/60" />
                              {new Date(content?.date).toLocaleDateString()}
                           </div>
                           <div className={`inline-block px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-widest ${
@@ -192,10 +193,10 @@ const ContentApprovalTable = ({ initialContents }) => {
               ) : (
                 <tr>
                   <td colSpan={6} className="text-center py-20">
-                     <div className="flex flex-col items-center gap-4 opacity-40">
-                        <FaClipboardList size={48} className="text-slate-600" />
-                        <div className="font-display text-xl font-bold text-slate-300">Queue is Empty</div>
-                        <p className="text-xs tracking-widest uppercase">All community content has been verified</p>
+                     <div className="flex flex-col items-center gap-4 py-10">
+                        <FaClipboardList size={48} className="text-slate-400 dark:text-slate-600 animate-pulse" />
+                        <div className="font-display text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tighter uppercase">Queue is Empty</div>
+                        <p className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-500 dark:text-slate-500">All community content has been verified</p>
                      </div>
                   </td>
                 </tr>

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 
 export async function GET(req: NextRequest, props: { params: Promise<{ id: string }> }) {
@@ -43,6 +44,9 @@ export async function PUT(req: NextRequest, props: { params: Promise<{ id: strin
     if (!updatedUser) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    revalidatePath("/", "layout");
+    revalidateTag("users", "page");
 
     return NextResponse.json(updatedUser);
   } catch (error: any) {

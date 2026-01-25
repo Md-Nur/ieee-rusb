@@ -1,9 +1,6 @@
 import ContentActions from "@/components/Content/ContentActions";
 import ReadingProgress from "@/components/Content/ReadingProgress";
-import AuthCheck from "@/components/Content/AuthorizationCheck"; // We will create this
-import connectDB from "@/lib/dbConnect";
-import ContentModel from "@/models/content.model";
-import UserModel from "@/models/user.model";
+import AuthCheck from "@/components/Content/AuthorizationCheck";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,62 +8,81 @@ import "@/app/(pages)/content/style.css";
 import { FaCalendarAlt, FaUserEdit, FaArrowLeft, FaExternalLinkAlt } from "react-icons/fa";
 import { Metadata } from "next";
 import { serializeData } from "@/lib/serialize";
+import { getBaseUrl } from "@/lib/api-utils";
 
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  await connectDB();
-  const content = await ContentModel.findOne({ slug }).lean();
+  
+  try {
+    const res = await fetch(`${getBaseUrl()}/api/contents/${slug}`, {
+      next: { revalidate: 3600 }
+    });
+    
+    if (!res.ok) {
+      return { title: "Content Not Found" };
+    }
 
-  if (!content) {
+    const content = await res.json();
+
     return {
-      title: "Content Not Found",
-    };
-  }
-
-  return {
-    title: content.title,
-    description: content.content.substring(0, 160).replace(/<[^>]*>/g, ""), // Strip HTML for description
-    openGraph: {
       title: content.title,
-      description: content.content.substring(0, 160).replace(/<[^>]*>/g, ""),
-      images: [content.thumbnail],
-      type: "article",
-    },
-  };
+      description: content.content ? content.content.substring(0, 160).replace(/<[^>]*>/g, "") : "",
+      openGraph: {
+        title: content.title,
+        description: content.content ? content.content.substring(0, 160).replace(/<[^>]*>/g, "") : "",
+        images: [content.thumbnail],
+        type: "article",
+      },
+      // alternates: {
+      //   canonical: `https://ieee-rusb.org/content/${slug}`,
+      // }
+    };
+  } catch (error) {
+    return { title: "Error" };
+  }
 }
 
 const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug: rawSlug } = await params;
   const slug = decodeURIComponent(rawSlug);
-  await connectDB();
   
-  // Ensure User model is registered
-  const _ = UserModel;
-
-  const contentDoc = await ContentModel.findOne({ slug })
-    .populate("userId", "name avatar position")
-    .lean();
-
-  if (!contentDoc) {
+  let content;
+  
+  try {
+     const res = await fetch(`${getBaseUrl()}/api/contents/${slug}`, {
+       next: { revalidate: 3600 }
+     });
+     
+     if (!res.ok) {
+       return notFound();
+     }
+     
+     content = await res.json();
+  } catch (error) {
+    console.error("Error fetching content:", error);
     return notFound();
   }
 
-  // Serialize for passing to client components
-  const content = serializeData({
-    ...contentDoc,
-    user: contentDoc.userId && typeof contentDoc.userId === 'object' ? contentDoc.userId : { name: "Unknown", avatar: "", position: "" },
-    userId: (contentDoc.userId as any)?._id?.toString() || (contentDoc.userId as any)?.toString() || ""
-  });
+  // Ensure content exists
+  if (!content) return notFound();
 
-  const formattedDate = new Date(content.date).toLocaleDateString('en-US', {
+  // API returns serialized JSON, but we might ensure it matches what client components expect.
+  // The API result includes 'user' object from lookup.
+  
+  // No need to manually serialize if API returns JSON, but let's be safe.
+  content = serializeData(content);
+
+  const formattedDate = content.date ? new Date(content.date).toLocaleDateString('en-US', {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
-  });
-
-  const contentUserId = content.userId?._id?.toString() || content.userId?.toString() || "";
+  }) : "";
+  
+  // API returns userId as string in 'userId' or populated 'user._id'. 
+  // Let's ensure compatibility.
+  const contentUserId = content.userId || content.user?._id || "";// In the API response, content.user is populated.
 
   return (
     <section className="w-full bg-base-100 min-h-screen pb-24 relative overflow-x-hidden">
@@ -76,7 +92,7 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
       <div className="max-w-7xl mx-auto md:px-12 pt-6 md:pt-10">
         {/* Back Button & Metadata */}
         <div className="flex items-center justify-between mb-6 md:mb-10 px-4 md:px-0">
-           <Link href="/blogs" className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
+           <Link href={content.type === 'event' ? "/all-events" : "/blogs"} className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
               <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Back to Feed
            </Link>
            <div className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase border backdrop-blur-md shadow-sm ${
@@ -102,21 +118,28 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
                 <div className="w-1 h-1 bg-slate-300 rounded-full hidden md:block"></div>
                 <div className="flex items-center gap-2">
                    <FaUserEdit className="text-primary/60" />
-                   <span>Published by {content.user.name}</span>
+                   <span>Published by {content.user?.name || "Unknown"}</span>
                 </div>
              </div>
           </div>
 
-          <div className="relative aspect-video w-full md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5 bg-slate-100 dark:bg-slate-900">
-            <Image
-              src={content?.thumbnail}
-              alt={content.title}
-              fill
-              priority
-              className="object-contain transition-transform duration-[10000ms] hover:scale-105"
-              sizes="(max-width: 896px) 100vw, 896px"
-              unoptimized={content?.thumbnail?.includes('ieee.org')}
-            />
+          <div className="relative w-full min-h-[300px] md:min-h-[400px] max-h-[1000px] md:rounded-[2.5rem] overflow-hidden shadow-2xl border-y md:border border-black/5 dark:border-white/5 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 group">
+            {/* Thumbnail Image - Full Display */}
+            <div className="relative w-full h-full">
+              <Image
+                src={content?.thumbnail}
+                alt={content.title}
+                width={1200}
+                height={1000}
+                priority
+                className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-[1.02] group-hover:brightness-105"
+                sizes="(max-width: 896px) 100vw, 896px"
+                unoptimized={content?.thumbnail?.includes('ieeerusb.org')}
+              />
+            </div>
+            {/* Decorative corner accents */}
+            <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-primary/20 rounded-tl-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-primary/20 rounded-br-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
         </div>
 
@@ -125,7 +148,7 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
            {/* Left: Article Content */}
            <div className="flex-1 max-w-4xl mx-auto">
               <article
-                className="custom-html-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-p:leading-relaxed prose-img:rounded-3xl shadow-sm bg-base-200/30 px-4 py-8 md:p-12 md:rounded-[2.5rem] border-y md:border border-black/5 dark:border-white/5"
+                className="custom-html-content prose prose-lg dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-black prose-p:leading-relaxed prose-img:rounded-3xl shadow-sm bg-base-200/30 px-4 py-8 md:p-12 md:rounded-[2.5rem] border-y md:border border-black/5 dark:border-white/5 overflow-x-hidden"
                 dangerouslySetInnerHTML={{ __html: content.content }}
               ></article>
 
@@ -136,15 +159,15 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
                     <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-2xl md:rounded-3xl overflow-hidden ring-4 ring-primary/10 shadow-lg">
                        <Image
                          src={content?.user?.avatar || "/defaultAvatar.jpg"}
-                         alt={content?.user?.name}
+                         alt={content?.user?.name || "Author"}
                          fill
                          className="object-cover"
                        />
                     </div>
                     <div className="text-center md:text-left space-y-2 flex-1">
                        <h4 className="text-[10px] font-black tracking-[0.2em] text-primary uppercase">Author Spotlight</h4>
-                       <h3 className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white font-display uppercase">{content.user.name}</h3>
-                       <p className="text-slate-500 font-medium italic">{content.user.position || "Member, IEEE University of Rajshahi"}</p>
+                       <h3 className="text-2xl md:text-3xl font-black text-slate-800 dark:text-white font-display uppercase">{content.user?.name || "Unknown Author"}</h3>
+                       <p className="text-slate-500 font-medium italic">{content.user?.position || "Member, IEEE University of Rajshahi"}</p>
                        <p className="text-sm text-slate-400 max-w-md">Dedicated to advancing technology for humanity through collaboration and innovation within the RU Student Branch.</p>
                     </div>
                     <ContentActions contentSlug={content.slug} contentUserId={contentUserId} contentType={content.type} />

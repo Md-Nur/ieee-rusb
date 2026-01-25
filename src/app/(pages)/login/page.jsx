@@ -1,72 +1,15 @@
 "use client";
-import Title from "@/components/Title";
-import { useUserAuth } from "@/context/userAuth";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
-import { toast } from "react-toastify";
+import LoginForm from "@/components/Auth/Login/LoginForm";
+import RedirectIfAuthenticated from "@/components/Auth/RedirectIfAuthenticated";
+import React from "react";
 
-const Login = () => {
-  const { setUserAuth } = useUserAuth();
-  const router = useRouter();
-  const [user, setUser] = useState({
-    phoneEmail: "",
-    password: "",
-  });
-
-  const handleSubmit = async (e) => {
-    toast("Logging in...");
-    e.preventDefault();
-    try {
-      const res = await axios.post("/api/users/login", user);
-      toast.dismiss();
-      if (res.data.error) {
-        toast.error(res.data.error);
-      } else {
-        setUserAuth(res.data?.user);
-        toast.success(res.data?.message);
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error?.response?.data?.error || error.message);
-    }
-  };
-
+const LoginOne = () => {
   return (
-    <div className="card w-full max-w-sm shrink-0 mb-10">
-      <Title>Login</Title>
-      <form className="card-body" onSubmit={handleSubmit}>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Phone or Email</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Phone or Email"
-            className="input input-bordered input-accent"
-            onBlur={(e) => setUser({ ...user, phoneEmail: e.target.value })}
-            required
-          />
-        </div>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-bordered input-accent"
-            required
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
-        </div>
-        <div className="form-control mt-6">
-          <button className="btn btn-accent">Login</button>
-        </div>
-      </form>
+    <div className="w-full flex items-center justify-center py-20 bg-base-100 min-h-screen">
+      <RedirectIfAuthenticated />
+      <LoginForm />
     </div>
   );
 };
 
-export default Login;
+export default LoginOne;

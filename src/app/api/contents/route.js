@@ -112,6 +112,10 @@ export async function GET(req) {
     ];
   }
 
+  const page = parseInt(url.searchParams.get("page")) || null;
+  const limit = parseInt(url.searchParams.get("limit")) || 10;
+  const skip = (page - 1) * limit;
+
   pipeline = [
     ...pipeline,
     {
@@ -139,12 +143,25 @@ export async function GET(req) {
     },
   ];
 
+  if (page) {
+    const paginatedPipeline = [
+      {
+        $facet: {
+          data: [{ $skip: skip }, { $limit: limit }],
+          totalCount: [{ $count: "count" }],
+        },
+      },
+    ];
+    const result = await ContentModel.aggregate([...pipeline, ...paginatedPipeline]);
+    const response = {
+      data: result[0].data,
+      total: result[0].totalCount[0]?.count || 0,
+      page,
+      limit,
+    };
+    return Response.json(response, { status: 200 });
+  }
 
   const contents = await ContentModel.aggregate(pipeline);
-  if (!contents.length) {
-    return Response.json(
-      [], { status: 200 }
-    );
-  }
   return Response.json(contents, { status: 200 });
 }

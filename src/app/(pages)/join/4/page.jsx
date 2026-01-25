@@ -6,28 +6,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { positions } from "@/lib/constants";
 
-const positions = [
-  "Counselor",
-  "Advisor",
-  "Senior member",
-  "Alumni",
-  "Chairperson",
-  "Vice Chair",
-  "General Sec",
-  "Ass GS",
-  "Treasuerer",
-  "Webmaster",
-  "Programm coordinator",
-  "Graphic Designer",
-  "Content Development",
-  "Membership Development",
-  "Public Relation",
-  "Photographer",
-  "Publication coordinator",
-  "Volunteer",
-  "Other",
-];
 
 const societyList = [
   "robotics-&-automation-society",
