@@ -1,5 +1,4 @@
 import ContentActions from "@/components/Content/ContentActions";
-import ReadingProgress from "@/components/Content/ReadingProgress";
 import AuthCheck from "@/components/Content/AuthorizationCheck";
 import Image from "next/image";
 import Link from "next/link";
@@ -86,7 +85,6 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
 
   return (
     <section className="w-full bg-base-100 min-h-screen pb-24 relative overflow-x-hidden">
-      <ReadingProgress />
       <AuthCheck isApproved={content.isApproved} contentUserId={contentUserId} />
 
       <div className="max-w-7xl mx-auto md:px-12 pt-6 md:pt-10">

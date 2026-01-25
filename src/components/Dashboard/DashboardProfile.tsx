@@ -15,11 +15,8 @@ const DashboardProfile = () => {
   }
 
   return (
-    <section className="w-full bg-[#f8fafc] dark:bg-[#001c30] min-h-screen pb-24 relative overflow-hidden">
-      {/* Background Cinematic Accents */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px] -mr-64 -mt-64" />
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] -ml-64 -mb-64" />
-
+    <section className="w-full">
+    
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-10 relative z-10 space-y-12">
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 pb-8 border-b border-black/5 dark:border-white/5">

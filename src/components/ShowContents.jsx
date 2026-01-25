@@ -9,12 +9,12 @@ import { FaCalendarAlt, FaUser, FaArrowRight } from "react-icons/fa";
 /**
  * @param {{ query: string; society?: string; initialData?: any[]; hideIfEmpty?: boolean }} props
  */
-const ShowContents = ({ query, society, initialData, hideIfEmpty = false }) => {
+const ShowContents = ({ query, society, initialData, hideIfEmpty = false, limit = 8 }) => {
   const [contents, setContents] = useState(initialData?.data || initialData || []);
   const [loading, setLoading] = useState(!initialData);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = limit;
 
   useEffect(() => {
     // If it's the first load and we have initialData, calculate totalPages

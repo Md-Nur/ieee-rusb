@@ -13,7 +13,7 @@ const AllEvents = async () => {
     ? process.env.NEXT_PUBLIC_URL 
     : `http://${process.env.NEXT_PUBLIC_URL}`;
   
-  const res = await fetch(`${baseUrl}/api/contents?query=event&approved=true`, {
+  const res = await fetch(`${baseUrl}/api/contents?query=event&approved=true&page=1&limit=9`, {
     cache: "no-store",
   });
 
@@ -23,7 +23,7 @@ const AllEvents = async () => {
       <div className="w-full overflow-x-auto">
         <Title>All Events</Title>
         {/* @ts-ignore */}
-        <ShowContents query="" initialData={[]} hideIfEmpty={false} />
+        <ShowContents query="event" initialData={[]} hideIfEmpty={false} limit={9} />
       </div>
     );
   }
@@ -34,7 +34,7 @@ const AllEvents = async () => {
     <div className="w-full overflow-x-auto">
       <Title>All Events</Title>
       {/* @ts-ignore */}
-      <ShowContents query="" initialData={events} hideIfEmpty={false} />
+      <ShowContents query="event" initialData={events} hideIfEmpty={false} limit={9} />
     </div>
   );
 };

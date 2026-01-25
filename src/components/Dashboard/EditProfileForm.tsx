@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUpload } from "react-icons/fa";
 import Loading from "@/components/Loading";
-import { positions } from "@/lib/constants";
+import { positions, memberRoles } from "@/lib/constants";
 
 const availableSocieties = [
   { id: "robotics-&-automation-society", name: "Robotics & Automation Society" },
@@ -27,6 +27,7 @@ const EditProfileForm = () => {
   const [preview, setPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [selectedSocieties, setSelectedSocieties] = useState<string[]>([]);
+  const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
   const [societyDesignations, setSocietyDesignations] = useState<{ society: string; designation: string }[]>([]);
 
   const {
@@ -39,8 +40,8 @@ const EditProfileForm = () => {
       name: "",
       phone: "",
       linkedin: "",
-      position: "",
       ieee_id: "",
+      position: "",
     },
   });
 
@@ -50,13 +51,12 @@ const EditProfileForm = () => {
         name: userAuth.name || "",
         phone: userAuth.phone || "",
         linkedin: userAuth.linkedin || "",
-        position: userAuth.position || "",
         ieee_id: userAuth.ieee_id || "",
+        position: userAuth.position || "",
       });
-      if (userAuth.avatar) {
-        setPreview(userAuth.avatar);
-      }
+      setPreview(userAuth.avatar || null);
       setSelectedSocieties(userAuth.societies || []);
+      setSelectedRoles(userAuth.roles || []);
       setSocietyDesignations(userAuth.society_designations || []);
     }
   }, [userAuth, reset]);
@@ -76,6 +76,14 @@ const EditProfileForm = () => {
       setSocietyDesignations(societyDesignations.filter((sd) => sd.society !== socId));
     } else {
       setSelectedSocieties([...selectedSocieties, socId]);
+    }
+  };
+
+  const handleRoleToggle = (roleId: string) => {
+    if (selectedRoles.includes(roleId)) {
+      setSelectedRoles(selectedRoles.filter((id) => id !== roleId));
+    } else {
+      setSelectedRoles([...selectedRoles, roleId]);
     }
   };
 
@@ -112,6 +120,7 @@ const EditProfileForm = () => {
         avatar: avatarUrl,
         societies: selectedSocieties,
         society_designations: societyDesignations,
+        roles: selectedRoles,
       };
 
       const res = await axios.put("/api/users/profile", updatePayload);
@@ -142,11 +151,8 @@ const EditProfileForm = () => {
   }
 
   return (
-    <section className="w-full bg-[#f8fafc] dark:bg-[#001c30] min-h-screen pb-32 pt-10 relative overflow-hidden">
-      {/* Cinematic Background Accents */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] -ml-40 -mt-40" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] -mr-40 -mb-40" />
-
+    <section className="w-full">
+   
       <div className="max-w-4xl mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center space-y-6 mb-16">
            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-primary/10 rounded-full text-primary font-black text-[10px] tracking-[0.4em] uppercase border border-primary/20">
@@ -222,17 +228,41 @@ const EditProfileForm = () => {
               </div>
 
               <div className="form-control w-full space-y-2">
-                <label className="label-text font-black text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] ml-1">Rank: Status</label>
+                <label className="label-text font-black text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] ml-1">Rank: Position</label>
                 <select
-                  className="select select-bordered h-14 bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/10 rounded-2xl font-bold focus:ring-2 focus:ring-primary/20"
-                  {...register("position", { required: "Position is required" })}
+                  className={`select select-bordered select-sm w-full bg-white dark:bg-slate-800 rounded-xl font-bold ${errors.position ? 'input-error' : ''}`}
+                  defaultValue={userAuth?.position || ""}
+                  {...register("position")}
                 >
-                  <option value="">Select Core Position</option>
+                  <option value="">Select Role</option>
                   {positions.map((p) => (
                     <option key={p} value={p}>{p}</option>
                   ))}
                 </select>
+                <p className="text-[9px] text-slate-400 italic ml-1">Select your current role/position</p>
               </div>
+            </div>
+
+            {/* Community Roles Checklist */}
+            <div className="space-y-4 pt-8 border-t border-black/5 dark:border-white/5">
+               <label className="label-text font-black text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] ml-1">Community: Roles (Check all that apply)</label>
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {memberRoles.map((role) => (
+                  <label key={role.id} className={`flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                    selectedRoles.includes(role.id) 
+                      ? 'bg-primary/5 border-primary/40 shadow-md shadow-primary/5' 
+                      : 'bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/5 opacity-60 hover:opacity-100'
+                  }`}>
+                    <span className="text-xs font-bold dark:text-slate-200">{role.label}</span>
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-primary checkbox-xs rounded-md"
+                      checked={selectedRoles.includes(role.id)}
+                      onChange={() => handleRoleToggle(role.id)}
+                    />
+                  </label>
+                ))}
+               </div>
             </div>
 
             {/* Network Affiliation Selection */}

@@ -36,3 +36,11 @@ export const deptShorthands: { [key: string]: string } = {
   "Applied Chemistry & Chemical Engineering": "ACCE",
   "Others": "Others",
 };
+
+export const memberRoles = [
+  { id: "student-member", label: "Student Member" },
+  { id: "graduate-member", label: "Graduate Member" },
+  { id: "faculty-member", label: "Faculty Member" },
+  { id: "executive-committee", label: "Executive Committee" },
+  { id: "alumni", label: "Alumni" },
+];

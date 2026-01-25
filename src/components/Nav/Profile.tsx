@@ -16,11 +16,19 @@ const Profile = () => {
         toast.success("Logged out successfully");
       }
     } catch (err) {
-      toast.error(err?.response?.data?.message || err.message);
+      if (axios.isAxiosError(err)) {
+        toast.error(err.response?.data?.message || err.message);
+      } else if (err instanceof Error) {
+        toast.error(err.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
     }
   };
   const handleVisible = () => {
     const profile = document.getElementById("profile");
+    if (!profile) return; // Guard against null
+    
     if (profile.classList.contains("hidden")) {
       profile.classList.remove("hidden");
     } else {

@@ -23,12 +23,14 @@ export async function PUT(req: NextRequest) {
     const data = await req.json();
 
     // Only allow safe fields to be updated by the user themselves
+    // NOTE: position/role should ONLY be changed by admins, not by users themselves
     const updateData: any = {};
     if (data.name) updateData.name = data.name;
     if (data.phone) updateData.phone = data.phone;
     if (data.linkedin !== undefined) updateData.linkedin = data.linkedin;
     if (data.avatar) updateData.avatar = data.avatar;
     if (data.position) updateData.position = data.position;
+    if (data.roles) updateData.roles = data.roles;
     if (data.societies) updateData.societies = data.societies;
     if (data.society_designations) updateData.society_designations = data.society_designations;
     if (data.ieee_id) updateData.ieee_id = data.ieee_id;

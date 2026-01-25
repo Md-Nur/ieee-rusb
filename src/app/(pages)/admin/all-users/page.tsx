@@ -77,6 +77,11 @@ const AllUsers = () => {
     fetchUsers();
   }, [currentPage, limit, debouncedSearch, selectedDept]);
 
+  // Smart scroll on pagination
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   const fetchUsers = () => {
     setLoading(true);
     axios
