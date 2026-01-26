@@ -9,6 +9,10 @@ export async function POST(request: NextRequest) {
     await dbConnect();
     const { email } = await request.json();
 
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+        return NextResponse.json({ error: "Please provide a valid email address" }, { status: 400 });
+    }
+
     const user = await UserModel.findOne({ email });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -24,7 +28,12 @@ export async function POST(request: NextRequest) {
     console.log("Token saved for user:", email, "Token:", token);
 
     // Send email
-    const resetUrl = `${process.env.NEXT_PUBLIC_URL}/reset-password/${token}`;
+    const baseUrl = process.env.NEXT_PUBLIC_URL;
+    if (!baseUrl) {
+      console.error("NEXT_PUBLIC_URL is not defined");
+      return NextResponse.json({ error: "Server configuration error" }, { status: 500 });
+    }
+    const resetUrl = `${baseUrl}/reset-password/${token}`;
 
     // Configure transporter
     // TODO: Move this to a separate utility or config

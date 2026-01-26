@@ -18,6 +18,10 @@ const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (password.length < 6) {
+        return toast.error("Password must be at least 6 characters long");
+    }
+
     if (password !== confirmPassword) {
         return toast.error("Passwords do not match");
     }
