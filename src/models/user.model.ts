@@ -87,6 +87,7 @@ const UserSchema = new Schema<Users>({
       "Social Media Coordinator",
       "Speaker",
       "Other",
+      "Technical Coordinator",
     ],
     required: true,
     index: true,

@@ -26,6 +26,7 @@ const Join = () => {
         await axios.post("/api/users/existing-user", {
           email: user.email,
           phone: user.phone,
+          ieee_id: user.ieee_id,
         });
       } catch (error) {
         toast.error(error?.response?.data?.error || "User already exists");

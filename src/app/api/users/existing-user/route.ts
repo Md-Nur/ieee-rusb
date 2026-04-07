@@ -17,12 +17,22 @@ export async function POST(req: Request) {
     data.phone = data.phone.slice(3);
   }
   const phoneUser = await UserModel.findOne({ phone: data.phone });
-
   if (phoneUser) {
     return Response.json(
       { error: "User already exists with this phone number" },
       { status: 400 }
     );
   }
+
+  if (data.ieee_id) {
+    const ieeeUser = await UserModel.findOne({ ieee_id: data.ieee_id });
+    if (ieeeUser) {
+      return Response.json(
+        { error: "User already exists with this IEEE ID" },
+        { status: 400 }
+      );
+    }
+  }
+
   return Response.json({ message: "User does not exist" }, { status: 200 });
 }

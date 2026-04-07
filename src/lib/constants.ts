@@ -20,6 +20,7 @@ export const positions = [
   "Social Media Coordinator",
   "Speaker",
   "Other",
+  "Technical Coordinator",
 ];
 export const depts = [
   "Electrical & Electronic Engineering",
