@@ -128,7 +128,7 @@ const UserApprovalTable = ({ initialUsers }) => {
               <tr>
                 <th>Member</th>
                 <th className="hidden lg:table-cell">Contact</th>
-                <th>Academic/Role</th>
+                <th>Department & Role</th>
 
                 <th className="text-right">Actions</th>
               </tr>
@@ -230,7 +230,7 @@ const UserApprovalTable = ({ initialUsers }) => {
                       {!searchTerm && (
                         <p className="opacity-40">
                           {activeTab === "pending" 
-                            ? "All registration requests have been handled." 
+                            ? "There are no pending member requests." 
                             : "There are no approved members yet."}
                         </p>
                       )}

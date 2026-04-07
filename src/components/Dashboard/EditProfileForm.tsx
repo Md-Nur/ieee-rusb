@@ -9,17 +9,10 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaUpload } from "react-icons/fa";
 import Loading from "@/components/Loading";
-import { positions, memberRoles } from "@/lib/constants";
+import { positions, memberRoles, availableSocieties } from "@/lib/constants";
 import { Users } from "@/models/user.model";
 
-const availableSocieties = [
-  { id: "robotics-&-automation-society", name: "Robotics & Automation Society" },
-  { id: "signal-processing-society", name: "Signal Processing Society" },
-  { id: "power-&-energy-society", name: "Power & Energy Society" },
-  { id: "computer-society", name: "Computer Society" },
-  { id: "antenna-&-propagation-society", name: "Antenna & Propagation Society" },
-  { id: "women-in-engineering-society", name: "Women In Engineering" },
-];
+
 
 const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
   const router = useRouter();
@@ -228,7 +221,7 @@ const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
                   type="text"
                   placeholder="Global Registry ID"
                   className={`input input-bordered h-14 bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/10 rounded-2xl font-bold focus:ring-2 focus:ring-primary/20 ${errors.ieee_id ? 'input-error' : ''}`}
-                  {...register("ieee_id", { required: "IEEE ID is required" })}
+                  {...register("ieee_id")}
                 />
               </div>
 

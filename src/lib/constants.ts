@@ -17,6 +17,8 @@ export const positions = [
   "Photographer",
   "Publication Coordinator",
   "Volunteer",
+  "Social Media Coordinator",
+  "Speaker",
   "Other",
 ];
 export const depts = [
@@ -43,4 +45,13 @@ export const memberRoles = [
   { id: "faculty-member", label: "Faculty Member" },
   { id: "executive-committee", label: "Executive Committee" },
   { id: "alumni", label: "Alumni" },
+];
+
+export const availableSocieties = [
+  { id: "robotics-&-automation-society", name: "Robotics & Automation Society" },
+  { id: "signal-processing-society", name: "Signal Processing Society" },
+  { id: "power-&-energy-society", name: "Power & Energy Society" },
+  { id: "computer-society", name: "Computer Society" },
+  { id: "antenna-&-propagation-society", name: "Antenna & Propagation Society" },
+  { id: "women-in-engineering-society", name: "Women In Engineering" },
 ];

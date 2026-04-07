@@ -12,8 +12,7 @@ export async function POST(req: Request) {
     !data?.password ||
     !data?.dept ||
     !data?.dept ||
-    !data?.position ||
-    !data?.ieee_id
+    !data?.position
   ) {
     return Response.json({ error: "All fields are required" }, { status: 404 });
   }

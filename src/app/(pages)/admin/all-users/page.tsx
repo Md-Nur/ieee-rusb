@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/components/Loading";
-import { positions, depts, deptShorthands } from "@/lib/constants";
+import { positions, depts, deptShorthands, availableSocieties } from "@/lib/constants";
 import { FaSearch, FaUserShield, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 
@@ -123,6 +123,18 @@ const AllUsers = () => {
 
 
 
+  const handleSocietyToggle = (socId: string) => {
+    const currentSocieties = formData.societies || [];
+    if (currentSocieties.includes(socId)) {
+      const newSocieties = currentSocieties.filter((id) => id !== socId);
+      // Also remove designation if society is removed
+      const newSocietyDesignations = (formData.society_designations || []).filter((sd) => sd.society !== socId);
+      setFormData({ ...formData, societies: newSocieties, society_designations: newSocietyDesignations });
+    } else {
+      setFormData({ ...formData, societies: [...currentSocieties, socId] });
+    }
+  };
+
   const handleSave = async (e: any) => {
     if (!editUser) return;
     e.preventDefault();
@@ -146,11 +158,11 @@ const AllUsers = () => {
            <div className="space-y-4">
               <div className="flex items-center gap-3">
                  <div className="w-1.5 h-6 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary-rgb),0.5)]" />
-                 <span className="text-[10px] font-mono font-black text-primary uppercase tracking-[0.5em] opacity-70">Administrative Terminal</span>
+                 <span className="text-[10px] font-mono font-black text-primary uppercase tracking-[0.5em] opacity-70">Admin Dashboard</span>
               </div>
-              <Title className="!p-0 !m-0 !text-left lg:text-5xl !leading-tight tracking-tighter bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white bg-clip-text text-transparent animate-text-shimmer">Verified_Members</Title>
+              <Title className="!p-0 !m-0 !text-left lg:text-5xl !leading-tight tracking-tighter bg-gradient-to-r from-slate-900 via-slate-700 to-slate-900 dark:from-white dark:via-slate-200 dark:to-white bg-clip-text text-transparent animate-text-shimmer">All Members</Title>
               <p className="text-slate-600 dark:text-slate-400 font-medium max-w-xl text-sm leading-relaxed antialiased">
-                 Execute administrative protocols and synchronize member identities across the global RUSB synchronization matrix.
+                 View and manage all registered members of the IEEE RUSB community.
               </p>
            </div>
            
@@ -159,7 +171,7 @@ const AllUsers = () => {
                  <span className="absolute inset-y-0 left-4 flex items-center text-slate-400 group-focus-within:text-primary transition-colors z-20"><FaSearch /></span>
                  <input 
                     type="text" 
-                    placeholder="Search Identity Registry..." 
+                    placeholder="Search members..." 
                     className="input input-bordered w-full h-14 pl-12 bg-white/20 dark:bg-white/5 border-black/5 dark:border-white/10 rounded-2xl font-bold shadow-sm focus:ring-4 focus:ring-primary/10 backdrop-blur-3xl transition-all duration-300 placeholder:opacity-50"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
@@ -170,7 +182,7 @@ const AllUsers = () => {
                  value={selectedDept}
                  onChange={(e) => setSelectedDept(e.target.value)}
               >
-                 <option value="">All Technical Sectors</option>
+                 <option value="">All Departments</option>
                  {depts.map(d => <option key={d} value={d}>{d}</option>)}
               </select>
            </div>
@@ -191,11 +203,11 @@ const AllUsers = () => {
               <table className="table table-lg w-full border-separate border-spacing-y-4">
                 <thead>
                   <tr className="text-slate-500 dark:text-slate-400 font-black uppercase text-[10px] tracking-[0.3em] border-none">
-                    <th className="py-2 pl-0 bg-transparent">Digital_Persona</th>
-                    <th className="bg-transparent">Link_Protocols</th>
-                    <th className="bg-transparent">Registry_ID</th>
-                    <th className="bg-transparent">Active_Status</th>
-                    <th className="text-right pr-0 bg-transparent">Operational_Control</th>
+                    <th className="py-2 pl-0 bg-transparent">Member</th>
+                    <th className="bg-transparent">Contact</th>
+                    <th className="bg-transparent">IEEE ID</th>
+                    <th className="bg-transparent">Position</th>
+                    <th className="text-right pr-0 bg-transparent">Manage</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -245,7 +257,7 @@ const AllUsers = () => {
                           className="btn btn-sm h-10 bg-primary/10 dark:bg-primary/20 text-primary border border-primary/30 rounded-xl hover:bg-primary hover:text-white transition-all duration-500 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/5 px-6"
                           onClick={() => handleEdit(user)}
                         >
-                          Modify_Record
+                          Edit Profile
                         </button>
                       </td>
                     </tr>
@@ -265,8 +277,8 @@ const AllUsers = () => {
             <footer className="mt-16 flex flex-col md:flex-row justify-between items-center gap-8 px-6 py-8 bg-white/20 dark:bg-white/[0.02] backdrop-blur-2xl rounded-[2.5rem] border border-black/[0.03] dark:border-white/[0.05] shadow-inner">
               <div className="flex items-center gap-3">
                  <div className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse shadow-[0_0_8px_rgba(var(--primary-rgb),0.5)]" />
-                 <span className="text-[10px] font-mono font-black text-slate-600 dark:text-slate-400 uppercase tracking-[0.4em]">
-                    Terminal_View: {currentPage} / {totalPages} Pages_Synchronized
+                 <span className="text-[10px] font-mono font-black text-slate-600 dark:text-slate-400 uppercase tracking-raw-widest">
+                    Page: {currentPage} / {totalPages}
                  </span>
               </div>
               
@@ -301,56 +313,83 @@ const AllUsers = () => {
         <dialog id="edit_modal" className="modal backdrop-blur-sm">
           <div className="modal-box w-11/12 max-w-5xl bg-white dark:bg-slate-900 p-0 rounded-[3rem] border border-black/5 dark:border-white/10 shadow-2xl overflow-y-auto max-h-[90vh]">
             <header className="bg-primary/5 p-8 border-b border-black/5 dark:border-white/5">
-               <div className="flex items-center gap-3 mb-2">
-                  <div className="w-1.5 h-4 bg-primary rounded-full" />
-                  <span className="text-[9px] font-mono font-black text-primary/60 uppercase tracking-[0.4em]">Protocol Override</span>
+                <div className="flex items-center gap-3 mb-2">
+                   <div className="w-1.5 h-4 bg-primary rounded-full" />
+                   <span className="text-[9px] font-mono font-black text-primary/60 uppercase tracking-[0.4em]">Admin Control</span>
+                </div>
+                <h3 className="text-3xl font-black text-slate-800 dark:text-white font-display tracking-tight uppercase">Edit Member Profile</h3>
+                <p className="text-slate-500 font-medium text-sm mt-1">Update the member's details and organizational roles.</p>
+             </header>
+             
+             <form onSubmit={handleSave} className="p-8 md:p-12 space-y-10">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>
+                     <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.name || ""} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Email Address</label>
+                     <input type="email" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.email || ""} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Phone Number</label>
+                     <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.phone || ""} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">IEEE ID</label>
+                     <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.ieee_id || ""} onChange={(e) => setFormData({ ...formData, ieee_id: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Department</label>
+                     <select className="select select-bordered h-14 w-full bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.dept || ""} onChange={(e) => setFormData({ ...formData, dept: e.target.value })}>
+                        {depts.map(d => <option key={d} value={d}>{d}</option>)}
+                     </select>
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Session</label>
+                     <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.session || ""} onChange={(e) => setFormData({ ...formData, session: e.target.value })} />
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Main Position</label>
+                     <select className="select select-bordered h-14 w-full bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.position || ""} onChange={(e) => setFormData({ ...formData, position: e.target.value })}>
+                        {positions.map(p => <option key={p} value={p}>{p}</option>)}
+                     </select>
+                  </div>
+                  <div className="space-y-2">
+                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Admin Status</label>
+                     <label className={`flex items-center justify-between h-14 px-6 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border transition-all cursor-pointer ${formData.isAdmin ? 'border-primary/40 bg-primary/5 shadow-inner' : 'border-black/5 dark:border-white/10 opacity-70'}`}>
+                        <span className={`text-[11px] uppercase tracking-widest ${formData.isAdmin ? 'text-primary' : 'text-slate-500'}`}>Grant Admin Access</span>
+                        <input type="checkbox" className="toggle toggle-primary toggle-sm" checked={formData.isAdmin || false} onChange={(e) => setFormData({ ...formData, isAdmin: e.target.checked })} />
+                     </label>
+                  </div>
                </div>
-               <h3 className="text-3xl font-black text-slate-800 dark:text-white font-display tracking-tight uppercase">Edit Identity Matrix</h3>
-               <p className="text-slate-500 font-medium text-sm mt-1">Modifying global affiliation and rank metrics for security clearance.</p>
-            </header>
-            
-            <form onSubmit={handleSave} className="p-8 md:p-12 space-y-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Identity: Name</label>
-                    <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.name || ""} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Comm: Link_Email</label>
-                    <input type="email" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.email || ""} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Comm: Link_Phone</label>
-                    <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.phone || ""} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Registry: IEEE_ID</label>
-                    <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.ieee_id || ""} onChange={(e) => setFormData({ ...formData, ieee_id: e.target.value })} />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Node: Department</label>
-                    <select className="select select-bordered h-14 w-full bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.dept || ""} onChange={(e) => setFormData({ ...formData, dept: e.target.value })}>
-                       {depts.map(d => <option key={d} value={d}>{d}</option>)}
-                    </select>
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Record: Session</label>
-                    <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.session || ""} onChange={(e) => setFormData({ ...formData, session: e.target.value })} />
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Rank: Branch_Position</label>
-                    <select className="select select-bordered h-14 w-full bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" value={formData.position || ""} onChange={(e) => setFormData({ ...formData, position: e.target.value })}>
-                       {positions.map(p => <option key={p} value={p}>{p}</option>)}
-                    </select>
-                 </div>
-                 <div className="space-y-2">
-                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Security: Clearance</label>
-                    <label className={`flex items-center justify-between h-14 px-6 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border transition-all cursor-pointer ${formData.isAdmin ? 'border-primary/40 bg-primary/5 shadow-inner' : 'border-black/5 dark:border-white/10 opacity-70'}`}>
-                       <span className={`text-[11px] uppercase tracking-widest ${formData.isAdmin ? 'text-primary' : 'text-slate-500'}`}>Administrative Privileges</span>
-                       <input type="checkbox" className="toggle toggle-primary toggle-sm" checked={formData.isAdmin || false} onChange={(e) => setFormData({ ...formData, isAdmin: e.target.checked })} />
+              
+              <section className="border-t border-black/5 dark:border-white/5 pt-10">
+                <div className="flex items-center gap-3 mb-6">
+                   <div className="w-6 h-[2px] bg-primary" />
+                   <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight italic">Society Memberships</h4>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {availableSocieties.map((soc) => (
+                    <label key={soc.id} className={`flex items-center justify-between p-5 rounded-[2rem] border transition-all duration-300 cursor-pointer ${
+                      formData.societies?.includes(soc.id) 
+                        ? 'bg-primary/5 border-primary/40 shadow-lg shadow-primary/5' 
+                        : 'bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/5 opacity-60 hover:opacity-100'
+                    }`}>
+                      <div className="flex flex-col">
+                         <span className="text-[9px] font-black text-primary/70 uppercase mb-1">{soc.id.split('-')[0]}</span>
+                         <span className="text-sm font-black dark:text-slate-200">{soc.name}</span>
+                      </div>
+                      <input
+                        type="checkbox"
+                        className="checkbox checkbox-primary checkbox-sm rounded-lg"
+                        checked={formData.societies?.includes(soc.id) || false}
+                        onChange={() => handleSocietyToggle(soc.id)}
+                      />
                     </label>
-                 </div>
-              </div>
+                  ))}
+                </div>
+              </section>
               
               <section className="border-t border-black/5 dark:border-white/5 pt-10">
                 <div className="flex items-center gap-3 mb-6">
@@ -389,8 +428,8 @@ const AllUsers = () => {
               </section>
               
               <div className="modal-action flex flex-col md:flex-row gap-4">
-                <button type="submit" className="w-full md:w-auto btn btn-primary h-auto py-5 px-16 rounded-2xl shadow-2xl shadow-primary/20 font-black uppercase text-[10px] tracking-[0.2em]">Synchronize Identity</button>
-                <button type="button" className="w-full md:w-auto px-10 py-5 font-black uppercase text-[10px] tracking-widest text-slate-400 hover:text-slate-600 transition-colors" onClick={()=>(document.getElementById("edit_modal") as HTMLDialogElement | null)?.close()}>Abort Protocol</button>
+                <button type="submit" className="w-full md:w-auto btn btn-primary h-auto py-5 px-16 rounded-2xl shadow-2xl shadow-primary/20 font-black uppercase text-[10px] tracking-[0.2em]">Save Changes</button>
+                <button type="button" className="w-full md:w-auto px-10 py-5 font-black uppercase text-[10px] tracking-widest text-slate-400 hover:text-slate-600 transition-colors" onClick={()=>(document.getElementById("edit_modal") as HTMLDialogElement | null)?.close()}>Cancel</button>
               </div>
             </form>
           </div>

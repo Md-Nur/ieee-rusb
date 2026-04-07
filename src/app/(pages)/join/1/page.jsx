@@ -13,7 +13,7 @@ const Join = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const intPhoneRegex = /^\+?[0-9]\d{1,14}$/;
-    if (user.name === "" || user.email === "" || !user.ieee_id) {
+    if (user.name === "" || user.email === "") {
       toast.error("Please fill all the fields");
       return;
     } else if (!intPhoneRegex.test(user.phone)) {
@@ -21,7 +21,7 @@ const Join = () => {
       return;
     }
 
-    if (user.email && user.phone && user.ieee_id) {
+    if (user.email && user.phone) {
       try {
         await axios.post("/api/users/existing-user", {
           email: user.email,
@@ -87,7 +87,6 @@ const Join = () => {
             placeholder="e.g. 12345678"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, ieee_id: e.target.value })}
-            required
           />
         </div>
         <div className="form-control">

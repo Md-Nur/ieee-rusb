@@ -50,10 +50,10 @@ const ContentApprovalTable = ({ initialContents }) => {
               <tr className="text-slate-400 border-none uppercase text-[10px] tracking-[0.2em] font-black">
                 <th className="bg-transparent pb-6 text-slate-500 dark:text-slate-400">Action</th>
                 <th className="bg-transparent pb-6 text-center text-slate-500 dark:text-slate-400">Preview</th>
-                <th className="bg-transparent pb-6 text-slate-500 dark:text-slate-400">Content Details</th>
-                <th className="bg-transparent pb-6">Contributor</th>
-                <th className="bg-transparent pb-6">Timeline & Type</th>
-                <th className="bg-transparent pb-6">Utilities</th>
+                <th className="bg-transparent pb-6 text-slate-500 dark:text-slate-400">Details</th>
+                <th className="bg-transparent pb-6">Author</th>
+                <th className="bg-transparent pb-6">Date & Type</th>
+                <th className="bg-transparent pb-6">Links</th>
               </tr>
             </thead>
             <tbody>
@@ -195,8 +195,8 @@ const ContentApprovalTable = ({ initialContents }) => {
                   <td colSpan={6} className="text-center py-20">
                      <div className="flex flex-col items-center gap-4 py-10">
                         <FaClipboardList size={48} className="text-slate-400 dark:text-slate-600 animate-pulse" />
-                        <div className="font-display text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tighter uppercase">Queue is Empty</div>
-                        <p className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-500 dark:text-slate-500">All community content has been verified</p>
+                        <div className="font-display text-2xl font-black text-slate-800 dark:text-slate-200 tracking-tighter uppercase">No Pending Content</div>
+                        <p className="text-[10px] font-black tracking-[0.3em] uppercase text-slate-500 dark:text-slate-500">All submitted content has been reviewed</p>
                      </div>
                   </td>
                 </tr>

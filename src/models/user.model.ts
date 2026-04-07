@@ -84,6 +84,8 @@ const UserSchema = new Schema<Users>({
       "Photographer",
       "Publication Coordinator",
       "Volunteer",
+      "Social Media Coordinator",
+      "Speaker",
       "Other",
     ],
     required: true,
@@ -139,9 +141,10 @@ const UserSchema = new Schema<Users>({
   },
   ieee_id: {
     type: String,
-    required: true,
+    required: false,
     unique: true,
     index: true,
+    sparse: true,
     trim: true,
   },
   society_designations: {
