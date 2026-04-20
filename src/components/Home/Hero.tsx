@@ -22,7 +22,7 @@ const HeroData = [
     secondaryLink: "/#about"
   },
   {
-    image: "https://jobs.ieee.org/headers/cc/responsive/partner_lib/23764/img/hero23764.jpg",
+    image: "/hero23764.jpg",
     title: "Global Network of Innovators",
     subtitle: "Join the world's largest technical professional organization for the advancement of technology.",
     cta: "Explore Societies",
@@ -31,7 +31,7 @@ const HeroData = [
     secondaryLink: "/#about"
   },
   {
-    image: "https://standards.ieee.org/wp-content/uploads/2024/03/iStock-1413210242-DM-r1.jpg",
+    image: "/iStock-1413210242-DM-r1.jpg",
     title: "Engineering the Future",
     subtitle: "Setting global standards and driving technological breakthroughs at RU.",
     cta: "Upcoming Events",

@@ -1,13 +1,10 @@
-import Chairperson from "@/components/Home/Chairperson";
 import CommunityAG from "@/components/Home/CommunityAG";
 import Hero from "@/components/Home/Hero";
 import MissionVission from "@/components/Home/MissionVission";
 import RecentEvents from "@/components/Home/RecentEvents";
 import UpcomingEvent from "@/components/Home/UpcomingEvent";
 import About from "@/components/Home/About";
-import Counselor from "@/components/Home/Counselor";
-import FoundingCounselor from "@/components/Home/FoundingCounselor";
-import FoundingChairperson from "@/components/Home/FoundingChairperson";
+import Advisors from "@/components/Home/Advisors";
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
@@ -41,10 +38,7 @@ export default async function Home() {
       <UpcomingEvent event={serializedUpcoming} />
       {/* @ts-ignore */}
       <RecentEvents events={serializedRecent} />
-      <Counselor />
-      <Chairperson />
-      <FoundingCounselor />
-      <FoundingChairperson />
+      <Advisors />
     </div>
   );
 }

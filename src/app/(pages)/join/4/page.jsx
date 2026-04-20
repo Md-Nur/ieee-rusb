@@ -42,11 +42,6 @@ const Join4 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!societies.length) {
-      toast.dismiss();
-      toast.error("Please select at least one society");
-      return;
-    }
 
     // Check if designations are selected for all selected societies
     for (const society of societies) {
@@ -67,7 +62,7 @@ const Join4 = () => {
 
   return (
     <div className="card-body">
-      <Title>Societies</Title>
+      <Title>Societies <span className="text-sm font-normal opacity-60">(Optional)</span></Title>
       <form
         className="flex flex-col max-w-sm mx-auto gap-3"
         onSubmit={handleSubmit}
