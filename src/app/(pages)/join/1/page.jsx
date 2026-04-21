@@ -52,6 +52,7 @@ const Join = () => {
             placeholder="e.g. John Doe"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, name: e.target.value })}
+            value={user?.name || ""}
             required
           />
         </div>
@@ -64,6 +65,7 @@ const Join = () => {
             placeholder="e.g. 01XXXXXXXXX"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, phone: e.target.value })}
+            value={user?.phone || ""}
             required
           />
         </div>
@@ -77,6 +79,7 @@ const Join = () => {
             className="input input-bordered input-accent"
             required
             onChange={(e) => setUser({ ...user, email: e.target.value })}
+            value={user?.email || ""}
           />
         </div>
         <div className="form-control">
@@ -88,6 +91,7 @@ const Join = () => {
             placeholder="e.g. 12345678"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, ieee_id: e.target.value })}
+            value={user?.ieee_id || ""}
           />
         </div>
         <div className="form-control">
@@ -99,6 +103,7 @@ const Join = () => {
             placeholder="Linkedin Profile Url"
             className="input input-bordered input-accent"
             onChange={(e) => setUser({ ...user, linkedin: e.target.value })}
+            value={user?.linkedin || ""}
           />
         </div>
         <div className="form-control mt-6">

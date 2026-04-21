@@ -17,6 +17,10 @@ const JoinProvider = ({ children }) => {
     session: "",
     ieee_id: "",
     society_designations: [],
+    linkedin: "",
+    avatar: "",
+    position: "",
+    designation: "",
   });
 
   return <Join.Provider value={{ user, setUser }}>{children}</Join.Provider>;

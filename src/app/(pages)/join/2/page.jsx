@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 const Join2 = () => {
   const { user, setUser } = useJoin();
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(user?.avatar || null);
   const [progress, setProgress] = useState(0);
   const avatarFile = useRef(null);
   const router = useRouter();

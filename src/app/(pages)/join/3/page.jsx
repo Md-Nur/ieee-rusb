@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 
 const Join3 = () => {
   const { user, setUser } = useJoin();
-  const [committee, setCommittee] = useState([]);
+  const [committee, setCommittee] = useState(user?.roles || []);
   const router = useRouter();
 
   const handleChecked = (e) => {
@@ -51,11 +51,11 @@ const Join3 = () => {
         className="flex flex-col max-w-sm mx-auto gap-3"
         onSubmit={handleSubmit}
       >
-        <Check name="executive-committee" handleChecked={handleChecked} />
-        <Check name="faculty-member" handleChecked={handleChecked} />
-        <Check name="student-member" handleChecked={handleChecked} />
-        <Check name="graduate-member" handleChecked={handleChecked} />
-        <Check name="alumni" handleChecked={handleChecked} />
+        <Check name="executive-committee" handleChecked={handleChecked} checked={committee.includes("executive-committee")} />
+        <Check name="faculty-member" handleChecked={handleChecked} checked={committee.includes("faculty-member")} />
+        <Check name="student-member" handleChecked={handleChecked} checked={committee.includes("student-member")} />
+        <Check name="graduate-member" handleChecked={handleChecked} checked={committee.includes("graduate-member")} />
+        <Check name="alumni" handleChecked={handleChecked} checked={committee.includes("alumni")} />
         <div className="flex w-full items-center justify-between">
           <Link href="/join/2" type="reset" className="btn btn-accent">
             Previous

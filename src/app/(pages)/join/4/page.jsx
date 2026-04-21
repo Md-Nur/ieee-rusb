@@ -20,8 +20,13 @@ const societyList = [
 
 const Join4 = () => {
   const { user, setUser } = useJoin();
-  const [societies, setSocieties] = useState([]);
-  const [designations, setDesignations] = useState({});
+  const [societies, setSocieties] = useState(user?.societies || []);
+  const [designations, setDesignations] = useState(
+    user?.society_designations?.reduce((acc, curr) => {
+      acc[curr.society] = curr.designation;
+      return acc;
+    }, {}) || {}
+  );
   const router = useRouter();
 
   const handleChecked = (e) => {
@@ -72,6 +77,7 @@ const Join4 = () => {
             <Check
               name={society}
               handleChecked={handleChecked}
+              checked={societies.includes(society)}
             />
             {societies.includes(society) && (
               <select

@@ -14,6 +14,8 @@ export async function GET(req: NextRequest) {
     const search = searchParams.get("search");
     const dept = searchParams.get("dept");
     let query = searchParams.get("query");
+    const society = searchParams.get("society");
+    const designation = searchParams.get("designation");
     
     // Pagination params
     const pageParam = searchParams.get("page");
@@ -60,10 +62,33 @@ export async function GET(req: NextRequest) {
       });
     }
 
+    // Ensure Alumni ONLY show on the alumni page (not on other public committees/societies/positions)
+    // We restrict this exclusively when query, society, or position is defined to ensure Admin dashboards can still view them.
+    if ((query || society || position) && query !== "alumni") {
+      pipeline.push({
+        $match: {
+          roles: {
+            $ne: "alumni",
+          },
+          position: {
+            $ne: "Alumni",
+          },
+        },
+      });
+    }
+
+    if (query === "executive-committee") {
+      pipeline.push({
+        $match: {
+          position: {
+            $ne: "Other",
+          },
+        },
+      });
+    }
+
     // Handle Societies
     let isSocietyQuery = false;
-    const society = searchParams.get("society");
-    const designation = searchParams.get("designation");
 
     if (
       query === "women-in-engineering-society" ||

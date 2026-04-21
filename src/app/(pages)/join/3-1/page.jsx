@@ -135,6 +135,7 @@ const Join31 = () => {
               placeholder="Format: YYYY-YY (e.g. 2019-20)"
               className="input input-bordered input-accent"
               onChange={(e) => setUser({ ...user, session: e.target.value })}
+              value={user?.session || ""}
               required
             />
           </div>

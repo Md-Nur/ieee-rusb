@@ -1,11 +1,13 @@
 const Check = ({
   name,
   label,
+  checked,
   handleChecked,
 }: {
   name: string;
   label?: string;
-  handleChecked: () => void;
+  checked?: boolean;
+  handleChecked: (e: any) => void;
 }) => {
   return (
     <div className="form-control">
@@ -13,8 +15,8 @@ const Check = ({
         <input
           type="checkbox"
           value={name}
-          // onChange={handleChecked}
-          onClick={handleChecked}
+          checked={checked || false}
+          onChange={handleChecked}
           className="checkbox checkbox-accent rounded-full"
         />
         <span className="label-text capitalize">

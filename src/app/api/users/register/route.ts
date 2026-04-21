@@ -42,6 +42,8 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+  } else {
+    delete data.ieee_id;
   }
 
   if (
