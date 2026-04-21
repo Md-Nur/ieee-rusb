@@ -5,6 +5,7 @@ import RecentEvents from "@/components/Home/RecentEvents";
 import UpcomingEvent from "@/components/Home/UpcomingEvent";
 import About from "@/components/Home/About";
 import Advisors from "@/components/Home/Advisors";
+import Counselor from "@/components/Home/Counselor";
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
@@ -38,6 +39,7 @@ export default async function Home() {
       <UpcomingEvent event={serializedUpcoming} />
       {/* @ts-ignore */}
       <RecentEvents events={serializedRecent} />
+      <Counselor />
       <Advisors />
     </div>
   );
