@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "@/components/Loading";
 import { positions, depts, deptShorthands, availableSocieties } from "@/lib/constants";
-import { FaSearch, FaUserShield, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaSearch, FaUserShield, FaChevronLeft, FaChevronRight, FaImage } from "react-icons/fa";
 
 
 
@@ -58,6 +58,33 @@ const AllUsers = () => {
 
   // Debouncing Search
   const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [avatarUploading, setAvatarUploading] = useState(false);
+
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAvatarUploading(true);
+    const toastId = toast.loading("Uploading avatar...");
+
+    try {
+      const uploadData = new FormData();
+      uploadData.append("image", file);
+
+      const response = await axios.post(
+        `https://api.imgbb.com/1/upload?key=${process.env.NEXT_PUBLIC_IMGBB_API_KEY}`,
+        uploadData
+      );
+
+      const imageUrl = response.data.data.url;
+      setFormData((prev) => ({ ...prev, avatar: imageUrl }));
+      toast.update(toastId, { render: "Avatar uploaded successfully!", type: "success", isLoading: false, autoClose: 3000 });
+    } catch (error: any) {
+      toast.update(toastId, { render: error?.message || "Failed to upload avatar", type: "error", isLoading: false, autoClose: 3000 });
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -322,6 +349,35 @@ const AllUsers = () => {
              </header>
              
              <form onSubmit={handleSave} className="p-8 md:p-12 space-y-10">
+               <div className="flex justify-center mb-8">
+                 <div className="relative group">
+                    <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-100 dark:border-slate-800 shadow-xl">
+                       <Image
+                         src={formData.avatar || "/defaultAvatar.jpg"}
+                         alt="Avatar"
+                         width={96}
+                         height={96}
+                         className="object-cover w-full h-full"
+                       />
+                    </div>
+                    <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity backdrop-blur-sm">
+                       <FaImage className="text-white text-xl" />
+                    </label>
+                    <input 
+                       id="avatar-upload" 
+                       type="file" 
+                       className="hidden" 
+                       accept="image/*"
+                       onChange={handleAvatarChange}
+                       disabled={avatarUploading}
+                    />
+                    {avatarUploading && (
+                       <div className="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center backdrop-blur-sm z-10">
+                          <span className="loading loading-spinner loading-sm text-white"></span>
+                       </div>
+                    )}
+                 </div>
+              </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6">
                   <div className="space-y-2">
                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">Full Name</label>

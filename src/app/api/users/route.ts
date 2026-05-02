@@ -47,7 +47,6 @@ export async function GET(req: NextRequest) {
 
     // Handle Roles
     if (
-      query === "executive-committee" ||
       query === "faculty-member" ||
       query === "student-member" ||
       query === "graduate-member" ||
@@ -83,6 +82,10 @@ export async function GET(req: NextRequest) {
           position: {
             $ne: "Other",
           },
+          $or: [
+            { roles: { $elemMatch: { $eq: "executive-committee" } } },
+            { position: { $nin: ["Alumni", "Senior Member", "Member"] } }
+          ]
         },
       });
     }
