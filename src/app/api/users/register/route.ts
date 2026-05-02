@@ -46,6 +46,10 @@ export async function POST(req: Request) {
     delete data.ieee_id;
   }
 
+  if (!data.designation) {
+    delete data.designation;
+  }
+
   if (
     data.roles.includes("faculty-member") &&
     data.roles.includes("student-member")
@@ -57,10 +61,10 @@ export async function POST(req: Request) {
   }
   if (
     data.roles.includes("student-member") &&
-    (data.roles.includes("gradute-member") || data.roles.includes("alumni"))
+    (data.roles.includes("graduate-member") || data.roles.includes("alumni"))
   ) {
     return Response.json(
-      { error: "You can't be both student and gradute member/alumni" },
+      { error: "You can't be both student and graduate member/alumni" },
       { status: 400 }
     );
   }
