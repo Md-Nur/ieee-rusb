@@ -34,6 +34,7 @@ interface User {
   session?: string;
   ieee_id?: string;
   society_designations?: { society: string; designation: string }[];
+  ecTerm?: string;
   __v?: number;
   createdAt?: string;
   updatedAt?: string;
@@ -234,6 +235,7 @@ const AllUsers = () => {
                     <th className="bg-transparent">Contact</th>
                     <th className="bg-transparent">IEEE ID</th>
                     <th className="bg-transparent">Position</th>
+                    <th className="bg-transparent">EC Term</th>
                     <th className="text-right pr-0 bg-transparent">Manage</th>
                   </tr>
                 </thead>
@@ -276,10 +278,15 @@ const AllUsers = () => {
                       <td className="bg-white/40 dark:bg-white/[0.03] backdrop-blur-md border-y border-black/[0.03] dark:border-white/[0.05] group-hover/row:bg-white/60 dark:group-hover/row:bg-white/[0.07] group-hover/row:border-primary/20 transition-all">
                           <div className="px-4 py-2 bg-slate-100/50 dark:bg-white/5 rounded-full border border-black/5 dark:border-white/10 inline-flex items-center gap-2">
                               <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover/row:animate-ping" />
-                              <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">{user.position}</span>
-                          </div>
-                      </td>
-                      <td className="py-6 pr-8 bg-white/40 dark:bg-white/[0.03] backdrop-blur-md rounded-r-[2rem] border-y border-r border-black/[0.03] dark:border-white/[0.05] group-hover/row:bg-white/60 dark:group-hover/row:bg-white/[0.07] group-hover/row:border-primary/20 transition-all text-right">
+                           <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 dark:text-slate-300">{user.position}</span>
+                           </div>
+                       </td>
+                       <td className="bg-white/40 dark:bg-white/[0.03] backdrop-blur-md border-y border-black/[0.03] dark:border-white/[0.05] group-hover/row:bg-white/60 dark:group-hover/row:bg-white/[0.07] group-hover/row:border-primary/20 transition-all">
+                          <span className="font-mono text-[11px] font-black text-primary/80 bg-primary/5 px-3 py-1 rounded-lg border border-primary/10">
+                             {user.ecTerm || "—"}
+                          </span>
+                       </td>
+                       <td className="py-6 pr-8 bg-white/40 dark:bg-white/[0.03] backdrop-blur-md rounded-r-[2rem] border-y border-r border-black/[0.03] dark:border-white/[0.05] group-hover/row:bg-white/60 dark:group-hover/row:bg-white/[0.07] group-hover/row:border-primary/20 transition-all text-right">
                         <button
                           className="btn btn-sm h-10 bg-primary/10 dark:bg-primary/20 text-primary border border-primary/30 rounded-xl hover:bg-primary hover:text-white transition-all duration-500 font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/5 px-6"
                           onClick={() => handleEdit(user)}
@@ -290,7 +297,7 @@ const AllUsers = () => {
                     </tr>
                   )) : (
                     <tr>
-                       <td colSpan={5} className="py-32 text-center">
+                        <td colSpan={6} className="py-32 text-center">
                           <div className="text-7xl font-black text-slate-300 dark:text-white/5 tracking-tighter">NULL_DATA</div>
                           <p className="font-mono text-[10px] font-black uppercase tracking-[0.5em] mt-4 text-slate-500 dark:text-slate-400">Registry query returned zero linked identities.</p>
                        </td>
@@ -416,11 +423,15 @@ const AllUsers = () => {
                      <label className={`flex items-center justify-between h-14 px-6 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border transition-all cursor-pointer ${formData.isAdmin ? 'border-primary/40 bg-primary/5 shadow-inner' : 'border-black/5 dark:border-white/10 opacity-70'}`}>
                         <span className={`text-[11px] uppercase tracking-widest ${formData.isAdmin ? 'text-primary' : 'text-slate-500'}`}>Grant Admin Access</span>
                         <input type="checkbox" className="toggle toggle-primary toggle-sm" checked={formData.isAdmin || false} onChange={(e) => setFormData({ ...formData, isAdmin: e.target.checked })} />
-                     </label>
-                  </div>
-               </div>
-              
-              <section className="border-t border-black/5 dark:border-white/5 pt-10">
+                      </label>
+                   </div>
+                   <div className="space-y-2">
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">EC Term (e.g. 2025-2026)</label>
+                      <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" placeholder="2025-2026" value={formData.ecTerm || ""} onChange={(e) => setFormData({ ...formData, ecTerm: e.target.value })} />
+                   </div>
+                </div>
+               
+               <section className="border-t border-black/5 dark:border-white/5 pt-10">
                 <div className="flex items-center gap-3 mb-6">
                    <div className="w-6 h-[2px] bg-primary" />
                    <h4 className="text-xl font-black text-slate-800 dark:text-white uppercase tracking-tight italic">Society Memberships</h4>
