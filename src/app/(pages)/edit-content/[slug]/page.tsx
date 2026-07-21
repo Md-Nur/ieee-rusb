@@ -36,7 +36,7 @@ const EditContent = ({ params }: { params: Promise<{ slug: string }> }) => {
   // Security Check: Only Admin or Author can edit
   useEffect(() => {
     if (!loading && content && userAuth) {
-      if (userAuth._id !== content.userId && !userAuth.isAdmin) {
+      if (userAuth._id.toString() !== content.userId.toString() && !userAuth.isAdmin) {
         toast.error("Unauthorized: Scientific access denied.");
         router.push("/");
       }

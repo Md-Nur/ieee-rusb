@@ -91,6 +91,9 @@ const SpeechSection = ({
 
               <div className="pt-8 border-t border-base-content/10">
                 <h3 className={`text-3xl font-black text-${themeColor}`}>{user.name}</h3>
+                {user.designation && (
+                  <p className="text-base font-bold opacity-40 uppercase tracking-widest">{user.designation}</p>
+                )}
                 <p className="text-lg font-bold opacity-60 uppercase tracking-widest">{user.position}</p>
                 <div className="mt-2 text-sm font-medium text-base-content/40">
                    Department of {user.dept}<br/>

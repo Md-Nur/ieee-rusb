@@ -90,6 +90,17 @@ const ShowUsers = ({ query, initialData }) => {
                   </div>
                 </div>
 
+                {user?.designation && (
+                  <div className="space-y-1">
+                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Academic Rank</p>
+                    <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
+                      <span className="text-sm font-black text-slate-700 dark:text-slate-200">
+                        {user.designation}
+                      </span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="space-y-4">
                   <div className="space-y-1.5">
                     <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Core Position</p>
