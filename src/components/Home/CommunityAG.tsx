@@ -9,42 +9,42 @@ const communityAndAG = [
     title: "Signal Processing Society",
     desc: "Focusing on signal processing and machine learning research and development.",
     url: "/sps",
-    img: "https://signalprocessingsociety.org/sites/default/files/SPS_Newsletter_slider_sized.jpg",
+    img: "/societies/sps.jpg",
     color: "from-blue-600/20",
   },
   {
     title: "Robotics & Automation Society",
     desc: "Innovative research in the field of robotics and automated systems.",
     url: "/ras",
-    img: "https://img.freepik.com/free-photo/futuristic-scene-with-high-tech-robot-used-construction-industry_23-2151329542.jpg",
+    img: "/societies/ras.jpg",
     color: "from-red-600/20",
   },
   {
     title: "Computer Society",
     desc: "Advancing computer science and digital technology through collaboration.",
     url: "/cs",
-    img: "https://img.freepik.com/free-vector/cloud-storage-realistic-concept-with-abstract-digital-globe-three-laptop-around_1284-26976.jpg",
+    img: "/societies/cs.jpg",
     color: "from-green-600/20",
   },
   {
     title: "Power & Energy Society",
     desc: "Developing sustainable energy solutions and power management systems.",
     url: "/pes",
-    img: "https://img.freepik.com/free-photo/wind-energy-with-wind-turbines-background_53876-124631.jpg",
+    img: "/societies/pes.jpg",
     color: "from-amber-600/20",
   },
   {
     title: "Antennas & Propagation Society",
     desc: "Exploring the frontiers of wireless communication and antenna design.",
     url: "/aps",
-    img: "https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg",
+    img: "/societies/aps.jpg",
     color: "from-purple-600/20",
   },
   {
     title: "Women In Engineering",
     desc: "Empowering women engineers and promoting diversity in technical fields.",
     url: "/wie",
-    img: "https://img.freepik.com/free-photo/beautiful-girl-s-day-concept_23-2148594283.jpg",
+    img: "/societies/wie.jpg",
     color: "from-pink-600/20",
   },
 ];
@@ -81,7 +81,7 @@ const CommunityAG = () => {
             <Link
               href={item.url}
               key={index}
-              className="group relative h-[420px] rounded-[3rem] overflow-hidden flex flex-col justify-end p-10 transition-all duration-700 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/30 border border-white/10"
+              className="group relative h-[420px] w-[420px] rounded-[3rem] overflow-hidden flex flex-col justify-end p-10 transition-all duration-700 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/30 border border-white/10"
             >
               {/* Background Image */}
               <div className="absolute inset-0">

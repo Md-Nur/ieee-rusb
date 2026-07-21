@@ -426,8 +426,8 @@ const AllUsers = () => {
                       </label>
                    </div>
                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">EC Term (e.g. 2025-2026)</label>
-                      <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" placeholder="2025-2026" value={formData.ecTerm || ""} onChange={(e) => setFormData({ ...formData, ecTerm: e.target.value })} />
+                      <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1">EC Term (e.g. 2026)</label>
+                      <input type="text" className="input input-bordered w-full h-14 bg-slate-50 dark:bg-white/5 rounded-2xl font-bold border-black/5 dark:border-white/10 focus:ring-2 focus:ring-primary/20" placeholder="2025" value={formData.ecTerm || ""} onChange={(e) => setFormData({ ...formData, ecTerm: e.target.value })} />
                    </div>
                 </div>
                
