@@ -76,7 +76,7 @@ const SpeechSection = ({
             {/* Quote/Text Section */}
             <div className="lg:w-3/5 p-8 md:p-12 space-y-8">
               <div className="relative">
-                <FaQuoteLeft className={`text-${themeColor}/20 text-6xl absolute -top-4 -left-4`} />
+                <FaQuoteLeft className={`text-${themeColor}/20 text-3xl absolute -top-2 -left-7`} />
                 <div className="relative z-10 space-y-4">
                   <p className="text-xl md:text-2xl font-medium text-base-content/80 leading-relaxed italic text-justify">
                     "{quote || `${user.name} is a dedicated leader for IEEE RUSB. Under their guidance, our branch has evolved into a powerhouse of technical innovation and student leadership.`}"

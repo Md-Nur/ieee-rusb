@@ -1,42 +1,10 @@
 
-Designation serial:
+There have many teachers cards in the website. add designation under teacher name
 
-Counselor
-Advisor
-Senior member
-Alumni
-Chairperson
-Vice Chair
-General Sec
-Ass GS
-Treasurer
-Webmaster
-Programm coordinator
-Graphic Designer
-Content Development 
-Membership Development
-Public Relation Coordinator 
-Photographer
-Publication coordinator
-Volunteer
-Other
-
-
-Speach Home page:
-Counselor
-Chairperson
-Founding Chairperson: Hossain Md. Sabir
-Founding Counselor: Shamim Ahmad
-
-
-International Number Validation
-
-Every socity have like main home page: carosel,About, Mission Vision, Speaches
-
-Exe Committee, Volunteer, Alumni
-
-Expiration of Registration Date
-
-Show content: content & thumbnail align
-
-Thumbnail Aspect Ratio: 16:9
+active member acutal data
+update gallery
+In the cards there have session in double line make it in single line.
+upcoming events in every socity
+message from advisor and chair in every society
+executive committee of ru student branch
+every session committee must be present
