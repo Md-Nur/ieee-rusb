@@ -53,7 +53,7 @@ export async function GET(req) {
   }
 
   if (society) {
-    pipeline.push({ $match: { society: society } });
+    pipeline.push({ $match: { societies: { $in: [society] } } });
   }
   if (query === "blog") {
     pipeline.push({ $match: { type: "blog" } });

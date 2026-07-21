@@ -21,10 +21,8 @@ const SocietySpeech = ({ society }: SocietySpeechProps) => {
   const [chair, setChair] = useState<Users | null>(null);
 
   useEffect(() => {
-    // We need an API that can filter by society designation
-    // For now, let's assume we can query by society and designation
     axios
-      .get(`/api/users?society=${society}&designation=Chairperson`)
+      .get("/api/users", { params: { society, designation: "Chairperson" } })
       .then((res) => {
         const users = Array.isArray(res.data) ? res.data : [];
         setChair(users[0] || null);

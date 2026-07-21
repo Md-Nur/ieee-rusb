@@ -22,7 +22,7 @@ const SocietyAdvisor = ({ society }: SocietyAdvisorProps) => {
 
   useEffect(() => {
     axios
-      .get(`/api/users?society=${society}&position=Advisor`)
+      .get("/api/users", { params: { society, designation: "Advisor" } })
       .then((res) => {
         const users = Array.isArray(res.data) ? res.data : [];
         setAdvisor(users[0] || null);

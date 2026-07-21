@@ -95,7 +95,6 @@ const SpeechSection = ({
                 {user.designation && (
                   <p className="text-base font-bold opacity-40 uppercase tracking-widest">{user.designation}</p>
                 )}
-                <p className="text-lg font-bold opacity-60 uppercase tracking-widest">{user.position}</p>
                 <div className="mt-2 text-sm font-medium text-base-content/40">
                    {deptShorthands[user.dept] || user.dept}<br/>
                    University of Rajshahi

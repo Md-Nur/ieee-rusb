@@ -18,7 +18,9 @@ const societyAcronyms = {
 };
 
 const ShowUsers = ({ query, initialData }) => {
-  const [users, setUsers] = useState(initialData ? sortUsersByDesignation(initialData, query) : []);
+  const [users, setUsers] = useState(
+    initialData ? sortUsersByDesignation(initialData, query) : [],
+  );
   const [loading, setLoading] = useState(!initialData);
 
   useEffect(() => {
@@ -36,7 +38,10 @@ const ShowUsers = ({ query, initialData }) => {
   }, [query, initialData]);
 
   return (
-    <div id="members" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-8 px-4 md:px-10 py-16">
+    <div
+      id="members"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto gap-8 px-4 md:px-10 py-16"
+    >
       {!loading ? (
         users.length ? (
           users.map((user) => (
@@ -53,24 +58,35 @@ const ShowUsers = ({ query, initialData }) => {
                   alt={user?.name}
                   className="object-cover h-full w-full transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
                 />
-                
+
                 {/* Modern Cinematic Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#001c30] via-transparent to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-700" />
-                
+
                 {/* Floating Social Hub */}
                 <div className="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-primary/20 backdrop-blur-[2px]">
                   {user?.phone && (
-                    <a href={`tel:${user?.phone}`} className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
+                    <a
+                      href={`tel:${user?.phone}`}
+                      className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300"
+                    >
                       <MdOutlinePhone className="text-xl" />
                     </a>
                   )}
                   {user?.email && (
-                    <a href={`mailto:${user?.email}`} className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
+                    <a
+                      href={`mailto:${user?.email}`}
+                      className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300"
+                    >
                       <MdOutlineMailOutline className="text-xl" />
                     </a>
                   )}
                   {user?.linkedin && (
-                    <a href={user?.linkedin} target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300">
+                    <a
+                      href={user?.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-12 h-12 flex items-center justify-center bg-white/10 border border-white/20 rounded-full text-white hover:bg-primary hover:scale-125 transition-all duration-300"
+                    >
                       <PiLinkedinLogoBold className="text-xl" />
                     </a>
                   )}
@@ -103,17 +119,25 @@ const ShowUsers = ({ query, initialData }) => {
 
                 {societyAcronyms[query] ? (
                   <div className="space-y-1.5">
-                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">{societyAcronyms[query]} Position</p>
+                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">
+                      {societyAcronyms[query]} Position
+                    </p>
                     <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
                       <span className="text-sm font-black text-slate-700 dark:text-slate-200 uppercase italic leading-none">
-                        {user.society_designations?.find((sd) => sd.society === query)?.designation || user.position || "Member"}
+                        {user.society_designations?.find(
+                          (sd) => sd.society === query,
+                        )?.designation ||
+                          user.position ||
+                          "Member"}
                       </span>
                     </div>
                   </div>
                 ) : (
                   <div className="space-y-4">
                     <div className="space-y-1.5">
-                      <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Core Position</p>
+                      <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">
+                        Core Position
+                      </p>
                       <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
                         <span className="text-sm font-black text-slate-700 dark:text-slate-200 uppercase italic leading-none">
                           {user.position || "Branch Member"}
@@ -124,9 +148,13 @@ const ShowUsers = ({ query, initialData }) => {
                     {user?.society_designations?.length > 0 && (
                       <div className="flex flex-wrap gap-2 pt-4 border-t border-black/5 dark:border-white/5">
                         {user.society_designations.map((sd, idx) => (
-                          <div key={idx} className="group/badge px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 flex items-center gap-2 hover:bg-primary/20 transition-colors">
+                          <div
+                            key={idx}
+                            className="group/badge px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 flex items-center gap-2 hover:bg-primary/20 transition-colors"
+                          >
                             <span className="text-[9px] font-black text-primary/70">
-                              {societyAcronyms[sd.society] || sd.society.split("-")[0].toUpperCase()}
+                              {societyAcronyms[sd.society] ||
+                                sd.society.split("-")[0].toUpperCase()}
                             </span>
                             <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">
                               {sd.designation}
@@ -140,12 +168,24 @@ const ShowUsers = ({ query, initialData }) => {
 
                 <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Dept:</span>
-                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{deptShorthands[user?.dept] || user?.dept}</span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                      Dept:
+                    </span>
+                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">
+                      {deptShorthands[user?.dept] || user?.dept}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-right">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Session:</span>
-                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{user?.session || 'N/A'}</span>
+                    {user?.session && (
+                      <>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">
+                          Session:
+                        </span>
+                        <span className="text-xs font-black text-slate-600 dark:text-slate-400">
+                          {user.session}
+                        </span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -156,13 +196,17 @@ const ShowUsers = ({ query, initialData }) => {
           ))
         ) : (
           <div className="w-full text-center py-24 flex flex-col items-center gap-6 col-span-full opacity-60">
-             <div className="text-8xl font-display font-black tracking-tighter text-slate-200 dark:text-white/5">NULL</div>
-             <h1 className="text-xl font-mono font-bold text-slate-400 uppercase tracking-[0.4em]">Grid Empty: 0 Members</h1>
+            <div className="text-8xl font-display font-black tracking-tighter text-slate-200 dark:text-white/5">
+              NULL
+            </div>
+            <h1 className="text-xl font-mono font-bold text-slate-400 uppercase tracking-[0.4em]">
+              Grid Empty: 0 Members
+            </h1>
           </div>
         )
       ) : (
         <div className="col-span-full">
-           <UserSkeleton />
+          <UserSkeleton />
         </div>
       )}
     </div>

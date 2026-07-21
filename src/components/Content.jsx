@@ -18,6 +18,10 @@ const Content = ({ postData, type }) => {
   const [author, setAuthor] = useState(userAuth);
   const [progress, setProgress] = useState(0);
 
+  const [selectedSocieties, setSelectedSocieties] = useState(
+    postData?.societies || []
+  );
+
   const {
     register,
     handleSubmit,
@@ -31,9 +35,23 @@ const Content = ({ postData, type }) => {
       userId: postData?.userId || userAuth?._id,
       regUrl: postData?.regUrl || "",
       date: postData?.date || new Date().toISOString().split("T")[0],
-      society: postData?.society || "",
     },
   });
+
+  const allSocieties = [
+    { value: "computer-society", label: "Computer Society" },
+    { value: "power-&-energy-society", label: "Power & Energy Society" },
+    { value: "robotics-&-automation-society", label: "Robotics & Automation Society" },
+    { value: "signal-processing-society", label: "Signal Processing Society" },
+    { value: "women-in-engineering-society", label: "Women In Engineering" },
+    { value: "antenna-&-propagation-society", label: "Antenna & Propagation Society" },
+  ];
+
+  const toggleSociety = (socValue) => {
+    setSelectedSocieties((prev) =>
+      prev.includes(socValue) ? prev.filter((s) => s !== socValue) : [...prev, socValue]
+    );
+  };
 
   const handleFileChange = (event) => {
     const file = event?.target?.files[0];
@@ -61,6 +79,7 @@ const Content = ({ postData, type }) => {
     }
     data.content = editorRef.current.getContent();
     data.tags = data.tags.split(",").map((tag) => tag.trim());
+    data.societies = selectedSocieties.length > 0 ? selectedSocieties : ["main"];
     setProgress(25);
     
     if (image) {
@@ -168,20 +187,25 @@ const Content = ({ postData, type }) => {
                        <FaLayerGroup className="text-primary text-xs" />
                        <span className="text-[10px] font-black tracking-[0.2em] uppercase text-slate-400">Branch_Affiliation</span>
                     </label>
-                    <div className="relative">
-                      <select
-                        className="select bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/50 focus:border-primary rounded-2xl w-full font-semibold appearance-none"
-                        {...register("society")}
-                      >
-                        <option value="">General (All Events)</option>
-                        <option value="computer-society">Computer Society</option>
-                        <option value="power-&-energy-society">Power & Energy Society</option>
-                        <option value="robotics-&-automation-society">Robotics & Automation Society</option>
-                        <option value="signal-processing-society">Signal Processing Society</option>
-                        <option value="women-in-engineering-society">Women In Engineering</option>
-                        <option value="antenna-&-propagation-society">Antenna & Propagation Society</option>
-                      </select>
-                      <FaChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400 text-xs" />
+                    <div className="flex flex-wrap gap-3">
+                      {allSocieties.map((soc) => (
+                        <label
+                          key={soc.value}
+                          className={`flex items-center gap-2 px-4 py-2 rounded-2xl border cursor-pointer transition-all ${
+                            selectedSocieties.includes(soc.value)
+                              ? "bg-primary/10 border-primary/40"
+                              : "bg-slate-50 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700/50"
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            className="checkbox checkbox-primary checkbox-xs rounded"
+                            checked={selectedSocieties.includes(soc.value)}
+                            onChange={() => toggleSociety(soc.value)}
+                          />
+                          <span className="text-xs font-bold">{soc.label}</span>
+                        </label>
+                      ))}
                     </div>
                   </div>
                 </div>
