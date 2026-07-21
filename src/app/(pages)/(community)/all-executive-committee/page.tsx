@@ -1,5 +1,4 @@
 import ShowUsers from "@/components/ShowUsers";
-import Title from "@/components/Title";
 
 export const metadata = {
   title: "All Executive Committee",
@@ -34,7 +33,12 @@ const AllExecutiveCommittee = async () => {
     <div className="w-full">
       {sortedTerms.map((term) => (
         <div key={term}>
-          <Title>{term}</Title>
+          <div className="max-w-7xl mx-auto px-4 md:px-10 pt-8">
+            <h2 className="text-3xl md:text-5xl font-black text-base-content">
+              Executive Committee {term}
+            </h2>
+            <div className="h-1 w-20 bg-primary rounded-full mt-4 mb-2"></div>
+          </div>
           {/* @ts-ignore */}
           <ShowUsers query="all-executive-committee" initialData={grouped[term]} />
         </div>
