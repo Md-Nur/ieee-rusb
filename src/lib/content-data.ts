@@ -64,14 +64,14 @@ export const getContent = (params: any = {}) => {
   )();
 };
 
-export const getUpcomingEvent = unstable_cache(
+export const getUpcomingEvent = (society?: string) => unstable_cache(
   async () => {
-    const events = await getContentInternal({ query: "upcoming-event", limit: 1 });
+    const events = await getContentInternal({ query: "upcoming-event", limit: 1, society });
     return Array.isArray(events) ? events[0] || null : events || null;
   },
-  ["upcoming-event"],
+  [`upcoming-event-${society}`],
   { revalidate: 3600, tags: ["content", "upcoming-event"] }
-);
+)();
 
 export const getRecentEvents = (limit = 3, society?: string) => unstable_cache(
   async () => getContentInternal({ query: "recent-events", limit, society }),

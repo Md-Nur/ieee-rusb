@@ -127,13 +127,13 @@ const ShowUsers = ({ query, initialData }) => {
                 </div>
 
                 <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Department</p>
-                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 mt-1">{user?.dept}</p>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Dept:</span>
+                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{user?.dept}</span>
                   </div>
-                  <div className="text-right">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Record</p>
-                    <p className="text-xs font-black text-slate-600 dark:text-slate-400 mt-1">{user?.designation || user?.session || 'N/A'}</p>
+                  <div className="flex items-center gap-2 text-right">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Session:</span>
+                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{user?.session || 'N/A'}</span>
                   </div>
                 </div>
               </div>

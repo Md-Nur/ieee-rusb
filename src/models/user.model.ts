@@ -19,6 +19,7 @@ export interface Users extends Document {
   society_designations?: { society: string; designation: string }[];
   forgotPasswordToken?: string;
   forgotPasswordTokenExpiry?: Date;
+  ecTerm?: string;
 }
 
 const UserSchema = new Schema<Users>({
