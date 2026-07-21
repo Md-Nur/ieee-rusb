@@ -43,12 +43,12 @@ const PES = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "power-&-energy-society", approved: true });
+  const { users } = await getUsers({ query: "pes", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "power-&-energy-society");
-  const serializedUpcoming = await getUpcomingEvent("power-&-energy-society");
+  const serializedEvents = await getRecentEvents(3, "pes");
+  const serializedUpcoming = await getUpcomingEvent("pes");
 
   return (
     <div className="w-full">
@@ -59,15 +59,15 @@ const PES = async () => {
         image="https://img.freepik.com/free-photo/solar-panels-wind-turbines-electricity-station-at-sunset_335224-1188.jpg"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="power-&-energy-society" />
-      <SocietyAdvisor society="power-&-energy-society" />
+      <SocietySpeech society="pes" />
+      <SocietyAdvisor society="pes" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="power-&-energy-society" event={serializedUpcoming} />
+      <UpcomingEvent society="pes" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="power-&-energy-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="pes" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="power-&-energy-society" initialData={serializedUsers} />
+      <ShowUsers query="pes" initialData={serializedUsers} />
     </div>
   );
 };

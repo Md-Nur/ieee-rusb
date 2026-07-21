@@ -60,7 +60,7 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false, limit 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
         {!loading ? (
           contents.length ? (
-            contents.map((content) => (
+            contents.map((content, idx) => (
               <Link
                   href={`/content/${content.slug}`}
                   key={content._id}
@@ -73,7 +73,9 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false, limit 
                     height={600}
                     width={600}
                     alt={content.title}
+                    priority={idx === 0}
                     className="object-cover h-full w-full transition-transform duration-1000 group-hover:scale-105"
+                    unoptimized={content.thumbnail?.includes('ibb.co')}
                   />
                   
                   {/* ... remains unchanged ... */}

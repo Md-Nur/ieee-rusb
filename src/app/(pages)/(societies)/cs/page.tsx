@@ -45,12 +45,12 @@ const CS = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "computer-society", approved: true });
+  const { users } = await getUsers({ query: "cs", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "computer-society");
-  const serializedUpcoming = await getUpcomingEvent("computer-society");
+  const serializedEvents = await getRecentEvents(3, "cs");
+  const serializedUpcoming = await getUpcomingEvent("cs");
 
   return (
     <div className="w-full">
@@ -61,15 +61,15 @@ const CS = async () => {
         image="https://img.freepik.com/free-photo/standard-quality-control-concept-m_23-2150041851.jpg"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="computer-society" />
-      <SocietyAdvisor society="computer-society" />
+      <SocietySpeech society="cs" />
+      <SocietyAdvisor society="cs" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="computer-society" event={serializedUpcoming} />
+      <UpcomingEvent society="cs" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="computer-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="cs" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="computer-society" initialData={serializedUsers} />
+      <ShowUsers query="cs" initialData={serializedUsers} />
     </div>
   )
 }

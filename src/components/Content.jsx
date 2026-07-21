@@ -39,12 +39,12 @@ const Content = ({ postData, type }) => {
   });
 
   const allSocieties = [
-    { value: "computer-society", label: "Computer Society" },
-    { value: "power-&-energy-society", label: "Power & Energy Society" },
-    { value: "robotics-&-automation-society", label: "Robotics & Automation Society" },
-    { value: "signal-processing-society", label: "Signal Processing Society" },
-    { value: "women-in-engineering-society", label: "Women In Engineering" },
-    { value: "antenna-&-propagation-society", label: "Antenna & Propagation Society" },
+    { value: "cs", label: "Computer Society" },
+    { value: "pes", label: "Power & Energy Society" },
+    { value: "ras", label: "Robotics & Automation Society" },
+    { value: "sps", label: "Signal Processing Society" },
+    { value: "wie", label: "Women In Engineering" },
+    { value: "aps", label: "Antenna & Propagation Society" },
   ];
 
   const toggleSociety = (socValue) => {

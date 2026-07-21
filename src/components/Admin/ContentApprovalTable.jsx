@@ -111,6 +111,7 @@ const ContentApprovalTable = ({ initialContents }) => {
                             height={80}
                             alt={content?.title || "Thumbnail"}
                             className="object-cover"
+                            unoptimized={content?.thumbnail?.includes('ibb.co')}
                           />
                         </div>
                       </div>

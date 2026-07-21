@@ -43,12 +43,12 @@ const WIE = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "women-in-engineering-society", approved: true });
+  const { users } = await getUsers({ query: "wie", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "women-in-engineering-society");
-  const serializedUpcoming = await getUpcomingEvent("women-in-engineering-society");
+  const serializedEvents = await getRecentEvents(3, "wie");
+  const serializedUpcoming = await getUpcomingEvent("wie");
 
   return (
     <div className="w-full">
@@ -59,15 +59,15 @@ const WIE = async () => {
         image="/wie-about.png"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="women-in-engineering-society" />
-      <SocietyAdvisor society="women-in-engineering-society" />
+      <SocietySpeech society="wie" />
+      <SocietyAdvisor society="wie" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="women-in-engineering-society" event={serializedUpcoming} />
+      <UpcomingEvent society="wie" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="women-in-engineering-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="wie" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="women-in-engineering-society" initialData={serializedUsers} />
+      <ShowUsers query="wie" initialData={serializedUsers} />
     </div>
   );
 };

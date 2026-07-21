@@ -5,12 +5,12 @@ import { useEffect, useState } from "react";
 import SpeechSection from "./SpeechSection";
 
 const societyAcronyms: Record<string, string> = {
-  "robotics-&-automation-society": "RAS",
-  "signal-processing-society": "SPS",
-  "power-&-energy-society": "PES",
-  "computer-society": "CS",
-  "antenna-&-propagation-society": "APS",
-  "women-in-engineering-society": "WIE",
+  ras: "RAS",
+  sps: "SPS",
+  pes: "PES",
+  cs: "CS",
+  aps: "APS",
+  wie: "WIE",
 };
 
 interface SocietySpeechProps {

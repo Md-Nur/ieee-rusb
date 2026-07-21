@@ -100,14 +100,7 @@ const UserSchema = new Schema<Users>({
   societies: {
     type: [String],
     default: [],
-    enum: [
-      "robotics-&-automation-society",
-      "signal-processing-society",
-      "power-&-energy-society",
-      "computer-society",
-      "antenna-&-propagation-society",
-      "women-in-engineering-society",
-    ],
+    enum: ["ras", "sps", "pes", "cs", "aps", "wie"],
   },
   isApproved: {
     type: Boolean,

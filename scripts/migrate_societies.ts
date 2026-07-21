@@ -30,9 +30,9 @@ async function migrate() {
   console.log(`Total: ${total}`);
 
   // Verify
-  const rasEvents = await contents.countDocuments({ societies: "robotics-&-automation-society" });
+  const rasEvents = await contents.countDocuments({ societies: "ras" });
   console.log(`RAS events: ${rasEvents}`);
-  const wieEvents = await contents.countDocuments({ societies: "women-in-engineering-society" });
+  const wieEvents = await contents.countDocuments({ societies: "wie" });
   console.log(`WIE events: ${wieEvents}`);
 
   process.exit(0);

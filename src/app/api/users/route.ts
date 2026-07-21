@@ -102,12 +102,12 @@ export async function GET(req: NextRequest) {
     let isSocietyQuery = false;
 
     if (
-      query === "women-in-engineering-society" ||
-      query === "signal-processing-society" ||
-      query === "antenna-&-propagation-society" ||
-      query === "computer-society" ||
-      query === "power-&-energy-society" ||
-      query === "robotics-&-automation-society" ||
+      query === "wie" ||
+      query === "sps" ||
+      query === "aps" ||
+      query === "cs" ||
+      query === "pes" ||
+      query === "ras" ||
       society
     ) {
       isSocietyQuery = true;

@@ -43,12 +43,12 @@ const RAS = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "robotics-&-automation-society", approved: true });
+  const { users } = await getUsers({ query: "ras", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "robotics-&-automation-society");
-  const serializedUpcoming = await getUpcomingEvent("robotics-&-automation-society");
+  const serializedEvents = await getRecentEvents(3, "ras");
+  const serializedUpcoming = await getUpcomingEvent("ras");
 
   return (
     <div className="w-full">
@@ -59,15 +59,15 @@ const RAS = async () => {
         image="/ras-about.png"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="robotics-&-automation-society" />
-      <SocietyAdvisor society="robotics-&-automation-society" />
+      <SocietySpeech society="ras" />
+      <SocietyAdvisor society="ras" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="robotics-&-automation-society" event={serializedUpcoming} />
+      <UpcomingEvent society="ras" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="robotics-&-automation-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="ras" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="robotics-&-automation-society" initialData={serializedUsers} />
+      <ShowUsers query="ras" initialData={serializedUsers} />
     </div>
   );
 };

@@ -1,21 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import ShowContents from "@/components/ShowContents";
 import Title from "@/components/Title";
 
 const societies = [
   { value: "", label: "All Societies" },
-  { value: "robotics-&-automation-society", label: "RAS" },
-  { value: "signal-processing-society", label: "SPS" },
-  { value: "power-&-energy-society", label: "PES" },
-  { value: "computer-society", label: "CS" },
-  { value: "antenna-&-propagation-society", label: "APS" },
-  { value: "women-in-engineering-society", label: "WIE" },
+  { value: "ras", label: "RAS" },
+  { value: "sps", label: "SPS" },
+  { value: "pes", label: "PES" },
+  { value: "cs", label: "CS" },
+  { value: "aps", label: "APS" },
+  { value: "wie", label: "WIE" },
   { value: "main", label: "Main Branch" },
 ];
 
 const AllEvents = () => {
-  const [society, setSociety] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const society = searchParams.get("society") || "";
+
+  const handleChange = useCallback((value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set("society", value);
+    } else {
+      params.delete("society");
+    }
+    router.replace(`/all-events?${params.toString()}`, { scroll: false });
+  }, [router, searchParams]);
 
   return (
     <div className="w-full overflow-x-auto">
@@ -23,7 +36,7 @@ const AllEvents = () => {
         <Title className="!my-0 !p-0">All Events</Title>
         <select
           value={society}
-          onChange={(e) => setSociety(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           className="select select-bordered select-sm w-full max-w-xs"
         >
           {societies.map((s) => (

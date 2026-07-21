@@ -9,14 +9,7 @@ import { toast } from "react-toastify";
 import { positions } from "@/lib/constants";
 
 
-const societyList = [
-  "robotics-&-automation-society",
-  "signal-processing-society",
-  "power-&-energy-society",
-  "computer-society",
-  "antenna-&-propagation-society",
-  "women-in-engineering-society",
-];
+const societyList = ["ras", "sps", "pes", "cs", "aps", "wie"];
 
 const Join4 = () => {
   const { user, setUser } = useJoin();

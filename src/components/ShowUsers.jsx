@@ -9,12 +9,12 @@ import { deptShorthands } from "@/lib/constants";
 import UserSkeleton from "./Skeletons/UserSkeleton";
 
 const societyAcronyms = {
-  "robotics-&-automation-society": "RAS",
-  "signal-processing-society": "SPS",
-  "power-&-energy-society": "PES",
-  "computer-society": "CS",
-  "antenna-&-propagation-society": "APS",
-  "women-in-engineering-society": "WIE",
+  ras: "RAS",
+  sps: "SPS",
+  pes: "PES",
+  cs: "CS",
+  aps: "APS",
+  wie: "WIE",
 };
 
 const ShowUsers = ({ query, initialData }) => {

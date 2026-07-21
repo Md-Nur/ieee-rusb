@@ -43,12 +43,12 @@ const SPS = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "signal-processing-society", approved: true });
+  const { users } = await getUsers({ query: "sps", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "signal-processing-society");
-  const serializedUpcoming = await getUpcomingEvent("signal-processing-society");
+  const serializedEvents = await getRecentEvents(3, "sps");
+  const serializedUpcoming = await getUpcomingEvent("sps");
 
   return (
     <div className="w-full">
@@ -59,15 +59,15 @@ const SPS = async () => {
         image="/sps-about.png"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="signal-processing-society" />
-      <SocietyAdvisor society="signal-processing-society" />
+      <SocietySpeech society="sps" />
+      <SocietyAdvisor society="sps" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="signal-processing-society" event={serializedUpcoming} />
+      <UpcomingEvent society="sps" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="signal-processing-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="sps" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="signal-processing-society" initialData={serializedUsers} />
+      <ShowUsers query="sps" initialData={serializedUsers} />
     </div>
   );
 };

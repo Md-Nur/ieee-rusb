@@ -49,10 +49,10 @@ export const memberRoles = [
 ];
 
 export const availableSocieties = [
-  { id: "robotics-&-automation-society", name: "Robotics & Automation Society" },
-  { id: "signal-processing-society", name: "Signal Processing Society" },
-  { id: "power-&-energy-society", name: "Power & Energy Society" },
-  { id: "computer-society", name: "Computer Society" },
-  { id: "antenna-&-propagation-society", name: "Antenna & Propagation Society" },
-  { id: "women-in-engineering-society", name: "Women In Engineering" },
+  { id: "ras", name: "Robotics & Automation Society" },
+  { id: "sps", name: "Signal Processing Society" },
+  { id: "pes", name: "Power & Energy Society" },
+  { id: "cs", name: "Computer Society" },
+  { id: "aps", name: "Antenna & Propagation Society" },
+  { id: "wie", name: "Women In Engineering" },
 ];

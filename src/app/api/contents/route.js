@@ -5,7 +5,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 const existingSlug = async (title) => {
   await dbConnect();
   const slug = title.toLowerCase().replace(/ /g, "-");
-  console.log(slug);
+  // console.log(slug);
   const existData = await ContentModel.findOne({ slug });
   if (existData) {
     return await existingSlug(slug + "-1");
@@ -28,7 +28,7 @@ export async function POST(req) {
     return Response.json({ error: "All fields are required" }, { status: 400 });
   }
   data.slug = await existingSlug(data.title);
-  console.log(data);
+  // console.log(data);
   const content = await ContentModel.create(data);
   if (!content) {
     return Response.json({ error: "content didn't added" }, { status: 400 });
@@ -53,6 +53,7 @@ export async function GET(req) {
   }
 
   if (society) {
+    console.log("society", society);
     pipeline.push({ $match: { societies: { $in: [society] } } });
   }
   if (query === "blog") {

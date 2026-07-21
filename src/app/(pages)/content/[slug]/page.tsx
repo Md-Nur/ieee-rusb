@@ -132,7 +132,7 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
                 priority
                 className="w-full h-auto object-contain transition-all duration-700 group-hover:scale-[1.02] group-hover:brightness-105"
                 sizes="(max-width: 896px) 100vw, 896px"
-                unoptimized={content?.thumbnail?.includes('ieeerusb.org')}
+                unoptimized={content?.thumbnail?.includes('ieeerusb.org') || content?.thumbnail?.includes('ibb.co')}
               />
             </div>
             {/* Decorative corner accents */}

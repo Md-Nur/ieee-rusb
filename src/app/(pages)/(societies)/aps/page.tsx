@@ -43,12 +43,12 @@ const APS = async () => {
   ];
 
   // Fetch Users
-  const { users } = await getUsers({ query: "antenna-&-propagation-society", approved: true });
+  const { users } = await getUsers({ query: "aps", approved: true });
   const serializedUsers = serializeData(users);
 
   // Fetch Events
-  const serializedEvents = await getRecentEvents(3, "antenna-&-propagation-society");
-  const serializedUpcoming = await getUpcomingEvent("antenna-&-propagation-society");
+  const serializedEvents = await getRecentEvents(3, "aps");
+  const serializedUpcoming = await getUpcomingEvent("aps");
 
   return (
     <div className="w-full">
@@ -59,15 +59,15 @@ const APS = async () => {
         image="https://img.freepik.com/free-photo/wireless-television-antenna-sign-download_1172-230.jpg"
       />
       <MissionVission vision={vision} mission={mission} />
-      <SocietySpeech society="antenna-&-propagation-society" />
-      <SocietyAdvisor society="antenna-&-propagation-society" />
+      <SocietySpeech society="aps" />
+      <SocietyAdvisor society="aps" />
       {/* @ts-ignore */}
-      <UpcomingEvent society="antenna-&-propagation-society" event={serializedUpcoming} />
+      <UpcomingEvent society="aps" event={serializedUpcoming} />
       {/* @ts-ignore */}
-      <RecentEvents society="antenna-&-propagation-society" title="Events" events={serializedEvents} />
+      <RecentEvents society="aps" title="Events" events={serializedEvents} />
       <Title>Members</Title>
       {/* @ts-ignore */}
-      <ShowUsers query="antenna-&-propagation-society" initialData={serializedUsers} />
+      <ShowUsers query="aps" initialData={serializedUsers} />
     </div>
   );
 };

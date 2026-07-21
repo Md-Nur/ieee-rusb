@@ -4,14 +4,7 @@ import UserModel from "../src/models/user.model";
 async function assignAdvisorSocieties() {
   await dbConnect();
 
-  const allSocieties = [
-    "robotics-&-automation-society",
-    "signal-processing-society",
-    "power-&-energy-society",
-    "computer-society",
-    "antenna-&-propagation-society",
-    "women-in-engineering-society",
-  ];
+  const allSocieties = ["ras", "sps", "pes", "cs", "aps", "wie"];
 
   // Assign all societies to the branch advisor
   await UserModel.updateOne(
