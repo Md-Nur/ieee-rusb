@@ -101,31 +101,42 @@ const ShowUsers = ({ query, initialData }) => {
                   </div>
                 )}
 
-                <div className="space-y-4">
+                {societyAcronyms[query] ? (
                   <div className="space-y-1.5">
-                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Core Position</p>
+                    <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">{societyAcronyms[query]} Position</p>
                     <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
                       <span className="text-sm font-black text-slate-700 dark:text-slate-200 uppercase italic leading-none">
-                        {user.position || "Branch Member"}
+                        {user.society_designations?.find((sd) => sd.society === query)?.designation || user.position || "Member"}
                       </span>
                     </div>
                   </div>
-
-                  {user?.society_designations?.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-4 border-t border-black/5 dark:border-white/5">
-                      {user.society_designations.map((sd, idx) => (
-                        <div key={idx} className="group/badge px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 flex items-center gap-2 hover:bg-primary/20 transition-colors">
-                          <span className="text-[9px] font-black text-primary/70">
-                            {societyAcronyms[sd.society] || sd.society.split("-")[0].toUpperCase()}
-                          </span>
-                          <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">
-                            {sd.designation}
-                          </span>
-                        </div>
-                      ))}
+                ) : (
+                  <div className="space-y-4">
+                    <div className="space-y-1.5">
+                      <p className="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Core Position</p>
+                      <div className="px-4 py-2 bg-slate-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-2xl group-hover:border-primary/20 transition-colors">
+                        <span className="text-sm font-black text-slate-700 dark:text-slate-200 uppercase italic leading-none">
+                          {user.position || "Branch Member"}
+                        </span>
+                      </div>
                     </div>
-                  )}
-                </div>
+
+                    {user?.society_designations?.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-4 border-t border-black/5 dark:border-white/5">
+                        {user.society_designations.map((sd, idx) => (
+                          <div key={idx} className="group/badge px-3 py-1.5 bg-primary/5 dark:bg-primary/10 rounded-xl border border-primary/10 flex items-center gap-2 hover:bg-primary/20 transition-colors">
+                            <span className="text-[9px] font-black text-primary/70">
+                              {societyAcronyms[sd.society] || sd.society.split("-")[0].toUpperCase()}
+                            </span>
+                            <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300">
+                              {sd.designation}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                   <div className="flex items-center gap-2">

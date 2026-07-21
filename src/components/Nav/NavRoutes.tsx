@@ -8,11 +8,11 @@ const NavRoutes = () => {
   return (
     <>
       <NavLink name="home" route="/" />
+      <NavLink name="All EC" route="/all-executive-committee" />
       <NavDropdown
         name="community"
         routes={[
           { name: "Executive Committee", url: "/executive-committee" },
-          { name: "All Executive Committee", url: "/all-executive-committee" },
           { name: "Faculty Members", url: "/faculty-members" },
           { name: "Student Members", url: "/student-members" },
           { name: "Graduate Members", url: "/graduate-members" },
