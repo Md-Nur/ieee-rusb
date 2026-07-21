@@ -7,6 +7,8 @@ export const metadata = {
 };
 
 import RecentEvents from "@/components/Home/RecentEvents";
+import UpcomingEvent from "@/components/Home/UpcomingEvent";
+import SocietyAdvisor from "@/components/Home/SocietyAdvisor";
 import Hero from "@/components/Home/Hero";
 
 import MissionVission from "@/components/Home/MissionVission";
@@ -16,7 +18,7 @@ import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
 import { serializeData } from "@/lib/serialize";
-import { getRecentEvents } from "@/lib/content-data";
+import { getRecentEvents, getUpcomingEvent } from "@/lib/content-data";
 import SocietySpeech from "@/components/Home/SocietySpeech";
 
 export const revalidate = 3600;
@@ -48,6 +50,7 @@ const CS = async () => {
 
   // Fetch Events
   const serializedEvents = await getRecentEvents(3, "computer-society");
+  const serializedUpcoming = await getUpcomingEvent("computer-society");
 
   return (
     <div className="w-full">
@@ -59,6 +62,9 @@ const CS = async () => {
       />
       <MissionVission vision={vision} mission={mission} />
       <SocietySpeech society="computer-society" />
+      <SocietyAdvisor society="computer-society" />
+      {/* @ts-ignore */}
+      <UpcomingEvent society="computer-society" event={serializedUpcoming} />
       {/* @ts-ignore */}
       <RecentEvents society="computer-society" title="Events" events={serializedEvents} />
       <Title>Members</Title>

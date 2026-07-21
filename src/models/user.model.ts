@@ -153,6 +153,10 @@ const UserSchema = new Schema<Users>({
     type: [{ society: String, designation: String }],
     default: [],
   },
+  ecTerm: {
+    type: String,
+    trim: true,
+  },
   forgotPasswordToken: {
     type: String,
   },

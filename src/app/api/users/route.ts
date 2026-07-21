@@ -90,6 +90,14 @@ export async function GET(req: NextRequest) {
       });
     }
 
+    if (query === "all-executive-committee") {
+      pipeline.push({
+        $match: {
+          roles: { $elemMatch: { $eq: "executive-committee" } },
+        },
+      });
+    }
+
     // Handle Societies
     let isSocietyQuery = false;
 

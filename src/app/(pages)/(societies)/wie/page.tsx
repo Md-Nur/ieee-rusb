@@ -9,12 +9,14 @@ import MissionVission from "@/components/Home/MissionVission";
 import About from "@/components/Home/About";
 import Hero from "@/components/Home/Hero";
 import RecentEvents from "@/components/Home/RecentEvents";
+import UpcomingEvent from "@/components/Home/UpcomingEvent";
+import SocietyAdvisor from "@/components/Home/SocietyAdvisor";
 import { getUsers } from "@/lib/user-data";
 import connectDB from "@/lib/dbConnect";
 import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
 import { serializeData } from "@/lib/serialize";
-import { getRecentEvents } from "@/lib/content-data";
+import { getRecentEvents, getUpcomingEvent } from "@/lib/content-data";
 import SocietySpeech from "@/components/Home/SocietySpeech";
 
 export const revalidate = 3600;
@@ -46,6 +48,7 @@ const WIE = async () => {
 
   // Fetch Events
   const serializedEvents = await getRecentEvents(3, "women-in-engineering-society");
+  const serializedUpcoming = await getUpcomingEvent("women-in-engineering-society");
 
   return (
     <div className="w-full">
@@ -57,6 +60,9 @@ const WIE = async () => {
       />
       <MissionVission vision={vision} mission={mission} />
       <SocietySpeech society="women-in-engineering-society" />
+      <SocietyAdvisor society="women-in-engineering-society" />
+      {/* @ts-ignore */}
+      <UpcomingEvent society="women-in-engineering-society" event={serializedUpcoming} />
       {/* @ts-ignore */}
       <RecentEvents society="women-in-engineering-society" title="Events" events={serializedEvents} />
       <Title>Members</Title>
