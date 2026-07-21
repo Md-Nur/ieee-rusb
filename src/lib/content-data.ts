@@ -73,8 +73,5 @@ export const getUpcomingEvent = (society?: string) => unstable_cache(
   { revalidate: 3600, tags: ["content", "upcoming-event"] }
 )();
 
-export const getRecentEvents = (limit = 3, society?: string) => unstable_cache(
-  async () => getContentInternal({ query: "recent-events", limit, society }),
-  [`recent-events-${limit}-${society}`],
-  { revalidate: 3600, tags: ["content", "recent-events"] }
-)();
+export const getRecentEvents = (limit = 3, society?: string) =>
+  getContentInternal({ query: "recent-events", limit, society });
