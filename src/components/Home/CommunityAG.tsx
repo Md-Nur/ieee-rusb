@@ -81,7 +81,7 @@ const CommunityAG = () => {
             <Link
               href={item.url}
               key={index}
-              className="group relative h-[420px] w-[420px] rounded-[3rem] overflow-hidden flex flex-col justify-end p-10 transition-all duration-700 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/30 border border-white/10"
+              className="group relative h-72 w-72 md:h-96 md:w-96 rounded-[3rem] overflow-hidden flex flex-col justify-end p-10 transition-all duration-700 hover:-translate-y-3 hover:shadow-2xl hover:shadow-primary/30 border border-white/10"
             >
               {/* Background Image */}
               <div className="absolute inset-0">
