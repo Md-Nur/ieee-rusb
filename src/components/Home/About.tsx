@@ -30,13 +30,6 @@ const About = ({ title, description, image }: AboutProps) => {
               />
               <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
             </div>
-            {/* Decorative Elements */}
-            <div className="absolute -top-6 -left-6 w-32 h-32 bg-secondary opacity-10 rounded-full blur-3xl"></div>
-            <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-primary opacity-10 rounded-full blur-3xl"></div>
-            <div className="absolute top-1/2 -left-4 -translate-y-1/2 bg-base-100 p-6 rounded-2xl shadow-xl hidden md:block border-l-4 border-primary">
-               <FaQuoteLeft className="text-primary text-3xl mb-3 opacity-20" />
-               <p className="text-sm font-bold italic text-base-content/70 italic">Empowering the next<br/>generation of engineers.</p>
-            </div>
           </div>
 
           {/* Text Side */}

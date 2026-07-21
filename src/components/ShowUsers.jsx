@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import { PiLinkedinLogoBold } from "react-icons/pi";
 import { sortUsersByDesignation } from "@/lib/designation";
+import { deptShorthands } from "@/lib/constants";
 import UserSkeleton from "./Skeletons/UserSkeleton";
 
 const societyAcronyms = {
@@ -129,7 +130,7 @@ const ShowUsers = ({ query, initialData }) => {
                 <div className="mt-auto pt-6 border-t border-black/5 dark:border-white/5 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Dept:</span>
-                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{user?.dept}</span>
+                    <span className="text-xs font-black text-slate-600 dark:text-slate-400">{deptShorthands[user?.dept] || user?.dept}</span>
                   </div>
                   <div className="flex items-center gap-2 text-right">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Session:</span>

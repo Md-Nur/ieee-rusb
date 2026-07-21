@@ -3,6 +3,7 @@ import { Users } from "@/models/user.model";
 import Image from "next/image";
 import { FaLinkedin, FaEnvelope, FaQuoteLeft, FaUserTie, FaGraduationCap } from "react-icons/fa";
 import Title from "../Title";
+import { deptShorthands } from "@/lib/constants";
 
 interface SpeechSectionProps {
   user: Users | null;
@@ -96,7 +97,7 @@ const SpeechSection = ({
                 )}
                 <p className="text-lg font-bold opacity-60 uppercase tracking-widest">{user.position}</p>
                 <div className="mt-2 text-sm font-medium text-base-content/40">
-                   Department of {user.dept}<br/>
+                   {deptShorthands[user.dept] || user.dept}<br/>
                    University of Rajshahi
                 </div>
               </div>
