@@ -17,7 +17,7 @@ const AuthorizationCheck = ({
     if (
       !isApproved &&
       userAuth && 
-      userAuth._id !== contentUserId &&
+      userAuth._id.toString() !== contentUserId &&
       !userAuth.isAdmin
     ) {
       toast.error("Content not approved");

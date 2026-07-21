@@ -15,7 +15,7 @@ const ContentActions = ({
 }) => {
   const { userAuth } = useUserAuth();
 
-  if (userAuth?._id === contentUserId || userAuth?.isAdmin) {
+  if (userAuth?._id.toString() === contentUserId || userAuth?.isAdmin) {
     return (
       <div className="flex gap-3">
         <Link
