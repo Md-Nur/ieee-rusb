@@ -1,6 +1,4 @@
 
-There have many teachers cards in the website. add designation under teacher name
-
 active member acutal data
 update gallery
 In the cards there have session in double line make it in single line.
