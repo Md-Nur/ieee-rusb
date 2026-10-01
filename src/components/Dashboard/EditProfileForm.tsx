@@ -39,6 +39,7 @@ const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
       linkedin: currentUser?.linkedin || "",
       ieee_id: currentUser?.ieee_id || "",
       position: currentUser?.position || "",
+      speech: currentUser?.speech || "",
     }
   });
 
@@ -51,6 +52,7 @@ const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
         linkedin: userAuth?.linkedin || "",
         ieee_id: userAuth?.ieee_id || "",
         position: userAuth?.position || "",
+        speech: userAuth?.speech || "",
       });
       setPreview(userAuth.avatar || null);
       setSelectedSocieties(userAuth.societies || []);
@@ -328,6 +330,22 @@ const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
                 placeholder="https://linkedin.com/in/..."
                 className="input input-bordered h-14 bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/10 rounded-2xl font-bold text-blue-500 focus:ring-2 focus:ring-blue-400/20"
                 {...register("linkedin")}
+              />
+            </div>
+
+            {/* Speech / Message */}
+            <div className="form-control w-full border-t border-black/5 dark:border-white/5 pt-10 space-y-2">
+              <label className="label-text font-black text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] ml-1">
+                Speech / Message
+              </label>
+              <p className="text-[10px] text-slate-400 italic ml-1 mb-1">
+                This message will appear in your speech section on the homepage. Write a brief statement about your vision or role.
+              </p>
+              <textarea
+                placeholder="Write your message here..."
+                rows={5}
+                className="textarea textarea-bordered w-full bg-slate-50 dark:bg-white/5 border-black/5 dark:border-white/10 rounded-2xl font-medium focus:ring-2 focus:ring-primary/20 resize-none leading-relaxed"
+                {...register("speech")}
               />
             </div>
           </div>

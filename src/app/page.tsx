@@ -6,6 +6,7 @@ import UpcomingEvent from "@/components/Home/UpcomingEvent";
 import About from "@/components/Home/About";
 import Advisors from "@/components/Home/Advisors";
 import Counselor from "@/components/Home/Counselor";
+import Chairperson from "@/components/Home/Chairperson";
 import connectDB from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { getUpcomingEvent, getRecentEvents } from "@/lib/content-data";

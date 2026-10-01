@@ -27,11 +27,11 @@ const FoundingChairperson = () => {
     <SpeechSection
       user={chair}
       title="Message from Founding Chairperson"
-      badgeText="Founding Leadership"
       badgeIcon="tie"
       reverse={true}
       bgClass="bg-base-200/50"
-      quote="The foundation of IEEE RUSB was laid with the hope of empowering every student with the tools they need to lead in the technical world. I am honored to have been part of its beginning."
+      quote="When we founded IEEE RUSB in July 2017, we dared to dream of a student community that could stand shoulder to shoulder with the finest IEEE branches in the country. Every event we organized, every workshop we ran, and every member we welcomed was a step toward that dream. I am immensely proud of how far this branch has come."
+      secondaryQuote="To every future leader of RUSB — carry the founding spirit forward. Build boldly, collaborate genuinely, and never stop believing in the power of engineering to change the world."
     />
   );
 };

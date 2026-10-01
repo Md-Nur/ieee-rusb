@@ -17,6 +17,7 @@ export interface Users extends Document {
   designation?: string;
   ieee_id?: string;
   society_designations?: { society: string; designation: string }[];
+  speech?: string;
   forgotPasswordToken?: string;
   forgotPasswordTokenExpiry?: Date;
   ecTerm?: string;
@@ -147,6 +148,10 @@ const UserSchema = new Schema<Users>({
     default: [],
   },
   ecTerm: {
+    type: String,
+    trim: true,
+  },
+  speech: {
     type: String,
     trim: true,
   },

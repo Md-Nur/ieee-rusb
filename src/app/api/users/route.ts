@@ -79,13 +79,8 @@ export async function GET(req: NextRequest) {
     if (query === "executive-committee") {
       pipeline.push({
         $match: {
-          position: {
-            $ne: "Other",
-          },
-          $or: [
-            { roles: { $elemMatch: { $eq: "executive-committee" } } },
-            { position: { $nin: ["Alumni", "Senior Member", "Member"] } }
-          ]
+          roles: { $elemMatch: { $eq: "executive-committee" } },
+          position: { $nin: ["Other", "Alumni", "Senior Member", "Member"] },
         },
       });
     }

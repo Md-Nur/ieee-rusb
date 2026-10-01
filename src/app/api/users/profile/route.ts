@@ -34,6 +34,7 @@ export async function PUT(req: NextRequest) {
     if (data.societies) updateData.societies = data.societies;
     if (data.society_designations) updateData.society_designations = data.society_designations;
     if (data.ieee_id) updateData.ieee_id = data.ieee_id;
+    if (data.speech !== undefined) updateData.speech = data.speech;
 
     const updatedUser = await UserModel.findByIdAndUpdate(decoded.id, updateData, {
       new: true,

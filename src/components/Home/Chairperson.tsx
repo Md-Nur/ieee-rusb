@@ -26,15 +26,13 @@ const Chairperson = () => {
     <SpeechSection
       user={chair}
       title="Vision of the Chairperson"
-      badgeText="Student Leadership"
       badgeIcon="tie"
       reverse={true}
       bgClass="bg-base-200/50"
-      quote="The IEEE Rajshahi University Student Branch (RUSB), founded in July 2017, serves as a cornerstone for technical excellence and professional development."
-      secondaryQuote="Our purpose is to bridge the worlds of academia and industry, helping students learn from faculty members, seasoned professionals, and fellow innovators. As Chairperson, I am committed to fostering an environment where every member can transform their ideas into impactful realities."
+      quote="Leading IEEE RUSB is not just a responsibility — it is a calling. Our branch is a community of passionate engineers and innovators who believe that knowledge shared is knowledge multiplied. In my tenure as Chairperson, I am committed to expanding our technical programs, strengthening inter-branch collaborations, and ensuring every member has a clear pathway to professional growth."
+      secondaryQuote="I envision a RUSB where students don't just attend events but become agents of change — building projects that matter, solving problems that last, and inspiring the generations that follow."
     />
   );
 };
 
 export default Chairperson;
-
