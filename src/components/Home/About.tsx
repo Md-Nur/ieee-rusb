@@ -52,15 +52,15 @@ const About = ({ title, description, image }: AboutProps) => {
             </div>
 
             <div className="flex flex-wrap gap-10 pt-4">
-               <div>
-                  <h4 className="text-4xl font-black text-primary">50+</h4>
+               <div className="flex flex-col items-center">
+                  <h4 className="text-4xl font-black text-primary">84</h4>
                   <p className="text-sm font-bold opacity-50 uppercase tracking-tighter">Active Members</p>
                </div>
-               <div>
-                  <h4 className="text-4xl font-black text-secondary">50+</h4>
+               <div className="flex flex-col items-center">
+                  <h4 className="text-4xl font-black text-secondary">30+</h4>
                   <p className="text-sm font-bold opacity-50 uppercase tracking-tighter">Events Yearly</p>
                </div>
-               <div>
+               <div className="flex flex-col items-center">
                   <h4 className="text-4xl font-black text-accent">6</h4>
                   <p className="text-sm font-bold opacity-50 uppercase tracking-tighter">Societies & AGs</p>
                </div>
