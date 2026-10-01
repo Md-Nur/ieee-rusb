@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import NavRoutes from "./NavRoutes";
 import Image from "next/image";
@@ -17,6 +17,28 @@ const ieeeSites = [
 
 const Navbar = ({ children }: { children: ReactNode }) => {
   const { userAuth } = useUserAuth();
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.offsetHeight);
+      }
+    };
+    updateHeight();
+
+    const resizeObserver = new ResizeObserver(updateHeight);
+    if (headerRef.current) {
+      resizeObserver.observe(headerRef.current);
+    }
+    window.addEventListener("resize", updateHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, []);
 
   const closeDrawer = () => {
     const inputNav = document.getElementById("my-drawer-3");
@@ -30,7 +52,10 @@ const Navbar = ({ children }: { children: ReactNode }) => {
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col min-h-screen">
         {/* Fixed Header */}
-        <header className="fixed top-0 left-0 right-0 z-[50] w-full shadow-md transition-all duration-300">
+        <header
+          ref={headerRef}
+          className="fixed top-0 left-0 right-0 z-[50] w-full shadow-md transition-all duration-300"
+        >
           {/* Top Horizontal Stripe for IEEE Sites */}
           <div className="bg-[#001c30] text-slate-300 text-xs border-b border-white/10 tracking-wide">
             <div className="container mx-auto px-4 md:px-8 py-1.5 flex items-center overflow-x-auto scrollbar-none whitespace-nowrap">
@@ -101,7 +126,10 @@ const Navbar = ({ children }: { children: ReactNode }) => {
         </header>
 
         {/* Content offset for fixed header */}
-        <div className="pt-24 md:pt-28">
+        <div
+          style={{ paddingTop: headerHeight ? `${headerHeight}px` : undefined }}
+          className={headerHeight ? "" : "pt-[93px] md:pt-[100px]"}
+        >
           {children}
         </div>
       </div>

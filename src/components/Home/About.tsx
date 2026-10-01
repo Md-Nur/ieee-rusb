@@ -26,7 +26,7 @@ const About = ({ title, description, image }: AboutProps) => {
                 width={800}
                 height={600}
                 priority
-                className="w-full h-[400px] object-cover"
+                className="w-full h-[400px] object-contain bg-white rounded-2xl"
               />
               <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
             </div>

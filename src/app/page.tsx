@@ -32,7 +32,7 @@ export default async function Home() {
   return (
     <div className="">
       <Hero />
-      <About image="/about-pro.png" />
+      <About image="/logo.png" />
       <MissionVission />
       <CommunityAG />
       {/* @ts-ignore */}
