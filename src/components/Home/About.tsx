@@ -19,16 +19,15 @@ const About = ({ title, description, image }: AboutProps) => {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           {/* Image Side */}
           <div className="lg:w-1/2 relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl skew-y-1 transform transition-transform hover:skew-y-0 duration-500">
+            <div className="group relative rounded-2xl overflow-hidden shadow-2xl">
               <Image 
                 src={image || "https://img.freepik.com/free-photo/diverse-community-hands-joined-together_53876-133691.jpg"}
                 alt="IEEE Community"
                 width={800}
                 height={600}
                 priority
-                className="w-full h-[400px] object-contain bg-white rounded-2xl"
+                className="w-full h-[400px] object-contain bg-white rounded-2xl transition-transform duration-1000 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
             </div>
           </div>
 
@@ -43,10 +42,10 @@ const About = ({ title, description, image }: AboutProps) => {
             </Title>
             
             <div className="space-y-6">
-              <p className="text-xl text-base-content/80 leading-relaxed font-medium">
+              <p className="text-xl text-base-content/80 leading-relaxed font-medium text-justify">
                 {description || defaultDescription}
               </p>
-              <p className="text-base-content/60 leading-relaxed">
+              <p className="text-base-content/60 leading-relaxed text-justify">
                 Founded with a vision to bridge the gap between academic knowledge and industrial excellence, IEEE RU SB provides a platform for students to explore emerging technologies, participate in global competitions, and build meaningful professional networks.
               </p>
             </div>

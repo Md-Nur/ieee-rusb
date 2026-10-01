@@ -7,7 +7,6 @@ import About from "@/components/Home/About";
 import Advisors from "@/components/Home/Advisors";
 import Counselor from "@/components/Home/Counselor";
 import connectDB from "@/lib/dbConnect";
-import ContentModel from "@/models/content.model";
 import UserModel from "@/models/user.model";
 import { getUpcomingEvent, getRecentEvents } from "@/lib/content-data";
 

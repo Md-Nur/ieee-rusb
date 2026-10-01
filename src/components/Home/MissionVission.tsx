@@ -72,7 +72,7 @@ const MissionVission = ({ vision, mission }: MissionVissionProps) => {
                   <p className="opacity-80 font-medium">Join the ranks of innovators at Rajshahi University.</p>
                </div>
                <Link href="/join/1" className="btn btn-white btn-lg rounded-full px-10 relative z-10 border-none shadow-lg hover:scale-105 transition-transform flex items-center justify-center">
-                  Join IEEE SB
+                  Join IEEE RUSB
                </Link>
                {/* Decorative Circles */}
                <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full"></div>
