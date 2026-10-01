@@ -2,10 +2,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const NavLink = ({ name, route }: { name: string; route?: string }) => {
+interface NavLinkProps {
+  name: string;
+  route?: string;
+  target?: string;
+  rel?: string;
+}
+
+const NavLink = ({ name, route, target, rel }: NavLinkProps) => {
   const pathname = usePathname();
   const to = route || `/${name}`;
-  // console.log(pathname, to);
+  const isExternal = to.startsWith("http://") || to.startsWith("https://");
+
   const closeNav = () => {
     const dropdowns = document.getElementsByClassName("ieee-dropdown");
     for (let i = 0; i < dropdowns.length; i++) {
@@ -23,6 +31,8 @@ const NavLink = ({ name, route }: { name: string; route?: string }) => {
       <Link
         className={`${pathname === to ? "font-bold underline" : ""}`}
         href={to}
+        target={target || (isExternal ? "_blank" : undefined)}
+        rel={rel || (isExternal ? "noopener noreferrer" : undefined)}
       >
         {name.toUpperCase()}
       </Link>

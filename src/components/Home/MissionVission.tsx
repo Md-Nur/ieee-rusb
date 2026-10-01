@@ -11,7 +11,7 @@ interface MissionVissionProps {
 
 const MissionVission = ({ vision, mission }: MissionVissionProps) => {
   const { userAuth } = useUserAuth();
-  const defaultVision = "To build IEEE RU SB as a leading center of academic excellence and technological innovation in Bangladesh—where students grow as skilled engineers, responsible professionals, and impactful leaders.";
+  const defaultVision = "To make IEEE RUSB a leading hub for academic excellence and technological innovation in Bangladesh, where students can develop their skills, grow as responsible professionals, and become leaders who create a meaningful impact on society.";
   const defaultMission = [
     { text: "Inspire innovation in emerging technological fields.", icon: <FaLightbulb /> },
     { text: "Connect members with global IEEE communities.", icon: <FaGlobe /> },
@@ -34,7 +34,7 @@ const MissionVission = ({ vision, mission }: MissionVissionProps) => {
             <h2 className="text-5xl md:text-6xl font-black text-base-content leading-none">
               Our <span className="text-secondary">Vision</span>
             </h2>
-            <p className="text-xl md:text-2xl font-medium text-base-content/70 leading-relaxed italic">
+            <p className="text-xl md:text-2xl font-medium text-base-content/70 leading-relaxed italic text-justify">
               "{displayVision}"
             </p>
             <div className="h-1 w-20 bg-secondary rounded-full"></div>
