@@ -58,6 +58,7 @@ const DashboardProfile = () => {
                     width={200}
                     height={200}
                     className="object-cover w-full h-full"
+                    unoptimized={userAuth?.avatar?.includes("ibb.co")}
                   />
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-success rounded-full border-4 border-white dark:border-slate-900 flex items-center justify-center">

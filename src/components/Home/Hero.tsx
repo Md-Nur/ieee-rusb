@@ -71,6 +71,7 @@ const Hero = ({ slides = HeroData, className = "" }: { slides?: any[]; className
                   priority={index === 0}
                   className="object-cover"
                   sizes="100vw"
+                  unoptimized={typeof item.image === "string" && item.image.includes("ibb.co")}
                 />
               </div>
 

@@ -52,6 +52,7 @@ const GalleryViewer = ({ initialImages }: { initialImages: Photo[] }) => {
               src={image.img}
               alt={image.title}
               className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+              unoptimized={image.img?.includes('ibb.co')}
             />
 
             {/* Technical Overlay */}
@@ -101,7 +102,9 @@ const GalleryViewer = ({ initialImages }: { initialImages: Photo[] }) => {
                   src={selectedImage.img}
                   alt={selectedImage.title}
                   fill
+                  sizes="100vw"
                   className="object-contain"
+                  unoptimized={selectedImage.img?.includes('ibb.co')}
                 />
               </div>
 

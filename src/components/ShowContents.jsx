@@ -70,11 +70,11 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false, limit 
                 <div className="relative aspect-video overflow-hidden">
                   <Image
                     src={content.thumbnail || "/logo.png"}
-                    height={600}
-                    width={600}
                     alt={content.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     priority={idx === 0}
-                    className="object-cover h-full w-full transition-transform duration-1000 group-hover:scale-105"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
                     unoptimized={content.thumbnail?.includes('ibb.co')}
                   />
                   
@@ -116,7 +116,9 @@ const ShowContents = ({ query, society, initialData, hideIfEmpty = false, limit 
                           src={content?.user?.avatar || "/defaultAvatar.jpg"}
                           alt={content?.user?.name || "Author"}
                           fill
+                          sizes="48px"
                           className="object-cover"
+                          unoptimized={content?.user?.avatar?.includes('ibb.co')}
                         />
                       </div>
                       <div className="overflow-hidden">

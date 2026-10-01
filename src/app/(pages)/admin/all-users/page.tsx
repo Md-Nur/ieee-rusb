@@ -251,6 +251,7 @@ const AllUsers = () => {
                                width={80}
                                height={80}
                                className="object-cover w-full h-full"
+                               unoptimized={user.avatar?.includes("ibb.co")}
                              />
                              {user.isAdmin && (
                                 <div className="absolute -top-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-[10px] text-white shadow-lg ring-2 ring-white dark:ring-slate-900 z-10">
@@ -365,6 +366,7 @@ const AllUsers = () => {
                          width={96}
                          height={96}
                          className="object-cover w-full h-full"
+                         unoptimized={formData.avatar?.includes("ibb.co")}
                        />
                     </div>
                     <label htmlFor="avatar-upload" className="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center cursor-pointer transition-opacity backdrop-blur-sm">

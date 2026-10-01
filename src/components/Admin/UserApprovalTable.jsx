@@ -152,7 +152,8 @@ const UserApprovalTable = ({ initialUsers }) => {
                               width={48}
                               height={48}
                               alt={user?.name || "Avatar"}
-                              className="object-cover"
+                              className="object-cover w-full h-full"
+                              unoptimized={user?.avatar?.includes("ibb.co")}
                             />
                           </div>
                         </div>

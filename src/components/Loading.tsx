@@ -26,8 +26,8 @@ const Loading = () => {
               src="/logo.png"
               alt="IEEE RUSB"
               width={140}
-              height={140}
-              className="relative z-10 drop-shadow-[0_0_10px_rgba(0,98,155,0.4)]"
+              height={47}
+              className="relative z-10 drop-shadow-[0_0_10px_rgba(0,98,155,0.4)] w-auto h-auto"
               priority
             />
           </div>

@@ -110,7 +110,7 @@ const ContentApprovalTable = ({ initialContents }) => {
                             width={80}
                             height={80}
                             alt={content?.title || "Thumbnail"}
-                            className="object-cover"
+                            className="object-cover w-full h-full"
                             unoptimized={content?.thumbnail?.includes('ibb.co')}
                           />
                         </div>
@@ -136,7 +136,7 @@ const ContentApprovalTable = ({ initialContents }) => {
                          <div className="avatar placeholder">
                             <div className="bg-slate-800 text-slate-400 rounded-full w-8 h-8 ring-1 ring-white/10 group-hover/author:ring-accent transition-all">
                                {content?.user?.avatar ? (
-                                 <Image src={content.user.avatar} width={32} height={32} alt="Author" className="rounded-full" />
+                                 <Image src={content.user.avatar} width={32} height={32} alt="Author" className="rounded-full w-full h-full object-cover" unoptimized={content.user.avatar?.includes('ibb.co')} />
                                ) : (
                                  <FaUser size={12} />
                                )}

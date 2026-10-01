@@ -239,7 +239,9 @@ const Content = ({ postData, type }) => {
                        src={preview || postData?.thumbnail}
                        alt="Thumbnail Preview"
                        fill
+                       sizes="(max-width: 768px) 100vw, 500px"
                        className="object-cover"
+                       unoptimized={(preview || postData?.thumbnail)?.includes('ibb.co')}
                      />
                      <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover/upload:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
                         <label htmlFor="imgFile" className="btn btn-primary rounded-full px-8 cursor-pointer">Re-upload Asset</label>
@@ -352,7 +354,8 @@ const Content = ({ postData, type }) => {
                       alt={author?.name}
                       width={48}
                       height={48}
-                      className="object-cover"
+                      className="object-cover w-full h-full"
+                      unoptimized={author?.avatar?.includes('ibb.co')}
                     />
                  </div>
                  <div>

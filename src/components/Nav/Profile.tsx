@@ -48,6 +48,8 @@ const Profile = () => {
             src={userAuth?.avatar || "/defaultAvatar.jpg"}
             width={40}
             height={40}
+            className="w-full h-full object-cover"
+            unoptimized={userAuth?.avatar?.includes("ibb.co")}
           />
         </div>
       </div>

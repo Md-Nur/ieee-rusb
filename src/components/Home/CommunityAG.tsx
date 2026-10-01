@@ -89,7 +89,9 @@ const CommunityAG = () => {
                   src={item.img || "/ieee.jpg"}
                   alt={item.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  unoptimized={item.img?.includes('ibb.co')}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90 transition-opacity duration-500"></div>
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.color} to-transparent opacity-40 group-hover:opacity-60 transition-opacity duration-500`}></div>

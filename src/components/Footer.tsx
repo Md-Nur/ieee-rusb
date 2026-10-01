@@ -165,7 +165,7 @@ const Footer = () => {
             src="/logo.png"
             alt="IEEE RUSB Logo"
             width={150}
-            height={150}
+            height={50}
             className="w-32 h-auto"
           />
           <p className="max-w-full break-words">

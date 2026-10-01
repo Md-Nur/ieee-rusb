@@ -40,8 +40,10 @@ const UpcomingEvent = ({
                   src={upcomingEvent.thumbnail}
                   alt={upcomingEvent.title}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 60vw"
                   priority
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  unoptimized={upcomingEvent.thumbnail?.includes('ibb.co')}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8 lg:hidden">
                    <h2 className="text-2xl font-black text-white capitalize leading-tight">

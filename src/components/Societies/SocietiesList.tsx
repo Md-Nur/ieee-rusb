@@ -89,7 +89,9 @@ const SocietiesList = () => {
                   src={soc.img}
                   alt={soc.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  unoptimized={soc.img?.includes('ibb.co')}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
               </div>

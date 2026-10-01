@@ -52,7 +52,9 @@ const SpeechSection = ({
                 src={user?.avatar || (badgeIcon === "tie" ? "/defaultAvatar.jpg" : "/foez_ahmed.jpg")}
                 alt={user.name}
                 fill
+                sizes="(max-width: 1024px) 100vw, 400px"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
+                unoptimized={user?.avatar?.includes('ibb.co')}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               <div className={`absolute bottom-6 ${reverse ? 'right-6' : 'left-6'} flex gap-3`}>

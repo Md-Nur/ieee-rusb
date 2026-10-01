@@ -57,6 +57,7 @@ const ShowUsers = ({ query, initialData }) => {
                   width={600}
                   alt={user?.name}
                   className="object-cover h-full w-full transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                  unoptimized={user?.avatar?.includes("ibb.co")}
                 />
 
                 {/* Modern Cinematic Overlay */}

@@ -171,6 +171,7 @@ const EditProfileForm = ({ initialUser }: { initialUser?: Users | null }) => {
                   width={160}
                   height={160}
                   className="object-cover w-full h-full"
+                  unoptimized={preview?.includes("ibb.co")}
                 />
               </div>
               <label

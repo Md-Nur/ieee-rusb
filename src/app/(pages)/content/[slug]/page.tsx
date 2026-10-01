@@ -159,7 +159,9 @@ const ContentOne = async ({ params }: { params: Promise<{ slug: string }> }) => 
                          src={content?.user?.avatar || "/defaultAvatar.jpg"}
                          alt={content?.user?.name || "Author"}
                          fill
+                         sizes="128px"
                          className="object-cover"
+                         unoptimized={content?.user?.avatar?.includes('ibb.co')}
                        />
                     </div>
                     <div className="text-center md:text-left space-y-2 flex-1">
